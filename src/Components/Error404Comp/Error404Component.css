@@ -1,0 +1,60 @@
+.error_404_wrapper {
+  padding-top: 112px;
+  padding-bottom: 89px;
+  z-index: 111;
+  position: relative;
+  background: #fff;
+}
+.error404_img img {
+  max-width: 618px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.error404_outer {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 618px;
+  width: 100%;
+}
+.error404_title h2 {
+  color: #022539;
+  margin: 0;
+}
+.error404_title h3 {
+  color: #022539;
+  margin: 0;
+}
+.error404_title h3 {
+  margin-top: 20px;
+}
+.comin_soon_img {
+  max-width: 571px;
+  width: 100%;
+  border: 10px solid #fff;
+  border-radius: 10px;
+}
+.blog_detail_title h3 + p {
+  margin-top: 41px;
+}
+.blog_detail_title p + p {
+  margin-top: 15px;
+}
+.blog_detail_title p {
+  max-width: 1000px;
+  width: 100%;
+}
+.error_404_wrapper .troo_da_about_we_r_done_btn button.btn.btn-primary {
+  padding: 17px 15px 17px 15px;
+}
+.error_404_wrapper .troo_da_about_we_r_done_btn {
+  padding-top: 20px;
+}
+.error404_img {
+  padding-bottom: 66px;
+}
+
+@media (max-width : 991px){
+  .error_404_wrapper { padding-top: 50px; padding-bottom: 25px; } 
+    .error404_img { padding-bottom: 25px; }
+}

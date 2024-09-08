@@ -1,0 +1,356 @@
+.troo_da_handyman_wrapper {
+  padding-top: 104px;
+  padding-bottom: 105px;
+  position: relative;
+}
+.troo_da_hero_small_outer.about h4 {
+  color: #2d2d2d;
+}
+.troo_da_about_handyman_left_side {
+  max-width: 499px;
+  height: 100%;
+}
+.troo_da_about_hero_handyman_title {
+  padding-top: 13px;
+}
+.troo_da_about_hero_handyman_title_cont {
+  padding-top: 15px;
+}
+.troo_da_about_hero_handyman_cont {
+  padding-top: 21px;
+}
+.troo_da_about_hero_handyman_btn {
+  padding-top: 23px;
+}
+.troo_da_handyman_img img {
+  max-width: 611px;
+  width: 100%;
+  height: 100%;
+}
+.troo_da_about_hero_handyman_btn button.btn.btn-primary {
+  background: #022539;
+  box-shadow: 0px 7px 29px rgb(85 85 85 / 32%);
+  color: #fff;
+  padding: 17px 17px 17px 17px;
+}
+.troo_da_about_hero_handyman_btn button.btn.btn-primary:hover {
+  background-color: transparent;
+  border: 1px solid #022539;
+  color: #022539;
+}
+.about_polygon-1 {
+  position: absolute;
+  top: 88px;
+  left: 44px;
+}
+.about_polygon-2 {
+  position: absolute;
+  top: 88px;
+  right: 71px;
+}
+.about_polygon-3 {
+  position: absolute;
+  bottom: 186px;
+  left: 35.9%;
+}
+.about_polygon-4 {
+  position: absolute;
+  bottom: 137px;
+  right: 24px;
+}
+.action {
+  -webkit-animation: action 1s infinite alternate;
+  animation: action 1s infinite alternate;
+}
+@-webkit-keyframes action {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes action {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+.troo_da_detail_box_wrapper {
+  padding-bottom: 101px;
+}
+.troo_da_detail_box_wrapper .row {
+  margin: 0 -15px !important;
+}
+.troo_da_detail_box {
+  background: #ffffff;
+  box-shadow: 0px 8px 15px rgb(149 157 165 / 15%);
+  border-radius: 10px;
+  max-width: 387px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 25px 21px 19px 21px;
+  transition: all 0.3s ease;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+.about_year_box_outer {
+  position: relative;
+}
+.about_year_box {
+  background: #022539;
+  border: 5px solid #ffffff;
+  box-shadow: 0px 7px 15px rgb(85 85 85 / 15%);
+  border-radius: 10px;
+  max-width: 333px;
+  width: 100%;
+  padding: 25px 21px 24px 20px;
+  position: absolute;
+  bottom: 34px;
+  right: 53px;
+  padding-left: 15px;
+}
+.about_yr_detail {
+  margin-left: 13px;
+}
+.about_yr_detail h4 {
+  color: #ffffff;
+  margin-bottom: 0;
+}
+.about_yr_detail h2 {
+  margin: 0;
+  color: #fb991c;
+}
+.troo_da_detail_box_title {
+  padding-top: 17px;
+}
+.troo_da_detail_box_content {
+  padding-top: 18px;
+}
+
+.troo_da_detail_box:hover .troo_da_detail_box_title h3 {
+  color: #fff;
+}
+.troo_da_detail_box:hover .troo_da_detail_box_content p {
+  color: #fff;
+}
+.troo_da_detail_box:hover {
+  background-color: #022539;
+}
+.troo_da_detail_box:hover .troo_da_detail_box_img svg {
+  fill: #fb991c;
+}
+.troo_da_detail_box_img {
+  position: relative;
+  display: inline;
+  transition: all 0.3s ease;
+}
+.troo_da_detail_box_img::before {
+  content: "";
+  width: 70px;
+  height: 70px;
+  background: #022539;
+  opacity: 0.1;
+  position: absolute;
+  top: -24px;
+  left: -32px;
+  border-radius: 100%;
+  transition: all 0.3s ease;
+  z-index: 222;
+}
+.troo_da_detail_box:hover .troo_da_detail_box_img::before {
+  content: "";
+  width: 70px;
+  height: 70px;
+  background: #fb991c;
+  opacity: 0.1;
+  position: absolute;
+  top: -24px;
+  left: -32px;
+  border-radius: 100%;
+  z-index: 222;
+}
+.troo_da_hand_we_r_done_box_inner:hover .troo_da_hand_we_r_done_box_img::after {
+  content: "" !important;
+  background: #022539 !important;
+  opacity: 0.4 !important;
+  border-radius: 10px !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+.troo_da_hand_we_r_done_box_img {
+  position: relative;
+  border-radius: 10px;
+}
+.troo_da_hand_we_r_done_box_img img {
+  border-radius: 10px;
+}
+
+.about_yr_icon p {
+  color: #fb991c;
+  text-align: center;
+  padding-top: 9px;
+  font-size: 36px;
+  line-height: 52.02px;
+  padding-left: 16px;
+  font-family: "Jost";
+  font-weight: 700;
+}
+.about_yr_icon {
+  position: relative;
+}
+.about_yr_icon::after {
+  content: "";
+  background: #fb991c;
+  opacity: 0.1;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 100%;
+}
+
+@media (max-width: 1290px) {
+  .troo_da_detail_box {
+    max-width: 330px;
+    margin-right: 0;
+    margin-left: 0;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1230px) {
+  .troo_da_detail_box_wrapper .row {
+    margin: 0 0 !important;
+  }
+  .troo_da_about_handyman_left_side {
+    max-width: 470px;
+    height: 100%;
+  }
+}
+
+@media (max-width: 1130px) {
+  .troo_da_hand_we_r_done_box_inner {
+    max-width: 310px;
+  }
+  .troo_da_hand_we_r_done_box_title {
+    left: 25px;
+    max-width: 242px;
+  }
+  .about_year_box {
+    max-width: 295px;
+  }
+  .about_yr_detail h2 {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 1090px) {
+  .troo_da_detail_box {
+    max-width: 286px;
+    height: 315px;
+  }
+}
+@media (max-width: 1050px) {
+  .troo_da_hand_we_r_done_box_title {
+    left: 15px;
+    max-width: 217px;
+  }
+  .troo_da_hand_we_r_done_box_title h3 {
+    font-size: 18px;
+  }
+  .troo_da_hand_we_r_done_box_hover_detail h3 {
+    font-size: 16px !important;
+  }
+  .troo_da_hand_we_r_done_box_hover_detail::after {
+    top: 15px;
+  }
+  .troo_da_handyman_wrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .troo_da_detail_box_wrapper{
+    padding-bottom: 50px;
+  }
+}
+
+@media (max-width: 991px) {
+  .troo_da_about_handyman_left_side {
+    max-width: 100%;
+    height: 100%;
+    margin: 0 auto;
+  }
+  .troo_da_handyman_img img{
+    max-width: 100%;
+  }
+  .troo_da_hand_we_r_done_box_img img{
+    width: 100%;
+  }
+  .about_polygon-1 {
+    display: none;
+  }
+  .about_polygon-2 {
+    display: none;
+  }
+  .about_polygon-4 {
+    display: none;
+  }
+  .about_polygon-3 {
+    display: none;
+  }
+  .troo_da_handyman_img {
+    text-align: center;
+  }
+
+  .troo_da_handyman_wrapper {
+    padding-top: 50px;
+    padding-bottom: 180px;
+  }
+  .troo_da_about_hero_handyman_title_cont {
+    padding-top: 10px;
+  }
+  .troo_da_about_hero_handyman_cont {
+    padding-top: 10px;
+  }
+  .troo_da_detail_box {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .troo_da_detail_box_wrapper {
+    padding-bottom: 50px;
+  }
+
+  .troo_da_hand_we_r_done_box {
+    margin: 0;
+  }
+  .about_year_box {
+    position: inherit;
+    bottom: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    margin: 14px auto;
+  }
+  .troo_da_about_hero_handyman_btn{
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 450px) {
+
+   button.btn.btn-primary {
+    padding: 12px 11px 12px 11px;
+  }
+  .about_yr_icon p{
+    font-size: 25px;
+  }
+}

@@ -1,0 +1,201 @@
+.our_faq_wrapper {
+  padding-bottom: 100px;
+  background: #f4f9fd;
+  padding-top: 97px;
+  position: relative;
+}
+.our_faq_wrapper .troo_da_hand_we_r_done_title_outer {
+  padding-bottom: 50px;
+}
+.our_faq_wrapper .troo_da_about_we_r_done_btn button.btn.btn-primary {
+  padding: 17px 42px 17px 43px;
+}
+.faq_bg_1 {
+  position: absolute;
+  top: 126px;
+  left: 110px;
+}
+.faq_bg_2 {
+  position: absolute;
+  bottom: 88px;
+  right: 76px;
+}
+.our_faq_wrapper .hero_small_detail {
+  max-width: 233px;
+  width: 100%;
+}
+.our_faq_wrapper .our_awesome_team_title {
+  padding: 0;
+}
+.our_faq_wrapper .client_say_section_wrapper {
+  padding-bottom: 61px;
+}
+.our_faq_wrapper .row {
+  margin: 0 -15px !important;
+}
+/* .our_faq_right {
+  margin: 0 15px;
+} */
+/* .our_faq_left {
+  margin: 0 15px;
+} */
+/* .our_faq_right {
+  margin: 0 15px;
+} */
+.faq_wrapper {
+  padding-top: 100px;
+  padding-bottom: 85px;
+}
+.faq_left_img img {
+  width: 526px;
+  height: 752px;
+  object-fit: cover;
+}
+.faq_right_detail .hero_small_detail.we_service_small_title {
+  max-width: 235px;
+  width: 100%;
+}
+.faq_content {
+  padding-top: 25px;
+}
+.accordion-button:not(.collapsed) {
+  color: #022539 !important;
+  padding: 18px 24px 19px 24px;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+.accordion-button {
+  color: #2d2d2d;
+  background: #ffffff;
+  box-shadow: 0px 10px 10px rgb(0 0 0 / 5%);
+  border-radius: 10px;
+}
+.accordion-item {
+  color: #1f1e23;
+  background-color: transparent;
+  border: transparent;
+  margin-bottom: 15px;
+}
+.accordion-item:first-of-type {
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  margin-bottom: 15px;
+}
+.accordion-body {
+  border: none;
+  background: #ffffff;
+  border-radius: 0;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 19px 20px 18px 24px;
+}
+
+.accordion-item:last-of-type .accordion-button.collapsed {
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.accordion-button:focus {
+  z-index: 3;
+  border-color: #fc7523 !important;
+  box-shadow: none !important;
+}
+
+.accordion-button::after {
+  background: url("../../images/plus.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center;
+  background-size: contain;
+  width: 13px;
+  height: 12px;
+}
+.accordion-button:not(.collapsed)::after {
+  background: url("../../images/minus.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center;
+  background-size: contain;
+  width: 13px;
+  height: 12px;
+}
+.troo_da_hand_we_r_done_title_outer {
+  max-width: 459px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+.troo_da_hero_we_r_done_title {
+  padding-top: 13px;
+}
+.accordion-button::after {
+  background: url("../../images/plus.png");
+}
+.our_faq_wrapper .troo_da_about_we_r_done_btn {
+  padding-top: 50px;
+}
+.our_team_wrapper .troo_da_hand_we_r_done_box_hover_detail::after {
+  display: none;
+}
+button.accordion-button h5::after {
+  content: "";
+  width: 1px;
+  height: 30px;
+  position: absolute;
+  right: 50px;
+  top: 14px;
+  background: rgba(149, 157, 165, 0.15);
+}
+
+@media (max-width: 1230px) {
+  .our_faq_wrapper .row {
+    margin: 0 0 !important;
+  }
+}
+
+@media (max-width: 1090px) {
+  button.accordion-button.collapsed h5 {
+    font-size: 16px;
+  }
+  .our_faq_wrapper{
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+@media (max-width: 991px) {
+  .our_faq_wrapper .troo_da_about_we_r_done_btn {
+    padding-top: 20px;
+  }
+ 
+  .our_faq_wrapper {
+    padding-bottom: 50px;
+    padding-top: 50px;
+  }
+  .our_faq_wrapper .troo_da_hand_we_r_done_title_outer {
+    padding-bottom: 35px;
+  }
+  .faq_bg_2 {
+    display: none;
+  }
+  .faq_bg_1 {
+    display: none;
+  }
+  .our_faq_left {
+    margin: 0;
+  }
+  .our_faq_right {
+    margin: 0;
+  }
+}
+
+@media (max-width: 630px) {
+  button.accordion-button h5 {
+    font-size: 15px;
+  }
+}
+@media (max-width: 450px) {
+  button.accordion-button h5::after {
+    right: 42px;
+    top: 26px;
+  }
+  button.accordion-button h5 { font-size: 15px; padding-right: 11px; }
+}

@@ -1,0 +1,240 @@
+.troo_da_hand_we_r_done_title_outer {
+  max-width: 445px;
+  width: 100%;
+}
+.troo_da_hand_we_r_done_wrapper {
+  padding-bottom: 100px;
+  background: #f4f9fd;
+  padding-top: 100px;
+  position: relative;
+}
+.troo_da_hand_we_r_done_box_title {
+  max-width: 297px;
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0px 7px 15px rgb(85 85 85 / 15%);
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  position: absolute;
+  bottom: -27px;
+  left: 33px;
+  opacity: 1;
+}
+.troo_da_hand_we_r_done_box:hover .troo_da_hand_we_r_done_box_title {
+  opacity: 0;
+}
+.troo_da_hand_we_r_done_box_inner {
+  position: relative;
+  transition: all 0.3s ease-in;
+  max-width: 386px;
+  width: 100%;
+  border: 10px solid #fff;
+  box-shadow: 0px 7px 15px rgb(85 85 85 / 15%);
+  border-radius: 10px;
+}
+.troo_da_hand_we_r_done_box_hover_detail {
+  width: 90%;
+  background: #022539;
+  box-shadow: 0px 7px 15px rgb(85 85 85 / 15%);
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0 auto;
+  height: 90%;
+  text-align: center;
+  padding: 47px 28px 46px 27px;
+  opacity: 0;
+  transition: all 0.3s ease-in;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.troo_da_hand_we_r_done_box_inner:hover
+  .troo_da_hand_we_r_done_box_hover_detail {
+  opacity: 1;
+  transition: all 0.3s ease-in;
+}
+.troo_da_hand_we_r_done_box_hover_detail h3 {
+  color: #fb991c;
+  padding-top: 17px;
+}
+.troo_da_hand_we_r_done_box_hover_detail p {
+  color: #ffffff;
+  margin-top: 17px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+.readmore p {
+  color: #fb991c;
+  font-weight: 700;
+  margin: 0;
+}
+.troo_da_hand_we_r_done_box_hover_detail::after {
+  content: "";
+  width: 30px;
+  height: 5px;
+  background-color: #fb991c;
+  position: absolute;
+  top: 47px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 100px;
+}
+.readmore {
+  padding-top: 17px;
+  position: relative;
+}
+.troo_da_hand_we_r_done_box_hover_detail:hover
+  > .troo_da_hand_we_r_done_box_title {
+  opacity: 0;
+}
+.readmore::after {
+  content: "";
+  background: url("../../images/readmore_icon.png");
+  width: 10px;
+  height: 9px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 23px;
+  right: 65px;
+}
+.troo_da_hand_we_r_done_box {
+  margin-bottom: 40px;
+}
+.troo_da_hand_we_r_done_wrapper .row {
+  margin: 0 -15px !important;
+}
+.troo_da_hand_we_r_done_box:hover .troo_da_hand_we_r_done_box_img::after {
+  content: "";
+  background: #022539;
+  opacity: 0.4;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  border-radius: 10px;
+}
+.troo_da_about_we_r_done_btn {
+  padding-top: 70px;
+}
+.troo_da_about_we_r_done_btn button.btn.btn-primary {
+  background: #022539;
+  box-shadow: 0px 7px 29px rgb(85 85 85 / 32%);
+  border-radius: 10px;
+  padding: 17px 33px 17px 33px;
+  color: #fff;
+}
+.troo_da_about_we_r_done_btn button.btn.btn-primary:hover {
+  background-color: transparent;
+  color: #022539;
+  border: 1px solid #022539;
+}
+.what_we_r_done_bg_1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.what_we_r_done_bg_2 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+@media (max-width: 1290px) {
+  .readmore::after {
+    right: 42px;
+  }
+
+  .service_box_detail {
+    padding-left: 19px;
+  }
+  .service_box_img_outer {
+    width: 230px;
+  }
+  .servive_box {
+    margin: 12px auto;
+  }
+}
+
+@media (max-width: 1160px) {
+  .service_box_img_outer {
+    width: 240px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .service_box_img_outer {
+    width: 220px;
+  }
+
+  .troo_da_hand_we_r_done_wrapper {
+    padding-bottom: 50px;
+    padding-top: 50px;
+  }
+}
+
+@media (max-width: 991px) {
+  .what_we_r_done_bg_1 {
+    display: none;
+  }
+  .what_we_r_done_bg_2 {
+    display: none;
+  }
+
+  .troo_da_hand_we_r_done_title_outer {
+    padding-bottom: 15px;
+  }
+  .troo_da_hand_we_r_done_box_inner {
+    max-width: 386px;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .troo_da_hand_we_r_done_box_title {
+    max-width: 297px;
+    width: 100%;
+    position: absolute;
+    bottom: -27px;
+    left: 33px;
+  }
+  .troo_da_about_we_r_done_btn {
+    padding-top: 30px;
+  }
+  .servive_box {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 15px;
+  }
+  .service_box_wrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .service_box_wrapper_left_side h4 {
+    text-align: center;
+  }
+}
+@media (max-width: 450px) {
+  .troo_da_about_we_r_done_btn button.btn.btn-primary {
+    padding: 12px 11px 12px 11px;
+  }
+  .troo_da_hand_we_r_done_box_hover_detail {
+    padding:10px;
+  }
+  .troo_da_hand_we_r_done_box_hover_detail p {
+    margin-top: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+  }
+}
+

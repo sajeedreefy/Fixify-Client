@@ -1,0 +1,260 @@
+.troo_da_client_reviews_wrapper {
+  padding-top: 98px;
+  padding-bottom: 100px;
+  position: relative;
+}
+.troo_da_client_reviews_wrapper .our_team_title {
+  padding-bottom: 24px;
+}
+.client_review_box {
+  display: flex;
+}
+.client_review_img_outer {
+  width: 105px;
+  position: relative;
+}
+.client_review_img_outer::after {
+  content: "";
+  background: #d9d9d9;
+  width: 1px;
+  height: 52px;
+  position: absolute;
+  top: 6px;
+  right: 20px;
+}
+.reviw_second_box {
+  width: calc(100% - 105px);
+  padding-left: 0;
+}
+.client_review_box {
+  display: flex;
+  background: #ffffff;
+  box-shadow: 0px 8px 24px rgb(149 157 165 / 20%);
+  border-radius: 10px;
+  padding: 15px 15px 11px 20px;
+  max-width: 491px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+.troo_da_client_reviews_wrapper .troo_da_about_we_r_done_btn {
+  padding-top: 21px;
+}
+.clinet_review_name p {
+  color: #022539;
+  font-weight: 700;
+}
+.client_review_box:hover .clinet_review_name p {
+  color: #fb991c;
+}
+.clinet_review_days p {
+  font-size: 12px;
+  line-height: 1.445;
+}
+.client_review_box:hover .clinet_review_star svg {
+  color: #fb991c;
+}
+.review_quote {
+  padding-top: 15px;
+  padding-left: 20px;
+}
+.review_content {
+  padding-top: 14px;
+}
+.row.review_row {
+  padding: 0 104px !important;
+  margin-top: 30px !important;
+  margin-bottom: 29px !important;
+}
+.client_review_box.client_box_4 {
+  margin-left: auto;
+}
+.client_review_box.client_box_2 {
+  margin-left: auto;
+  position: relative;
+}
+.troo_da_client_reviews_wrapper
+  .troo_da_about_we_r_done_btn
+  button.btn.btn-primary {
+  padding: 17px 28px 17px 29px;
+}
+.client_review_box.client_box_2::before {
+  content: "";
+  background: url("../../images/thumbs-up.png");
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  top: 16px;
+  left: -34%;
+}
+.read_ur_latest_blox_wrapper .pricing_title_content::after {
+  display: none;
+}
+.read_ur_latest_blox_wrapper .troo_da_about_we_r_done_btn {
+  padding: 0;
+}
+section.read_ur_latest_blox_wrapper {
+  background: #f4f9fd;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.review_bg_1 {
+  position: absolute;
+  top: 129px;
+  left: 59px;
+}
+.review_bg_2 {
+  position: absolute;
+  top: 81px;
+  right: 0;
+}
+.review_bg_3 {
+  position: absolute;
+  right: 0;
+  bottom: 68px;
+}
+.review_bg_4 {
+  position: absolute;
+  bottom: 77px;
+  left: 23px;
+}
+.review_bg_5 {
+  position: absolute;
+  bottom: 65px;
+  right: 478px;
+}
+.review_bg_6 {
+  position: absolute;
+  bottom: 48%;
+  right: 36%;
+}
+.review_ani {
+  -webkit-animation: action 1s infinite alternate;
+  animation: action 1s infinite alternate;
+}
+@-webkit-keyframes review_ani {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes review_ani {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 1290px) {
+  .row.review_row {
+    padding: 0 60px !important;
+  }
+}
+
+@media (max-width: 1230px) {
+  .client_review_box {
+    max-width: 445px;
+  }
+}
+@media (max-width: 1090px) {
+  .client_review_box {
+    max-width: 403px;
+    left: 0;
+  }
+  .row.review_row {
+    padding: 0 35px !important;
+  }
+}
+@media (max-width: 1050px) {
+  .client_review_box {
+    max-width: 421px;
+    left: 0;
+  }
+  .troo_da_client_reviews_wrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  
+  section.read_ur_latest_blox_wrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .client_review_box.client_box_2::before {
+    left: -29%;
+  }
+}
+
+@media (max-width: 991px) {
+  .review_bg_1 {
+    display: none;
+  }
+  .review_bg_2 {
+    display: none;
+  }
+  .review_bg_3 {
+    display: none;
+  }
+  .review_bg_4 {
+    display: none;
+  }
+  .review_bg_5 {
+    display: none;
+  }
+  .review_bg_6 {
+    display: none;
+  }
+  .client_review_box.client_box_2::before {
+    display: block;
+  }
+  .client_review_box {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .row.review_row {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .read_ur_latest_blox_wrapper .troo_da_about_we_r_done_btn.text-end {
+    text-align: center !important;
+    margin-top: 21px;
+  }
+  .read_ur_latest_blox_wrapper .troo_da_hand_we_r_done_box_inner {
+    max-width: 386px;
+    margin-bottom: 20px;
+  }
+  .troo_da_hand_we_r_done_box_title {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 450px) {
+  .client_review_box {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .client_review_img_outer::after {
+    display: none;
+  }
+  .reviw_second_box {
+    width: 100%;
+    padding: 0 10px;
+  }
+  .client_review_img_outer {
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 20px;
+}
+}
