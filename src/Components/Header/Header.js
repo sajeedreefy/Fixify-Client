@@ -8,6 +8,8 @@ import { HeaderData } from "./HeaderData";
 import Navmenu from "./Navmenu";
 import mail from "../../images/Top_header_mail.png";
 import call from "../../images/top_header_call.png";
+import { fetchNavItems } from '../../api/navigation_items/navigationItemsAPI'
+
 
 import { fetchTopMenuData } from '../../api/top_menu/topMenuAPI'; // Corrected the import path
 
@@ -16,6 +18,20 @@ const Header = () => {
   const navbar_ref = useRef();
 
   const [topMenuData, setTopMenuData] = useState(null);
+  const [topNavItems, setTopNavItems] = useState(null);
+
+  useEffect(() => {
+    const loadTopNavItems = async () => {
+      try {
+        const data = await fetchNavItems();
+        setTopNavItems(data);
+      } catch (error) {
+        console.error('Error loading user data:', error);
+      }
+    };
+
+    loadTopNavItems();
+  }, []);
 
   function handleScroll() {
     if (window.pageYOffset > 20 || document.documentElement.scrollTop > 20) {
@@ -97,7 +113,11 @@ const Header = () => {
                   <ul className="top_header_list d-flex">
                     {topMenuData?.social_media_links?.map((link, index) => (
                       <li key={index}>
-                        <Link to={link.link} target="_blank" rel="noopener noreferrer">
+                        <Link
+                          to={link.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           {link.name1 === "Facebook" && <FaFacebookF />}
                           {link.name1 === "X" && <FaTwitter />}
                           {link.name1 === "Linkedin" && <FaLinkedinIn />}
@@ -110,14 +130,32 @@ const Header = () => {
             </div>
             <div className="troo_da_top_header_right d-flex">
               {topMenuData?.contact_informations?.map((contact, index) => (
-                <div className="troo_da_top_header_right_inner d-flex" key={index}>
+                <div
+                  className="troo_da_top_header_right_inner d-flex"
+                  key={index}
+                >
                   <div className={contact.type === "Phone" ? "call" : "mail"}>
-                    <img src={contact.type === "Phone" ? call : mail} alt={contact.type} />
+                    <img
+                      src={contact.type === "Phone" ? call : mail}
+                      alt={contact.type}
+                    />
                   </div>
-                  <div className={contact.type === "Phone" ? "call_detail" : "mail_detail"}>
-                    <span>{contact.type === "Phone" ? "Call Us on" : "Email Us"}</span>
+                  <div
+                    className={
+                      contact.type === "Phone" ? "call_detail" : "mail_detail"
+                    }
+                  >
+                    <span>
+                      {contact.type === "Phone" ? "Call Us on" : "Email Us"}
+                    </span>
                     <div className="number">
-                      <a href={contact.type === "Phone" ? `tel:${contact.value}` : `mailto:${contact.value}`}>
+                      <a
+                        href={
+                          contact.type === "Phone"
+                            ? `tel:${contact.value}`
+                            : `mailto:${contact.value}`
+                        }
+                      >
                         {contact.value}
                       </a>
                     </div>
@@ -139,9 +177,10 @@ const Header = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <ul className="navbar-nav ">
-                {HeaderData.slice(0, 6).map((item, i) => (
-                  <Navmenu key={i} item={item} />
-                ))}
+                {topNavItems &&
+                  topNavItems
+                    .slice(0, 6)
+                    .map((item, i) => <Navmenu key={i} item={item} />)}
               </ul>
 
               <div className="header_btn">
