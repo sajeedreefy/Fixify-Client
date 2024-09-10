@@ -8,7 +8,7 @@ import BrandLogo from "../Components/BrandLogo/BrandLogo";
 import useDocumentTitle from "../PageTitle";
 
 const Quotes = () => {
-  useDocumentTitle("Handyman | Quotes")
+  useDocumentTitle("Fixify | Quotes")
   return (
     <div>
       <Header />
