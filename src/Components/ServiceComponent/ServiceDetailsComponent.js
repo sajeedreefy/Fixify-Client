@@ -17,7 +17,7 @@ const ServiceDetailsComponent = () => {
   const serviceId = queryParams.get('id');
 
 
-  const [singleServiceData, setSingleServiceData] = useState(null);
+  const [singleServiceData, setSingleServiceData] = useState();
 
   useEffect(() => {
     // Use the serviceId to fetch details from API
@@ -50,22 +50,19 @@ const ServiceDetailsComponent = () => {
                     <img src={title} alt="title_img" />
                   </div>
                   <div class="troo_da_hero_left_small_title">
-                    <h4>Plumbing services overview</h4>
+                    <h4>{singleServiceData?.name} overview</h4>
                   </div>
                 </div>
-                <div class="troo_da_about_hero_handyman_title">
+                {/* <div class="troo_da_about_hero_handyman_title">
                   <h2>{singleServiceData?.name}</h2>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
           <div class="col-lg-8">
             <div class="servive_detail_wrapper_Box_content">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                in vestibulum arcu. Sed ultricies lectus non vulputate
-                scelerisque. Morbi eu nisl quis massa efficitur semper nec in
-                massa. Nulla id tempor lacus.
+               {singleServiceData?.custom_intro}
               </p>
             </div>
           </div>
@@ -79,7 +76,7 @@ const ServiceDetailsComponent = () => {
               <div class="play_btn">
                 <a
                   class="popup-youtube"
-                  href="https://www.youtube.com/watch?v=bY-mOdgz7zQ"
+                  href={singleServiceData?.custom_video_link}
                   target="blank"
                 >
                   <img src={play} alt="play_btn" />
@@ -91,21 +88,9 @@ const ServiceDetailsComponent = () => {
         <div class="row">
           <div class="col-lg-9">
             <div class="service_box_wrapper_left_side">
-              <h4>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                sed dolor eu dui elementum hendrerit in sed metus. Sed
-                consectetur nunc luctus quam faucibus rhoncus.
-              </h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                sed dolor eu dui elementum hendrerit in sed metus. Sed
-                consectetur nunc luctus quam faucibus rhoncus. Quisque sit amet
-                dolor lobortis, dignissim magna ut, tincidunt nulla. Sed nec
-                nibh nec augue egestas porttitor. Orci varius natoque penatibus
-                et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
-                varius augue eleifend arcu scelerisque, id dignissim eros
-                mattis. Morbi congue vestibulum erat sit amet gravida.
-              </p>
+              {/* <p dangerouslySetInnerHTML={{ __html:singleServiceData?.description}}> </p> */}
+              <p dangerouslySetInnerHTML={{ __html: singleServiceData?.description }}></p>
+              
               <div class="troo_da_people_choose_list our_feature">
                 <h4>Our features</h4>
                 <div class="troo_da_people_choose_list_ul d-flex justify-content-between">
@@ -125,21 +110,9 @@ const ServiceDetailsComponent = () => {
                 </div>
               </div>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                sed dolor eu dui elementum hendrerit in sed metus. Sed
-                consectetur nunc luctus quam faucibus rhoncus. Quisque sit amet
-                dolor lobortis, dignissim magna ut.
+                {singleServiceData?.custom_conclusion}
               </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                sed dolor eu dui elementum hendrerit in sed metus. Sed
-                consectetur nunc luctus quam faucibus rhoncus. Quisque sit amet
-                dolor lobortis, dignissim magna ut, tincidunt nulla. Sed nec
-                nibh nec augue egestas porttitor. Orci varius natoque penatibus
-                et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
-                varius augue eleifend arcu scelerisque, id dignissim eros
-                mattis. Morbi congue vestibulum erat sit amet gravida.
-              </p>
+              
               <div class="row">
                 <div class="col-lg-6">
                   <div class="latest_tech_box">
