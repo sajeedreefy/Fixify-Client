@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useState , useEffect} from "react";
 import "./AboutComponent.css";
+import fetchAboutHighlight from  "../../api/about/aboutHighlightAPI"
+
 
 const AboutHighlight = () => {
+  const [highlightData, setHighlightData] = useState(null)
+  
+  useEffect(() => {
+    const getHighlightCards = async () => {
+      try {
+        const cards = await fetchAboutHighlight();
+        setHighlightData(cards);
+      } catch (error) {
+        console.error("Failed to fetch highlight cards:", error);
+      }
+    };
+
+    getHighlightCards();
+  }, []);
+
+  console.log("cardssssssssssss",highlightData);
+
+  if (!highlightData) {
+    return <div>Loading...</div>; // Add a fallback while data is being fetched
+  }
+  
   return (
     <section class="troo_da_detail_box_wrapper">
       <div class="container">
@@ -26,13 +49,11 @@ const AboutHighlight = () => {
                 </svg>
               </div>
               <div class="troo_da_detail_box_title">
-                <h3>20+ Year of Experience</h3>
+                <h3>{ highlightData[0].title }</h3>
               </div>
               <div class="troo_da_detail_box_content">
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy.
+                { highlightData[0].description }
                 </p>
               </div>
             </div>
@@ -57,13 +78,11 @@ const AboutHighlight = () => {
                 </svg>
               </div>
               <div class="troo_da_detail_box_title">
-                <h3>Affordable Price</h3>
+                <h3>{ highlightData[1].title }</h3>
               </div>
               <div class="troo_da_detail_box_content">
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy.
+                { highlightData[1].description }
                 </p>
               </div>
             </div>
@@ -88,13 +107,11 @@ const AboutHighlight = () => {
                 </svg>
               </div>
               <div class="troo_da_detail_box_title">
-                <h3>24X7 Available</h3>
+                <h3>{ highlightData[2].title }</h3>
               </div>
               <div class="troo_da_detail_box_content">
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy.
+                { highlightData[2].description }
                 </p>
               </div>
             </div>

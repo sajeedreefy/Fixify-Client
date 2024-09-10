@@ -8,7 +8,10 @@ export const fetchNavItems = async () => {
     // console.log(test);
 
     const navigationItems = test.data.data;
+    const HeroSection = await axiosInstance.get('/Hero Section?filters=[["enable","=","1"]]&fields=["*"]');
+    // console.log(test);
 
+    
     // Helper function to find children of a parent navigation item
     const findChildren = (parentName) => {
       return navigationItems

@@ -69,6 +69,8 @@ const Header = () => {
     window.scrollTo(0, 0);
   }, []);
 
+
+
   return (
     <>
       <header className="show_nav" ref={navbar_ref}>
@@ -82,9 +84,10 @@ const Header = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <ul className="navbar-nav ">
-                {HeaderData.slice(0, 6).map((item, i) => (
-                  <Navmenu key={i} item={item} />
-                ))}
+                {topNavItems &&
+                  topNavItems
+                    .slice(0, 6)
+                    .map((item, i) => <Navmenu key={i} item={item} />)}
               </ul>
 
               <div className="header_btn">
