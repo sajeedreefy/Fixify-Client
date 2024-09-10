@@ -9,7 +9,7 @@ import Navmenu from "./Navmenu";
 import mail from "../../images/Top_header_mail.png";
 import call from "../../images/top_header_call.png";
 import { fetchNavItems } from '../../api/navigation_items/navigationItemsAPI'
-
+import fetchPreferenceAPI from "../../api/preference/preferenceAPI";
 
 import { fetchTopMenuData } from '../../api/top_menu/topMenuAPI'; // Corrected the import path
 
@@ -19,6 +19,21 @@ const Header = () => {
 
   const [topMenuData, setTopMenuData] = useState(null);
   const [topNavItems, setTopNavItems] = useState(null);
+  const [preferenceItems, setPreferenceItems] = useState(null)
+
+  useEffect(() => {
+    const loadPreference = async () => {
+      try {
+        const data = await fetchPreferenceAPI();
+        setPreferenceItems(data);
+      } catch (error) {
+        console.error("Error loading user data:", error);
+      }
+    };
+
+    loadPreference();
+  }, []);
+
 
   useEffect(() => {
     const loadTopNavItems = async () => {
@@ -70,7 +85,7 @@ const Header = () => {
   }, []);
 
 
-
+  
   return (
     <>
       <header className="show_nav" ref={navbar_ref}>
