@@ -4,7 +4,8 @@ import serviceBg from "../../images/what_we_r_done_bg_1.png";
 import serviceBg2 from "../../images/what_we_r_done_bg_2.png";
 import title from "../../images/title_img.png";
 import { Link } from "react-router-dom";
-import { fetchAllServiceData } from '../../api/services/allServicesAPI';
+// import { fetchAllServiceData } from '../../api/services/allServicesAPI';
+import ApiFacade from '../../api/facade';
 
 const ServiceComponent = () => {
 
@@ -13,7 +14,7 @@ const ServiceComponent = () => {
   useEffect(() => {
     const loadAllServiceData = async () => {
       try {
-        const data = await fetchAllServiceData();
+        const data = await ApiFacade.fetchAllServices();
         setAllServiceData(data);
       } catch (error) {
         console.error('Error loading services:', error);
@@ -22,6 +23,9 @@ const ServiceComponent = () => {
 
     loadAllServiceData();
   }, []);
+
+
+
   return (
     <section class="troo_da_hand_we_r_done_wrapper">
       <div class="what_we_r_done_bg_1">
@@ -43,7 +47,7 @@ const ServiceComponent = () => {
                 </div>
               </div>
               <div class="troo_da_hero_we_r_done_title">
-                <h2>We provide one of the best of handyman services</h2>
+                <h2>We provide one of the best of Fixify services</h2>
               </div>
             </div>
           </div>
@@ -61,7 +65,7 @@ const ServiceComponent = () => {
                     </div>
                     <div class="troo_da_hand_we_r_done_box_hover_detail">
                       <h3>{e.name} </h3>
-                      <p dangerouslySetInnerHTML={{ __html: e.description }}></p>
+                      <p>{e.custom_intro}</p>
                       <div class="readmore">
                         <p>See Details</p>
                       </div>
