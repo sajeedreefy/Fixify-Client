@@ -15,10 +15,16 @@ import arrow from "../../images/rightt_arrow.png";
 import logo from "../../images/Footer_Logo.png";
 import { fetchNavItems } from "../../api/navigation_items/navigationItemsAPI";
 import fetchPreferenceAPI from "../../api/preference/preferenceAPI";
+import { Link } from "react-router-dom";
+import postNewsletterAPI from "../../api/newsletter/newsletterAPI";
 
 const Footer = () => {
   const [navItems, setNavItems] = useState(null);
   const [preferenceItems, setPreferenceItems] = useState(null);
+
+  const [formData, setFormData] = useState({
+    email: "",
+  });
 
   useEffect(() => {
     const loadNavItems = async () => {
@@ -45,7 +51,30 @@ const Footer = () => {
 
     loadPreference();
   }, []);
-  console.log(preferenceItems);
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Create customer
+      const newsLetterPayload = {
+        newsLetter_email: formData.email,
+      };
+      const newsLetterResponse = await postNewsletterAPI(newsLetterPayload);
+
+      // Create quotation
+      setFormData({ email: "" }) ;
+
+      alert("Email received successfully!");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("There was an error processing your request.");
+    }
+  };
 
   if (!navItems) {
     return <div>Loading...</div>; // Add a fallback while data is being fetched
@@ -81,7 +110,13 @@ const Footer = () => {
         <div class="row">
           <div class="col-lg-6">
             <div class="footer_Logo">
-              <img src={logo} alt="Footer_Logo" />
+              <Link to="/">
+                <img
+                  src={`https://admin-fixify.glascutr.com${preferenceItems?.site_logo}`}
+                  style={{ height: "58px" }}
+                  alt="logo"
+                />
+              </Link>
             </div>
           </div>
           <div className="col-lg-6">
@@ -159,9 +194,7 @@ const Footer = () => {
                   <img src={location} alt="location" />
                 </div>
                 <div class="footer_call">
-                  <address>
-                    {preferenceItems.address}
-                  </address>
+                  <address>{preferenceItems.address}</address>
                 </div>
               </div>
             </div>
@@ -179,7 +212,7 @@ const Footer = () => {
                   <img src={location} alt="location" />
                 </div>
                 <div class="footer_call">
-                  <p>{ preferenceItems.opening_hours}</p>
+                  <p>{preferenceItems.opening_hours}</p>
                 </div>
               </div>
             </div>
@@ -190,14 +223,17 @@ const Footer = () => {
                 <h4>Newsletter</h4>
               </div>
               <div class="footer_form">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div class="form-group">
                     <input
                       type="email"
                       class="form-control"
-                      id="exampleInputEmail1"
+                      id="email"
+                      value={formData.email}
                       aria-describedby="emailHelp"
                       placeholder="Your email address"
+                      onChange={handleInputChange}
+                      required
                     />
                   </div>
                   <div class="footer_form_submit_btn">
