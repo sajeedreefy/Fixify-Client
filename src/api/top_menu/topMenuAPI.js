@@ -1,7 +1,5 @@
-// src/api/otherAPI.js
 import axiosInstance from '../axiosInstance';
 
-// Function to fetch some other data
 export const fetchTopMenuData = async () => {
   try {
     const response = await axiosInstance.get('/Topbar Menu?fields=[ "*"]&filters=[["enable", "=", " 1"]]');

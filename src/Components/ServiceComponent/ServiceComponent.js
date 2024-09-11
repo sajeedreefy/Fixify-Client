@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ServiceComponent.css";
 import serviceBg from "../../images/what_we_r_done_bg_1.png";
 import serviceBg2 from "../../images/what_we_r_done_bg_2.png";
 import title from "../../images/title_img.png";
-import { ServiceData } from "./ServiceData";
-import { Link, createSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+// import { fetchAllServiceData } from '../../api/services/allServicesAPI';
+import ApiFacade from '../../api/facade';
 
 const ServiceComponent = () => {
+
+  const [allServiceData, setAllServiceData] = useState(null);
+
+  useEffect(() => {
+    const loadAllServiceData = async () => {
+      try {
+        const data = await ApiFacade.fetchAllServices();
+        setAllServiceData(data);
+      } catch (error) {
+        console.error('Error loading services:', error);
+      }
+    };
+
+    loadAllServiceData();
+  }, []);
+
+
+
   return (
     <section class="troo_da_hand_we_r_done_wrapper">
       <div class="what_we_r_done_bg_1">
@@ -28,58 +47,27 @@ const ServiceComponent = () => {
                 </div>
               </div>
               <div class="troo_da_hero_we_r_done_title">
-                <h2>We provide one of the best of handyman services</h2>
+                <h2>We provide one of the best of Fixify services</h2>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-          {ServiceData.slice(0, 3).map((e, i) => (
+          {allServiceData?.slice(0, 6).map((e, i) => (
             <div class="col-lg-4" key={i}>
               <Link
-                to={`/Home/Our_Services/Service_Details?${createSearchParams({
-                  id: e.id,
-                })}`}
+                to={`/Home/Our_Services/Service_Details?id=${e.name}`}
               >
                 <div class="troo_da_hand_we_r_done_box">
                   <div class="troo_da_hand_we_r_done_box_inner">
                     <div class="troo_da_hand_we_r_done_box_img">
-                      <img src={e.img} alt="service_img-1" />
+                      <img src={`https://admin-fixify.glascutr.com/${e.image}`} alt="service_img-1" />
                     </div>
                     <div class="troo_da_hand_we_r_done_box_hover_detail">
                       <h3>{e.name} </h3>
-                      <p>{e.para}</p>
+                      <p>{e.custom_intro}</p>
                       <div class="readmore">
-                        <p>{e.btn}</p>
-                      </div>
-                    </div>
-                    <div class="troo_da_hand_we_r_done_box_title">
-                      <h3>{e.name} </h3>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-        <div class="row">
-          {ServiceData.slice(3, 6).map((e, i) => (
-            <div class="col-lg-4" key={i}>
-              <Link
-                to={`/Home/Our_Services/Service_Details?${createSearchParams({
-                  id: e.id,
-                })}`}
-              >
-                <div class="troo_da_hand_we_r_done_box">
-                  <div class="troo_da_hand_we_r_done_box_inner">
-                    <div class="troo_da_hand_we_r_done_box_img">
-                      <img src={e.img} alt="service_img-1" />
-                    </div>
-                    <div class="troo_da_hand_we_r_done_box_hover_detail">
-                      <h3>{e.name} </h3>
-                      <p>{e.para}</p>
-                      <div class="readmore">
-                        <p>{e.btn}</p>
+                        <p>See Details</p>
                       </div>
                     </div>
                     <div class="troo_da_hand_we_r_done_box_title">
