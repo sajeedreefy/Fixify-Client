@@ -5,7 +5,7 @@ import CommingSoonCompo from "../../Components/CommingSoonCompo/CommingSoonCompo
 import useDocumentTitle from "../../PageTitle";
 
 const CommingSoon = () => {
-  useDocumentTitle("Handyman | Comming Soon")
+  useDocumentTitle("Fixify | Comming Soon")
   return (
     <div>
       <Header />

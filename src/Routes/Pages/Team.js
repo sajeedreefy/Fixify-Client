@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../Components/Header/Header";
 import BannerGlobal from "../../Components/Banner/BannerGlobal";
 import Footer from "../../Components/Footer/Footer";
-import TeamComponent2 from "../../Components/TeamComponent/TeamComponent2";
+import TeamComponent from "../../Components/TeamComponent/TeamComponent";
 import FormComponent from "../../Components/FormComponents/FormComponent";
 import ReviewComponent from "../../Components/ReviewComponent/ReviewComponent";
 import BrandLogo from "../../Components/BrandLogo/BrandLogo";
@@ -14,7 +14,7 @@ const Team = () => {
     <div>
       <Header />
       <BannerGlobal />
-      <TeamComponent2 />
+      <TeamComponent />
       <FormComponent />
       <ReviewComponent />
       <BrandLogo />

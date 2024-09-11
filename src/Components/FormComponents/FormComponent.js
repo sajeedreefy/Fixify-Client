@@ -1,10 +1,92 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ApiFacade from '../../api/facade'
 import "./FormComponent.css";
 import title from "../../images/title_img.png"
 import mail from "../../images/form_mail_box.png"
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FormComponent = () => {
+
+  const [allServiceData, setAllServiceData] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    city: '',
+    areaCode: '',
+    service: '',
+    date: '',
+    time: '',
+    additionalInfo: ''
+  });
+
+  useEffect(() => {
+    const loadAllServiceData = async () => {
+      try {
+        const data = await ApiFacade.fetchAllServices();
+        setAllServiceData(data);
+      } catch (error) {
+        console.error('Error loading services:', error);
+      }
+    };
+
+    loadAllServiceData();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Create customer
+      const customerPayload = {
+        customer_name: formData.name,
+        customer_email: formData.email,
+        customer_phone: formData.phone,
+        city: formData.city
+      };
+      const customerResponse = await ApiFacade.createCustomer(customerPayload);
+
+      // Create quotation
+      const quotationPayload = {
+        customer: customerResponse.name, // Use the created customer ID/name
+        appointment_date: formData.date,
+        appointment_time: formData.time,
+        items: [{
+          service: formData.service,
+
+        }],
+        additional_info: formData.additionalInfo
+      };
+      const quotationResponse = await ApiFacade.createQuotation(quotationPayload);
+
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        city: '',
+        areaCode: '',
+        service: '',
+        date: '',
+        time: '',
+        additionalInfo: ''
+      });
+
+      console.log(quotationResponse);
+      // toast.success('Appointment created successfully!');
+      
+      alert('Quotation created successfully!');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('There was an error processing your request.');
+    }
+  };
+
   return (
     <section class="troo_da_form_wrappper">
       <div class="container">
@@ -57,67 +139,84 @@ const FormComponent = () => {
               </div>
               <div class="people_choose_btn">
                 <Link to="/Home/Contact_Us">
-                <button type="button" class="btn btn-primary">
-                  Contact Us
-                </button>
+                  <button type="button" class="btn btn-primary">
+                    Contact Us
+                  </button>
                 </Link>
               </div>
             </div>
           </div>
           <div class="col-lg-6">
             <div class="form-right_box">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div class="form-group">
                   <input
-                    type="name"
-                    class="form-control"
+                    type="text"
+                    className="form-control"
                     id="name"
-                    aria-describedby="nameHelp"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     placeholder="Enter your name"
+                    required
                   />
                 </div>
                 <div class="form-group">
                   <input
                     type="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
+                    className="form-control"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="Your email"
+                    required
                   />
                 </div>
                 <div class="form-group">
                   <input
-                    type="number"
-                    class="form-control"
+                    type="text"
+                    className="form-control"
                     id="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
                     placeholder="Your phone"
+                    required
                   />
                 </div>
                 <div class="form-group">
-                  <select class="form-control" id="exampleFormControlSelect1">
-                    <option>Select service</option>
-                    <option>2</option>
-                    <option>3</option>
+                  <select
+                    className="form-control"
+                    id="service"
+                    value={formData.service}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select service</option>
+                    {allServiceData?.map((service, index) => (
+                      <option key={index} value={service.name}>{service.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div class="form-group">
                   <div class="input-group date" id="datepicker">
                     <input
                       type="date"
-                      class="form-control"
+                      className="form-control"
                       id="date"
-                      data-placeholder="Select date"
+                      value={formData.date}
+                      onChange={handleInputChange}
+                      placeholder="Select date"
                       required
-                      aria-required="true"
                     />
                   </div>
                 </div>
                 <div class="form-group">
-                  <textarea
-                    class="form-control"
-                    id="exampleFormControlTextarea1"
-                    placeholder="Write something if you wish"
-                  ></textarea>
+                <textarea
+                      className="form-control"
+                      id="additionalInfo"
+                      value={formData.additionalInfo}
+                      onChange={handleInputChange}
+                      placeholder="Write something if you wish"
+                    ></textarea>
                 </div>
                 <div class="form_submit">
                   <button type="submit" class="btn btn-primary">

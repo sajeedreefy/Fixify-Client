@@ -6,7 +6,7 @@ import BrandLogo from '../../Components/BrandLogo/BrandLogo'
 import useDocumentTitle from '../../PageTitle'
 
 const Error404 = () => {
-  useDocumentTitle("Handyman | Error 404")
+  useDocumentTitle("Fixify | Error 404")
   return (
     <div>
         <Header/>

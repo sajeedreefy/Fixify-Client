@@ -1,23 +1,6 @@
-// import { createCustomer, createQuotation } from './quotation/quotationAPI';
-// import { fetchAllServiceData } from './services/allServicesAPI';
-
-// const ApiFacade = {
-//   // Customer-related API calls
-//   createCustomer: (customerData) => createCustomer(customerData),
-
-//   // Quotation-related API calls
-//   createQuotation: (quotationData) => createQuotation(quotationData),
-
-//   // Service-related API calls
-//   fetchAllServices: () => fetchAllServiceData(),
-// };
-
-// export default ApiFacade;
-
-
-
 import { createCustomer, createQuotation } from './quotation/quotationAPI';
 import { fetchAllServiceData } from './services/allServicesAPI';
+import { fetchTeamMembers } from './team_member/teamMemberAPI'
 
 class ApiFacade {
   // Static method for creating a customer
@@ -36,6 +19,12 @@ class ApiFacade {
   }
 
   //Static method for fetching single service
+
+  //Static method for fetching team members
+
+  static fetchTeamMembers() {
+    return fetchTeamMembers();
+  }
   
 }
 
