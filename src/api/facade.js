@@ -1,6 +1,7 @@
 import { createCustomer, createQuotation } from './quotation/quotationAPI';
 import { fetchAllServiceData } from './services/allServicesAPI';
 import { fetchTeamMembers } from './team_member/teamMemberAPI'
+import { fetchCustomerReviewData } from './customer_review/customerReviewsAPI';
 
 class ApiFacade {
   // Static method for creating a customer
@@ -21,9 +22,12 @@ class ApiFacade {
   //Static method for fetching single service
 
   //Static method for fetching team members
-
   static fetchTeamMembers() {
     return fetchTeamMembers();
+  }
+
+  static fetchCustomerReviews() {
+    return fetchCustomerReviewData();
   }
   
 }

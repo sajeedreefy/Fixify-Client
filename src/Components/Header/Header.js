@@ -8,11 +8,11 @@ import { HeaderData } from "./HeaderData";
 import Navmenu from "./Navmenu";
 import mail from "../../images/Top_header_mail.png";
 import call from "../../images/top_header_call.png";
-import { fetchNavItems } from '../../api/navigation_items/navigationItemsAPI'
 import AdvancedSkeletonLoader from '../AdvancedSkeletonLoader';
+import { fetchNavItems } from "../../api/navigation_items/navigationItemsAPI";
+import fetchPreferenceAPI from "../../api/preference/preferenceAPI";
 
-
-import { fetchTopMenuData } from '../../api/top_menu/topMenuAPI'; // Corrected the import path
+import { fetchTopMenuData } from "../../api/top_menu/topMenuAPI"; // Corrected the import path
 
 const Header = () => {
   const navigate = useNavigate();
@@ -21,6 +21,20 @@ const Header = () => {
 
   const [topMenuData, setTopMenuData] = useState(null);
   const [topNavItems, setTopNavItems] = useState(null);
+  const [preferenceItems, setPreferenceItems] = useState(null);
+
+  useEffect(() => {
+    const loadPreference = async () => {
+      try {
+        const data = await fetchPreferenceAPI();
+        setPreferenceItems(data);
+      } catch (error) {
+        console.error("Error loading user data:", error);
+      }
+    };
+
+    loadPreference();
+  }, []);
 
   useEffect(() => {
     const loadTopNavItems = async () => {
@@ -28,7 +42,7 @@ const Header = () => {
         const data = await fetchNavItems();
         setTopNavItems(data);
       } catch (error) {
-        console.error('Error loading user data:', error);
+        console.error("Error loading user data:", error);
       }
     };
 
@@ -53,7 +67,7 @@ const Header = () => {
         const data = await fetchTopMenuData();
         setTopMenuData(data);
       } catch (error) {
-        console.error('Error loading user data:', error);
+        console.error('Error loading top menu data:', error);
       }finally {
         setLoading(false);
       }
@@ -84,7 +98,11 @@ const Header = () => {
           <div className="container">
             <Navbar.Brand>
               <Link to="/">
-                <img src={logo} alt="logo" />
+                <img
+                  src={`https://admin-fixify.glascutr.com${preferenceItems?.site_logo}`}
+                  style={{ height: "58px" }}
+                  alt="logo"
+                />
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -112,7 +130,7 @@ const Header = () => {
           </div>
         </Navbar>
       </header>
-      
+
       <section className="troo_da_top_header_wrapper">
         <div className="container">
           <div className="troo_da_top_header_outer d-flex align-items-center justify-content-between">
@@ -181,7 +199,11 @@ const Header = () => {
           <div className="container">
             <Navbar.Brand>
               <Link to="/">
-                <img src={logo} alt="logo" />
+                <img
+                  src={`https://admin-fixify.glascutr.com${preferenceItems?.site_logo}`}
+                  style={{ height: "58px" }}
+                  alt="logo"
+                />
               </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
