@@ -9,7 +9,7 @@ import BrandLogo from "../../Components/BrandLogo/BrandLogo";
 import useDocumentTitle from "../../PageTitle";
 
 const Team = () => {
-  useDocumentTitle("Handyman | Teams")
+  useDocumentTitle("Fixify | Teams")
   return (
     <div>
       <Header />
