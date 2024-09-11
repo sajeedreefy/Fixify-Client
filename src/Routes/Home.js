@@ -25,7 +25,7 @@ const Home = () => {
         <ServiceComponent/>
         <Highlight/>
         <PricingcardComponent/>
-        <FAQComponenent/>
+        <FAQComponenent expand={false}/>
         <TeamComponent/>
         <FormComponent/>
         <ReviewComponent/>

@@ -1,12 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./FAQComponenent.css";
 import wrong from "../../images/wrong_icon_bg.png";
 import faqBG from "../../images/faq_bg_2.png";
 import title from "../../images/title_img.png";
 import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";
+import { fetchFAQData } from "../../api/FAQ/faqDataApi";
 
-const FAQComponenent = () => {
+const FAQComponenent = ({expand}) => {
+
+  const [FAQdata, setFAQdata] = useState(null)
+  const [firstHalf, setFirstHalf] = useState([]);
+  const [secondHalf, setSecondHalf] = useState([]);
+  let middleIndex = null;
+
+
+  useEffect(()=>{
+    const loadFAQData = async()=> {
+      try {
+        const data = await fetchFAQData();
+        setFAQdata(data)
+      } catch (error) {
+        console.error("Error Loading FAQ Data", error)
+      }
+    }
+
+    loadFAQData();
+  },[])
+
+
+  useEffect(()=>{
+    if(FAQdata){
+      if(expand){
+        middleIndex = Math.ceil(FAQdata.faq.length/2);
+        setFirstHalf(FAQdata.faq.slice(0,middleIndex));
+        setSecondHalf(FAQdata.faq.slice(middleIndex));
+      }else{
+        middleIndex = Math.ceil(FAQdata.faq.slice(0,10).length/2);
+        setFirstHalf(FAQdata.faq.slice(0,middleIndex));
+        setSecondHalf(FAQdata.faq.slice(middleIndex,10));
+      }
+    }
+    
+  },[FAQdata?.faq])
+
+
   return (
     <section class="our_faq_wrapper">
       <div class="faq_bg_1 action">
@@ -24,11 +62,11 @@ const FAQComponenent = () => {
                   <img src={title} alt="title_img" />
                 </div>
                 <div class="troo_da_hero_left_small_title">
-                  <h4>Do you have Questions?</h4>
+                  <h4>{FAQdata?.section_title}</h4>
                 </div>
               </div>
               <div class="troo_da_hero_we_r_done_title">
-                <h2>Frequently asked questions</h2>
+                <h2>{FAQdata?.title}</h2>
               </div>
             </div>
           </div>
@@ -37,103 +75,44 @@ const FAQComponenent = () => {
           <div class="col-lg-6">
             <div class="our_faq_left">
               <Accordion>
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>
-                    <h5>How Much Does A Handyman Charge Per Hour?</h5>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p>Lorem Ipsum is simply dummy and is text of the printing and
-                    typesetting industry. Lorem Ipsum has been is text of the
-                    printing.</p>
-                  </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="1">
-                  <Accordion.Header>
-                    <h5>What Kind Of Work Can A Handyman Do?</h5>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p>Lorem Ipsum is simply dummy and is text of the printing and
-                    typesetting industry. Lorem Ipsum has been is text of the
-                    printing.</p>
-                  </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="2">
-                  <Accordion.Header>
-                    <h5>Does A Handyman Need Insurance?</h5>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                   <p> Lorem Ipsum is simply dummy and is text of the printing and
-                    typesetting industry. Lorem Ipsum has been is text of the
-                    printing.</p>
-                  </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="3">
-                  <Accordion.Header>
-                   <h5> Can A Handyman Do Plumbing Work?</h5>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p> Lorem Ipsum is simply dummy and is text of the printing and
-                    typesetting industry. Lorem Ipsum has been is text of the
-                    printing.</p>
-                  </Accordion.Body>
-                </Accordion.Item>
+                {FAQdata && firstHalf.map((each,index)=>(
+                  <Accordion.Item key={index} eventKey={index}>
+                    <Accordion.Header>
+                      <h5>{each.question}</h5>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <p>{each.answer}</p>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                ))}
               </Accordion>
             </div>
           </div>
           <div class="col-lg-6">
             <div class="our_faq_right">
               <Accordion>
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>
-                   <h5> How Much Does A Handyman Charge Per Hour?</h5>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p> Lorem Ipsum is simply dummy and is text of the printing and
-                    typesetting industry. Lorem Ipsum has been is text of the
-                    printing.</p>
-                  </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="1">
-                  <Accordion.Header>
-                    <h5>What Kind Of Work Can A Handyman Do?</h5>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p> Lorem Ipsum is simply dummy and is text of the printing and
-                    typesetting industry. Lorem Ipsum has been is text of the
-                    printing.</p>
-                  </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="2">
-                  <Accordion.Header>
-                    <h5>Does A Handyman Need Insurance?</h5>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p> Lorem Ipsum is simply dummy and is text of the printing and
-                    typesetting industry. Lorem Ipsum has been is text of the
-                    printing.</p>
-                  </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="3">
-                  <Accordion.Header>
-                    <h5>Can A Handyman Do Plumbing Work?</h5>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <p> Lorem Ipsum is simply dummy and is text of the printing and
-                    typesetting industry. Lorem Ipsum has been is text of the
-                    printing.</p>
-                  </Accordion.Body>
-                </Accordion.Item>
+                {FAQdata && secondHalf.map((each,index)=>(
+                  <Accordion.Item key={index} eventKey={index}>
+                    <Accordion.Header>
+                      <h5>{each.question}</h5>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <p>{each.answer}</p>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                ))}
               </Accordion>
             </div>
           </div>
         </div>
+        {!expand && 
         <div class="troo_da_about_we_r_done_btn text-center">
-          <Link to="/Home/FAQ">
+          <Link to={FAQdata?.button_link}>
           <button type="button" class="btn btn-primary">
             See All FAQ’s
           </button>
           </Link>
-        </div>
+        </div>}
       </div>
     </section>
   );

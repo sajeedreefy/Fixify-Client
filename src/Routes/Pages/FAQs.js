@@ -6,6 +6,7 @@ import FAQComponent2 from '../../Components/FAQComponent/FAQComponent2'
 import FormComponent from '../../Components/FormComponents/FormComponent'
 import BrandLogo from '../../Components/BrandLogo/BrandLogo'
 import useDocumentTitle from '../../PageTitle'
+import FAQComponenent from '../../Components/FAQComponent/FAQComponenent'
 
 const FAQs = () => {
   useDocumentTitle("Handyman | FAQs")
@@ -13,7 +14,8 @@ const FAQs = () => {
     <div>
         <Header/>
         <BannerGlobal/>
-        <FAQComponent2/>
+        {/* <FAQComponent2/> */}
+        <FAQComponenent expand={true}/>
         <FormComponent/>
         <BrandLogo/>
         <Footer/>

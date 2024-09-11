@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Highlight.css";
 import title from "../../images/title_img.png";
 import highlight1 from "../../images/people_choose_bg_1.png";
@@ -11,9 +11,40 @@ import highlight7 from "../../images/people_choose_bg_6.png";
 import CountUp from "react-countup";
 import ScrollTrigger from "react-scroll-trigger";
 import { Link } from "react-router-dom";
+import { fetchHighlightData } from "../../api/why_people_choose_us/highlightDataApi";
 
 const Highlight = () => {
   const [counter, setCounter] = useState(false);
+  const [highlight, setHightLightData] = useState(null);
+  const [firstHalf, setFirstHalf] = useState([]);
+  const [secondHalf, setSecondHalf] = useState([]);
+  let middleIndex = null;
+
+  useEffect(() => {
+    const loadHightLightData = async () => {
+      try {
+        const data = await fetchHighlightData();
+        setHightLightData(data);
+      } catch (error) {
+        console.error('Error loading user data:', error);
+      }
+    };
+
+    loadHightLightData();
+
+  }, []);
+
+
+
+  useEffect(()=>{
+    if(highlight){
+      middleIndex = Math.ceil(highlight.features.length/2);
+      setFirstHalf(highlight.features.slice(0, middleIndex));
+      setSecondHalf(highlight.features.slice(middleIndex));
+    }
+  },[highlight?.features])
+
+
   return (
     <section class="troo_da_people_choose_wrapper">
       <div class="choose_people_vector_1 move">
@@ -37,40 +68,36 @@ const Highlight = () => {
                   <img src={title} alt="title_img" />
                 </div>
                 <div class="troo_da_hero_left_small_title">
-                  <h4>Why people choose us</h4>
+                  <h4>{highlight?.section_title}</h4>
                 </div>
               </div>
               <div class="troo_da_people_choose_title">
                 <h2>
-                  It’s simple. we’re here for you.
-                  <span>troo handyman</span> services
+                  {highlight?.title.split(" ").slice(0,7).join(" ")} <span>{highlight?.title.split(" ").slice(7).join(" ")}</span>
                 </h2>
               </div>
               <div class="troo_da_people_choose_content">
                 <p>
-                  Lorem Ipsum is simply dummy and is text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's and
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer.
+                  {highlight?.subtitle}
                 </p>
               </div>
               <div class="troo_da_people_choose_list">
                 <h4>Our features</h4>
                 <div class="troo_da_people_choose_list_ul d-flex justify-content-between">
                   <div class="troo_da_people_chooseList_box">
-                    <p>An affordable pricing plan</p>
-                    <p>All type repairs and maintence</p>
-                    <p>Commercial & Industrial Services</p>
+                    {highlight && firstHalf.map((each,index)=>(
+                      <p key={index}>{each.feature}</p>
+                    ))}
                   </div>
                   <div class="troo_da_people_chooseList_box_2">
-                    <p>We have morden technology to do work</p>
-                    <p>Work finish before deadline</p>
-                    <p>We provide 24X7 emergency services</p>
+                    {highlight && secondHalf?.map((each,index)=>(
+                      <p key={index}>{each.feature}</p>
+                    ))}
                   </div>
                 </div>
               </div>
               <div class="people_choose_btn">
-                <Link to="/Home/Our_Services">
+                <Link to={`${highlight?.button_link}`}>
                 <button type="button" class="btn btn-primary">
                   See All Services
                 </button>
@@ -82,6 +109,7 @@ const Highlight = () => {
             <div class="troo_da_people_choose_right_side">
               <div class="row">
                 <div class="col-lg-6">
+                  {/* first */}
                   <div class="troo_da_people_choose_right_box">
                     <div class="troo_da_detail_box_img">
                       <svg
@@ -108,15 +136,16 @@ const Highlight = () => {
                         className="counter"
                       >
                         {counter && (
-                          <CountUp start={800} end={950} duration={3} delay={0} />
+                          <CountUp start={highlight?.cards[0].count-200} end={highlight?.cards[0].count} duration={3} delay={0} />
                         )}
                         <strong>+</strong>
                       </ScrollTrigger>
-                      <p>Projects Complite</p>
+                      <p>{highlight?.cards[0].count_type}</p>
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-6">
+                  {/* second */}
                   <div class="troo_da_people_choose_right_box two">
                     <div class="troo_da_detail_box_img">
                       <svg
@@ -143,17 +172,18 @@ const Highlight = () => {
                         className="counter"
                       >
                         {counter && (
-                          <CountUp start={900} end={1062} duration={3} delay={0} />
+                          <CountUp start={highlight?.cards[1].count-200} end={highlight?.cards[1].count} duration={3} delay={0} />
                         )}
                         <strong>+</strong>
                       </ScrollTrigger>
-                      <p>Projects Complite</p>
+                      <p>{highlight?.cards[1].count_type}</p>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6">
+                  {/* third */}
                   <div class="troo_da_people_choose_right_box people_choose_box-3">
                     <div class="troo_da_detail_box_img">
                       <svg
@@ -180,15 +210,16 @@ const Highlight = () => {
                         className="counter"
                       >
                         {counter && (
-                          <CountUp start={150} end={320} duration={3} delay={0} />
+                          <CountUp start={highlight?.cards[2].count-200} end={highlight?.cards[2].count} duration={3} delay={0} />
                         )}
                         <strong>+</strong>
                       </ScrollTrigger>
-                      <p>National Award Win</p>
+                      <p>{highlight?.cards[2].count_type}</p>
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-6">
+                  {/* fourth */}
                   <div class="troo_da_people_choose_right_box two people_choose_box-4">
                     <div class="troo_da_detail_box_img">
                       <svg
@@ -215,11 +246,11 @@ const Highlight = () => {
                         className="counter"
                       >
                         {counter && (
-                          <CountUp start={0} end={111} duration={3} delay={0} />
+                          <CountUp start={highlight?.cards[3].count-200} end={highlight?.cards[3].count} duration={3} delay={0} />
                         )}
                         <strong>+</strong>
                       </ScrollTrigger>
-                      <p>Expert Team Member</p>
+                      <p>{highlight?.cards[3].count_type}</p>
                     </div>
                   </div>
                 </div>
