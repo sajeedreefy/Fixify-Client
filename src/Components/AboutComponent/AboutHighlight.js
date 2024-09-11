@@ -19,7 +19,6 @@ const AboutHighlight = () => {
     getHighlightCards();
   }, []);
 
-  console.log("cardssssssssssss",highlightData);
 
   if (!highlightData) {
     return <div>Loading...</div>; // Add a fallback while data is being fetched
