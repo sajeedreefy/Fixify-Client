@@ -58,7 +58,7 @@ const PricingcardComponent = () => {
             <div class="row">
                 {data && data.plan_data.map((each,index)=>(
                     <div key={index} class="col-lg-4">
-                        <div class="pricing_box">
+                        <div class={`pricing_box ${each.is_active?"hover_box":""}`}>
                             <div class="pricing_inner">
                                 <div class="pricing_title">
                                     <h3>{each.plan_title}</h3>
