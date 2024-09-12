@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./BlogComponent.css";
 import title from "../../images/title_img.png";
 import { BlogData } from "./BlogData";
 import { Link, createSearchParams } from "react-router-dom";
+import { fetchBlogPostData } from "../../api/blog_section/blogSectionAPI";
 
 const BlogComponent = () => {
+
+  const [blogList, setBlogList] = useState(null);
+  
+  useEffect(()=>{
+    const loadBlogPostData = async()=>{
+      try {
+        const data = await fetchBlogPostData();
+        setBlogList(data)
+        if(blogList){
+          console.log(blogList)
+        }
+      } catch (error) {
+        console.error("Blog Post Data Fetching Error: ", error);
+      }
+    }
+
+    loadBlogPostData();
+  },[])
+
+
   return (
     <section class="read_ur_latest_blox_wrapper">
       <div class="container">
@@ -43,23 +64,23 @@ const BlogComponent = () => {
           </div>
         </div>
         <div class="row">
-        {BlogData.slice(0, 3).map((e, i) => (
+        {blogList?.slice(0, 3).map((e, i) => (
             <div class="col-lg-4" key={i}>
-              <Link to={`/Home/Our_Blogs/Blog_Details?${createSearchParams({id : e.id})}`}>
+              <Link to={`/Home/Our_Blogs/Blog_Details?${createSearchParams({id : e.id, name:e.name})}`}>
               <div class="troo_da_hand_we_r_done_box">
                 <div class="troo_da_hand_we_r_done_box_inner">
                   <div class="troo_da_hand_we_r_done_box_img">
-                    <img src={e.img} alt="lastest_blog_1" />
+                    <img src={`https://admin-fixify.glascutr.com/${e.meta_image}`} alt="lastest_blog_1" />
                   </div>
                   <div class="troo_da_hand_we_r_done_box_hover_detail">
-                    <h3>{e.name} </h3>
-                    <p>{e.para}</p>
+                    <h3>{e.title} </h3>
+                    <p>{e.blog_intro}</p>
                     <div class="readmore">
-                      <p>{e.btn} </p>
+                      <p>Continue More</p>
                     </div>
                   </div>
                   <div class="troo_da_hand_we_r_done_box_title">
-                    <h3>{e.name} </h3>
+                    <h3>{e.title} </h3>
                   </div>
                 </div>
               </div>

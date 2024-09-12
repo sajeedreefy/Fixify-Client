@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./BlogDetails.css";
 import blogDetailsImg from "../../images/Blog_detail_img.png";
 import blogDetilsIMg2 from "../../images/Blog_detail_img-2.png";
+import { useLocation } from "react-router-dom";
+import { fetchSingleBlogPostData } from "../../api/blog_section/blogSectionAPI";
+import { fetchingSingleBlogPostComment } from "../../api/blog_section/blogSectionAPI";
 
 const BlogDetailsComponent = () => {
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const blog_postName = queryParams.get('name');
+  const [singleData, setSingleData] = useState(null);
+
+
+  useEffect(()=>{
+    const loadBlogPostData = async ()=> {
+      try {
+        const data = await fetchSingleBlogPostData(blog_postName);
+        const blogComment = await fetchingSingleBlogPostComment(blog_postName);
+        setSingleData(data);
+      } catch (error) {
+        console.error("Blog Post Data Fetching Error: ", error);
+      }
+    }
+
+    loadBlogPostData();
+  },[blog_postName])
+
+  useEffect(()=>{
+    document.title = singleData?.title
+  },[singleData])
+
   return (
     <section class="Blog_detail_wrapper">
       <div class="container">
@@ -11,73 +39,19 @@ const BlogDetailsComponent = () => {
           <div class="col-lg-12">
             <div class="blog_top_detail">
               <p>
-                By Admin, Published On: 21 August, 2022, Categories: Plumbing,
-                Handyman, Pipe
+                By {singleData?.blogger}, Published On: {singleData?.published_on}, Categories: {singleData?.blog_category},
               </p>
             </div>
             <div class="blog_detail_title">
-              <h2>When have a problem with cracked pipes</h2>
-              <img src={blogDetailsImg} alt="blog" />
+              <h2>{singleData?.title}</h2>
+              <img src={`https://admin-fixify.glascutr.com${singleData?.meta_image}`} alt="blog" />
               <h3>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.
+                {singleData?.blog_intro}
               </h3>
               <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus.
+                {singleData?.meta_description}
               </p>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-5">
-            <div class="blog_detail_img">
-              <img src={blogDetilsIMg2} alt="Blog" />
-            </div>
-          </div>
-          <div class="col-lg-7">
-            <div class="blog_detail_right_content">
-              <p>
-                Lorem Ipsum is simply dummy text of the and is printing and
-                typesetting industry. Lorem Ipsum has been the industry's
-                standard dummy text ever since the 1500s, when an unknown
-                printer took a galley of type lorem scrambled it to make a type
-                specimen book. It has survived not only five centuries, but also
-                the leap into lorem electronic typesetting, remaining
-                essentially unchanged. It was popularised in the 1960s with the
-                release of Letraset sheetscontaining Lorem Ipsum passages, and
-                more recently with desktop publishing software like Aldus.
-              </p>
-              <p>
-                Lorem Ipsum is simply dummy text of the and is printing and
-                typesetting industry. Lorem Ipsum has been the industry's
-                standard dummy text ever since the 1500s, when an unknown.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="blog_detail_cont">
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make.
-              </p>
+              <p dangerouslySetInnerHTML={{__html: singleData?.content}}></p>
             </div>
           </div>
         </div>
@@ -90,54 +64,31 @@ const BlogDetailsComponent = () => {
         </div>
         <div class="row">
           <div class="col-lg-4">
-            <div class="blog_detail_benifits_outer">
-              <ul class="blog_detail_benifits_ul">
-                <li>An affordable pricing plan</li>
-                <li>All type repairs and maintence</li>
-                <li>Commercial & Industrial Services</li>
-              </ul>
-            </div>
+              <div class="blog_detail_benifits_outer">
+                <ul class="blog_detail_benifits_ul">
+                  {singleData?.custom_benefits.slice(0,3).map((each,index)=>(
+                    <li key={index}>{each.benefit}</li>
+                  ))}
+                </ul>
+              </div>
           </div>
           <div class="col-lg-4">
-            <div class="blog_detail_benifits_outer">
-              <ul class="blog_detail_benifits_ul">
-                <li>We have morden technology to do work</li>
-                <li>Work finish before deadline</li>
-                <li>We provide 24X7 emergency services</li>
-              </ul>
-            </div>
+              <div class="blog_detail_benifits_outer">
+                <ul class="blog_detail_benifits_ul">
+                  {singleData?.custom_benefits.slice(3,6).map((each,index)=>(
+                    <li key={index}>{each.benefit}</li>
+                  ))}
+                </ul>
+              </div>
           </div>
           <div class="col-lg-4">
-            <div class="blog_detail_benifits_outer">
-              <ul class="blog_detail_benifits_ul">
-                <li>We have morden technology to do work</li>
-                <li>Work finish before deadline</li>
-                <li>We provide 24X7 emergency services</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="blog_detail_bottom_cont">
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus.
-              </p>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make.
-              </p>
-            </div>
+              <div class="blog_detail_benifits_outer">
+                <ul class="blog_detail_benifits_ul">
+                  {singleData?.custom_benefits.slice(6).map((each,index)=>(
+                    <li key={index}>{each.benefit}</li>
+                  ))}
+                </ul>
+              </div>
           </div>
         </div>
         <div class="row">
@@ -159,12 +110,12 @@ const BlogDetailsComponent = () => {
                   </ul>
                 </div>
               </div>
-              <h3>0 Comments</h3>
-              <p>Submit a Comment</p>
+              {/* <h3>0 Comments</h3> */}
+              {/* <p>Submit a Comment</p> */}
             </div>
           </div>
         </div>
-        <div class="row">
+        {/* <div class="row">
           <div class="col-lg-12">
             <div class="blog_detail_form">
               <form>
@@ -220,7 +171,7 @@ const BlogDetailsComponent = () => {
               </form>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
