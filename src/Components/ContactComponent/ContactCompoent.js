@@ -1,167 +1,279 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ApiFacade from '../../api/facade'
 import "./ContactComponent.css";
-import { FaCalendar } from 'react-icons/fa';
 import location from "../../images/Contct_location.png"
 import call from "../../images/Contct_call.png"
 import time from "../../images/Contct_time.png"
 
 const ContactCompoent = () => {
+  const [allServiceData, setAllServiceData] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    city: '',
+    areaCode: '',
+    service: '',
+    date: '',
+    time: '',
+    additionalInfo: ''
+  });
+  const [preferenceItems, setPreferenceItems] = useState(null);
+
+  useEffect(() => {
+    const loadPreference = async () => {
+      try {
+        const data = await ApiFacade.fetchPreferenceData();
+        setPreferenceItems(data);
+      } catch (error) {
+        console.error("Error loading preference data:", error);
+      }
+    };
+
+    loadPreference();
+  }, []);
+
+  useEffect(() => {
+    const loadAllServiceData = async () => {
+      try {
+        const data = await ApiFacade.fetchAllServices();
+        setAllServiceData(data);
+      } catch (error) {
+        console.error('Error loading services:', error);
+      }
+    };
+
+    loadAllServiceData();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Create customer
+      const customerPayload = {
+        customer_name: formData.name,
+        customer_email: formData.email,
+        customer_phone: formData.phone,
+        city: formData.city
+      };
+      const customerResponse = await ApiFacade.createCustomer(customerPayload);
+
+      // Create quotation
+      const quotationPayload = {
+        // Use the created customer ID/name
+        customer: customerResponse.name,
+        appointment_date: formData.date,
+        appointment_time: formData.time,
+        items: [{
+          service: formData.service,
+
+        }],
+        additional_info: formData.additionalInfo
+      };
+      const quotationResponse = await ApiFacade.createQuotation(quotationPayload);
+
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        city: '',
+        areaCode: '',
+        service: '',
+        date: '',
+        time: '',
+        additionalInfo: ''
+      });
+
+      console.log(quotationResponse);
+
+      alert('Contact created successfully!');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('There was an error processing your request.');
+    }
+  };
+
   return (
     <>
-    <section class="contact_us_wrapper">
-    <div class="container">
-        <div class="row">
+      <section class="contact_us_wrapper">
+        <div class="container">
+          <div class="row">
             <div class="col-lg-12">
-                <div class="contct_title text-center">
-                    <h2>Contact us</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="contct_us_box">
-                    <div class="conct_img">
-                        <img src={location} alt="Location"/>
-                    </div>
-                    <div class="conct_box_detail">
-                        <h4>Our location</h4>
-                        <address class="contct_address">
-                            4516 School Street, Danbury, 
-                            CT, Canada
-                        </address>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="contct_us_box contct_box2">
-                    <div class="conct_img">
-                        <img src={call} alt="Call"/>
-                    </div>
-                    <div class="conct_box_detail">
-                        <h4>Call and email</h4>
-                        <div class="contct_box_number">
-                            <a href="tel:+44 123 456 7890">+44 123 456 7890</a>, 
-                            <a href="tel:+44 9870 123456"> +44 9870 123456</a>
-                        </div>
-                      
-                        <div class="contct_email_1">
-                            <a href="mailto:troohandyman@email.com">troohandyman@email.com</a>, 
-                            <a href="mailto:info@troohandyman.com"> info@troohandyman.com</a>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="contct_us_box">
-                    <div class="conct_img">
-                        <img src={time} alt="Time"/>
-                    </div>
-                    <div class="conct_box_detail">
-                        <h4>Opening time</h4>
-                      <div class="contct_timing">
-                        <p>Monay to Friday: 10:00 AM to 06:00 PM</p>
-                        <p>Satuay and Sunday: 10:00AM to 03:00 PM</p>
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="contact_map_wrapper">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <h4>Send us a message</h4>
-            <div class="contact_form_box">
-              <div class="blog_detail_form">
-                <form>
-                  <div class="form-group">
-                    <input
-                      type="name"
-                      class="form-control"
-                      id="name"
-                      aria-describedby="nameHelp"
-                      placeholder="Enter your name"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder="Your email"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="phone"
-                      placeholder="Your phone"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <select class="form-control" id="exampleFormControlSelect1">
-                      <option>Select service</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group date" id="datepicker">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="date"
-                        placeholder="Select date"
-                      />
-                      <span class="input-group-append">
-                        <span class="input-group-text  d-block">
-                          <FaCalendar/>
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <textarea
-                      class="form-control"
-                      id="exampleFormControlTextarea1"
-                      placeholder="Write something if you wish"
-                    ></textarea>
-                  </div>
-
-                  <div class="form_submit">
-                    <button type="submit" class="btn btn-primary">
-                      Submit
-                    </button>
-                  </div>
-                </form>
+              <div class="contct_title text-center">
+                <h2>Contact us</h2>
               </div>
             </div>
           </div>
-          <div class="col-lg-6">
-            <h4>Find us on google map</h4>
-            <div class="contct_form_map">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.8850349918985!2d72.49642611542339!3d23.027993021903114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9b278e046fa5%3A0xd837def63555f791!2sTRooInbound%20Private%20Limited!5e0!3m2!1sen!2sin!4v1674649284683!5m2!1sen!2sin"
-                width="600"
-                height="450"
-                style={{border:"0"}}
-                allowfullscreen=""
-                title="googleMap"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="contct_us_box">
+                <div class="conct_img">
+                  <img src={location} alt="Location" />
+                </div>
+                <div class="conct_box_detail">
+                  <h4>Our location</h4>
+                  <address class="contct_address">
+                    {preferenceItems?.address}
+                  </address>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="contct_us_box contct_box2">
+                <div class="conct_img">
+                  <img src={call} alt="Call" />
+                </div>
+                <div class="conct_box_detail">
+                  <h4>Call and email</h4>
+                  <div class="contct_box_number">
+                    {preferenceItems?.phone_numbers.map((num, i) => (
+                      <a key={i} href={`tel:${num.phone}`}>{num.phone},</a>
+
+                    ))}
+                  </div>
+
+                  <div class="contct_email_1">
+                    {preferenceItems?.email_addresses.slice(0, 1).map((mail, i) => (
+                      <a key={i} href={`mailto:${mail.email}`}>{mail.email},</a>
+                    ))}
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="contct_us_box">
+                <div class="conct_img">
+                  <img src={time} alt="Time" />
+                </div>
+                <div class="conct_box_detail">
+                  <h4>Opening time</h4>
+                  <div class="contct_timing">
+                   {preferenceItems?.opening_hours}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <section class="contact_map_wrapper">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+              <h4>Send us a message</h4>
+              <div class="contact_form_box">
+                <div class="blog_detail_form">
+                  <form onSubmit={handleSubmit}>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="Enter your name"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="Your email"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="Your phone"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <select
+                        className="form-control"
+                        id="service"
+                        value={formData.service}
+                        onChange={handleInputChange}
+                        required
+                      >
+                        <option value="">Select service</option>
+                        {allServiceData?.map((service, index) => (
+                          <option key={index} value={service.name}>{service.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group date" id="datepicker">
+                        <input
+                          type="date"
+                          className="form-control"
+                          id="date"
+                          value={formData.date}
+                          onChange={handleInputChange}
+                          placeholder="Select date"
+                          required
+                        />
+                        <span class="input-group-append">
+                          <span class="input-group-text  d-block">
+                            {/* <FaCalendar/> */}
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <textarea
+                        className="form-control"
+                        id="additionalInfo"
+                        value={formData.additionalInfo}
+                        onChange={handleInputChange}
+                        placeholder="Write something if you wish"
+                      ></textarea>
+                    </div>
+
+                    <div class="form_submit">
+                      <button type="submit" class="btn btn-primary">
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <h4>Find us on google map</h4>
+              <div class="contct_form_map">
+                <iframe
+                  src={preferenceItems?.map_address}
+                  width="600"
+                  height="450"
+                  style={{ border: "0" }}
+                  allowfullscreen=""
+                  title="googleMap"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
-   
+
   );
 };
 

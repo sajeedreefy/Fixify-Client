@@ -8,6 +8,7 @@ import { HeaderData } from "./HeaderData";
 import Navmenu from "./Navmenu";
 import mail from "../../images/Top_header_mail.png";
 import call from "../../images/top_header_call.png";
+import AdvancedSkeletonLoader from '../AdvancedSkeletonLoader';
 import { fetchNavItems } from "../../api/navigation_items/navigationItemsAPI";
 import fetchPreferenceAPI from "../../api/preference/preferenceAPI";
 
@@ -16,6 +17,7 @@ import { fetchTopMenuData } from "../../api/top_menu/topMenuAPI"; // Corrected t
 const Header = () => {
   const navigate = useNavigate();
   const navbar_ref = useRef();
+  const [loading, setLoading] = useState(true);
 
   const [topMenuData, setTopMenuData] = useState(null);
   const [topNavItems, setTopNavItems] = useState(null);
@@ -65,7 +67,9 @@ const Header = () => {
         const data = await fetchTopMenuData();
         setTopMenuData(data);
       } catch (error) {
-        console.error("Error loading user data:", error);
+        console.error('Error loading top menu data:', error);
+      }finally {
+        setLoading(false);
       }
     };
 
@@ -82,6 +86,10 @@ const Header = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // if (loading) {
+  //   return <AdvancedSkeletonLoader />;
+  // }
 
   return (
     <>

@@ -8,7 +8,7 @@ import BrandLogo from "../Components/BrandLogo/BrandLogo";
 import useDocumentTitle from "../PageTitle";
 
 const Contact = () => {
-  useDocumentTitle("Handyman | Contacts")
+  useDocumentTitle("Fixify | Contacts")
   return (
     <div>
       <Header />

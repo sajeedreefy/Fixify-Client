@@ -9,7 +9,7 @@ import useDocumentTitle from '../../PageTitle'
 import FAQComponenent from '../../Components/FAQComponent/FAQComponenent'
 
 const FAQs = () => {
-  useDocumentTitle("Handyman | FAQs")
+  useDocumentTitle("Fixify | FAQs")
   return (
     <div>
         <Header/>
