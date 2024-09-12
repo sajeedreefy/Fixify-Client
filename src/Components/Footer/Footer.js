@@ -76,7 +76,7 @@ const Footer = () => {
     }
   };
 
-  if (!navItems) {
+  if (navItems === null || preferenceItems === null) {
     return <div>Loading...</div>; // Add a fallback while data is being fetched
   }
 
