@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./BlogDetails.css";
-import blogDetailsImg from "../../images/Blog_detail_img.png";
-import blogDetilsIMg2 from "../../images/Blog_detail_img-2.png";
 import { useLocation } from "react-router-dom";
 import { fetchSingleBlogPostData } from "../../api/blog_section/blogSectionAPI";
-import { fetchingSingleBlogPostComment } from "../../api/blog_section/blogSectionAPI";
+// import { fetchingSingleBlogPostComment } from "../../api/blog_section/blogSectionAPI";
 
 const BlogDetailsComponent = () => {
 
@@ -18,7 +16,7 @@ const BlogDetailsComponent = () => {
     const loadBlogPostData = async ()=> {
       try {
         const data = await fetchSingleBlogPostData(blog_postName);
-        const blogComment = await fetchingSingleBlogPostComment(blog_postName);
+        // const blogComment = await fetchingSingleBlogPostComment(blog_postName);
         setSingleData(data);
       } catch (error) {
         console.error("Blog Post Data Fetching Error: ", error);
