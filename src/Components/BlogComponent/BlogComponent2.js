@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./BlogComponent.css";
-import { BlogData } from "./BlogData";
 import { Link, createSearchParams } from "react-router-dom";
 import { fetchBlogPostData } from "../../api/blog_section/blogSectionAPI";
 

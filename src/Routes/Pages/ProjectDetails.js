@@ -8,7 +8,7 @@ import BrandLogo from '../../Components/BrandLogo/BrandLogo'
 import useDocumentTitle from '../../PageTitle'
 
 const ProjectDetails = () => {
-  useDocumentTitle("Handyman | Project Details")
+  useDocumentTitle("Fixify | Project Details")
   return (
     <div>
         <Header/>
