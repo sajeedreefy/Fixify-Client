@@ -2,8 +2,15 @@ import { createCustomer, createQuotation } from './quotation/quotationAPI';
 import { fetchAllServiceData } from './services/allServicesAPI';
 import { fetchTeamMembers } from './team_member/teamMemberAPI'
 import { fetchCustomerReviewData } from './customer_review/customerReviewsAPI';
+import fetchPreferenceAPI from './preference/preferenceAPI';
 
 class ApiFacade {
+  //Fetch preference data
+
+  static fetchPreferenceData(){
+    return fetchPreferenceAPI();
+  }
+
   // Static method for creating a customer
   static createCustomer(customerData) {
     return createCustomer(customerData);

@@ -18,6 +18,20 @@ const ContactCompoent = () => {
     time: '',
     additionalInfo: ''
   });
+  const [preferenceItems, setPreferenceItems] = useState(null);
+
+  useEffect(() => {
+    const loadPreference = async () => {
+      try {
+        const data = await ApiFacade.fetchPreferenceData();
+        setPreferenceItems(data);
+      } catch (error) {
+        console.error("Error loading preference data:", error);
+      }
+    };
+
+    loadPreference();
+  }, []);
 
   useEffect(() => {
     const loadAllServiceData = async () => {
@@ -104,8 +118,7 @@ const ContactCompoent = () => {
                 <div class="conct_box_detail">
                   <h4>Our location</h4>
                   <address class="contct_address">
-                    4516 School Street, Danbury,
-                    CT, Canada
+                    {preferenceItems?.address}
                   </address>
                 </div>
               </div>
@@ -118,13 +131,16 @@ const ContactCompoent = () => {
                 <div class="conct_box_detail">
                   <h4>Call and email</h4>
                   <div class="contct_box_number">
-                    <a href="tel:+44 123 456 7890">+44 123 456 7890</a>,
-                    <a href="tel:+44 9870 123456"> +44 9870 123456</a>
+                    {preferenceItems?.phone_numbers.map((num, i) => (
+                      <a key={i} href={`tel:${num.phone}`}>{num.phone},</a>
+
+                    ))}
                   </div>
 
                   <div class="contct_email_1">
-                    <a href="mailto:troohandyman@email.com">troohandyman@email.com</a>,
-                    <a href="mailto:info@troohandyman.com"> info@troohandyman.com</a>
+                    {preferenceItems?.email_addresses.slice(0, 1).map((mail, i) => (
+                      <a key={i} href={`mailto:${mail.email}`}>{mail.email},</a>
+                    ))}
                   </div>
 
                 </div>
@@ -138,8 +154,7 @@ const ContactCompoent = () => {
                 <div class="conct_box_detail">
                   <h4>Opening time</h4>
                   <div class="contct_timing">
-                    <p>Monay to Friday: 10:00 AM to 06:00 PM</p>
-                    <p>Satuay and Sunday: 10:00AM to 03:00 PM</p>
+                   {preferenceItems?.opening_hours}
                   </div>
                 </div>
               </div>
@@ -243,7 +258,7 @@ const ContactCompoent = () => {
               <h4>Find us on google map</h4>
               <div class="contct_form_map">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.8850349918985!2d72.49642611542339!3d23.027993021903114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9b278e046fa5%3A0xd837def63555f791!2sTRooInbound%20Private%20Limited!5e0!3m2!1sen!2sin!4v1674649284683!5m2!1sen!2sin"
+                  src={preferenceItems?.map_address}
                   width="600"
                   height="450"
                   style={{ border: "0" }}

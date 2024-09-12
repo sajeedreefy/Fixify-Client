@@ -4,8 +4,9 @@ import "./FormComponent.css";
 import title from "../../images/title_img.png"
 import mail from "../../images/form_mail_box.png"
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
 
 const FormComponent = () => {
 
@@ -21,6 +22,21 @@ const FormComponent = () => {
     time: '',
     additionalInfo: ''
   });
+
+  const [preferenceItems, setPreferenceItems] = useState(null);
+
+  useEffect(() => {
+    const loadPreference = async () => {
+      try {
+        const data = await ApiFacade.fetchPreferenceData();
+        setPreferenceItems(data);
+      } catch (error) {
+        console.error("Error loading preference data:", error);
+      }
+    };
+
+    loadPreference();
+  }, []);
 
   useEffect(() => {
     const loadAllServiceData = async () => {
@@ -103,12 +119,12 @@ const FormComponent = () => {
               </div>
               <div class="form_title">
                 <h2>Book online for appointment and get free quote</h2>
-                <h4>
+                {/* <h4>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry.
-                </h4>
+                </h4> */}
               </div>
-              <div class="form_content">
+              {/* <div class="form_content">
                 <p>
                   Lorem Ipsum is simply dummy and is text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's and
@@ -116,7 +132,7 @@ const FormComponent = () => {
                   printer took and galley of type and scrambled it to make a
                   type specimen book. It has survived not only five centuries.
                 </p>
-              </div>
+              </div> */}
               <div class="form_msg_box_outer d-flex">
                 <div class="form_msg_txt">
                   <h4>In emergency?</h4>
@@ -129,11 +145,18 @@ const FormComponent = () => {
                     />
                   </div>
                   <div class="form_number">
-                    <a href="tel:+44 123 456 7890">+44 123 456 7890</a>
+                    {preferenceItems?.phone_numbers.slice(0,1).map((num,i)=>(
+                      <a key={i} href={`tel:${num.phone}`}>{num.phone}</a>
+                      
+                    ))}
+                    
+                    
                     <br />
-                    <a href="mailto:troohandyman@email.com">
-                      troohandyman@email.com
-                    </a>
+
+                    {preferenceItems?.email_addresses.slice(0,1).map((mail,i)=>(
+                      <a key={i} href={`mailto:${mail.email}`}>{mail.email}</a>
+                    ))}
+                    
                   </div>
                 </div>
               </div>

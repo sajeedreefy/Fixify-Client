@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./ReviewComponent.css"
 import { FaStar } from 'react-icons/fa';
 import reviewBG1 from "../../images/client_review_bg_1.png"
@@ -6,10 +6,6 @@ import reviewBG2 from "../../images/client_review_bg_2.png"
 import reviewBG3 from "../../images/client_review_bg_3.png"
 import reviewBG4 from "../../images/client_review_bg_4.png"
 import title from "../../images/title_img.png"
-import review1 from "../../images/review_img_1.png"
-import review2 from "../../images/review_img_2.png"
-import review3 from "../../images/review_img_3.png"
-import review4 from "../../images/review_img_4.png"
 import quote from '../../images/quote.png'
 import { Link } from 'react-router-dom';
 import ApiFacade from '../../api/facade';
@@ -17,13 +13,14 @@ import ApiFacade from '../../api/facade';
 
 const ReviewComponent = () => {
 
+
     const [customerReviewData, setCustomerReviewData] = useState(null);
 
     useEffect(() => {
         const loadCustomerReviewData = async () => {
             try {
                 const data = await ApiFacade.fetchCustomerReviews();
-                setCustomerReviewData(data);
+                setCustomerReviewData(data.slice(0, 4)); // Slice to get only 4 reviews
             } catch (error) {
                 console.error('Error loading reviews:', error);
             }
@@ -31,7 +28,17 @@ const ReviewComponent = () => {
 
         loadCustomerReviewData();
     }, []);
-    const reviews = customerReviewData?.slice(0,4);
+
+    // Function to render stars based on rating
+    const renderStars = (rating) => {
+        const stars = [];
+        for (let i = 0; i < 5; i++) {
+            stars.push(
+                <FaStar key={i} color={i < rating ? '#ffc107' : '#e4e5e9'} />
+            );
+        }
+        return stars;
+    };
     return (
         <section class="troo_da_client_reviews_wrapper">
             <div class="review_bg_1 review_ani">
@@ -72,150 +79,75 @@ const ReviewComponent = () => {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="client_review_box">
-                            <div class="client_review_img_outer">
-                                <div class="client_review_img">
-                                    <img src={review1} alt="review_img_1" />
-                                </div>
-                                <div class="review_quote">
-                                    <img src={quote} alt="quote" />
-                                </div>
-                            </div>
-                            <div class="reviw_second_box">
-                                <div class="review_outer d-flex justify-content-between">
-                                    <div class="client_review_detail_outer">
-                                        <div class="clinet_review_name">
-                                            <p>Josefine jerica</p>
-                                        </div>
-                                        <div class="clinet_review_days">
-                                            <p>2 day ago</p>
-                                        </div>
+                    {customerReviewData?.slice(0, 2).map((review, index) => (
+                        <div className="col-lg-6" key={index}>
+                            <div className={`client_review_box ${index === 1 ? 'client_box_2' : ''}`}>
+                                <div className="client_review_img_outer">
+                                    <div className="client_review_img">
+                                        <img src={`https://admin-fixify.glascutr.com${review.customer_image}`} alt={`review_img_${index + 1}`} />
                                     </div>
-                                    <div class="clinet_review_star">
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
+                                    <div className="review_quote">
+                                        <img src={quote} alt="quote" />
                                     </div>
                                 </div>
-                                <div class="review_content">
-                                    <p>Lorem ipsum dolor amet consectetur do & eiusmod tempor incididunt & labore they enim
-                                        minim veniam Lorem ipsum dolor amet consectetur </p>
+                                <div className="reviw_second_box">
+                                    <div className="review_outer d-flex justify-content-between">
+                                        <div className="client_review_detail_outer">
+                                            <div className="clinet_review_name">
+                                                <p>{review.customer}</p>
+                                            </div>
+                                            <div className="clinet_review_days">
+                                                <p>{new Date(review.creation).toDateString()}</p>
+                                            </div>
+                                        </div>
+                                        <div className="clinet_review_star">
+                                            {renderStars(parseInt(review.rating))}
+                                        </div>
+                                    </div>
+                                    <div className="review_content">
+                                        <p>{review.comment}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="client_review_box client_box_2">
-                            <div class="client_review_img_outer">
-                                <div class="client_review_img">
-                                    <img src={review2} alt="review_img_2" />
-                                </div>
-                                <div class="review_quote">
-                                    <img src={quote} alt="quote" />
-                                </div>
-                            </div>
-                            <div class="reviw_second_box">
-                                <div class="review_outer d-flex justify-content-between">
-                                    <div class="client_review_detail_outer">
-                                        <div class="clinet_review_name">
-                                            <p>Kevin Nash</p>
-                                        </div>
-                                        <div class="clinet_review_days">
-                                            <p>2 day ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="clinet_review_star">
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                    </div>
-                                </div>
-                                <div class="review_content">
-                                    <p>Lorem ipsum dolor amet consectetur do & eiusmod tempor incididunt & labore they enim
-                                        minim veniam Lorem ipsum dolor amet consectetur </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
+
                 </div>
                 <div class="row review_row">
-                    <div class="col-lg-6">
-                        <div class="client_review_box">
-                            <div class="client_review_img_outer">
-                                <div class="client_review_img">
-                                    <img src={review3} alt="review_img_3" />
-                                </div>
-                                <div class="review_quote">
-                                    <img src={quote} alt="quote" />
-                                </div>
-                            </div>
-                            <div class="reviw_second_box">
-                                <div class="review_outer d-flex justify-content-between">
-                                    <div class="client_review_detail_outer">
-                                        <div class="clinet_review_name">
-                                            <p>Denial Cooper
-                                            </p>
-                                        </div>
-                                        <div class="clinet_review_days">
-                                            <p>2 day ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="clinet_review_star">
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                    </div>
-                                </div>
-                                <div class="review_content">
-                                    <p>Lorem ipsum dolor amet consectetur do & eiusmod tempor incididunt & labore they enim
-                                        minim veniam Lorem ipsum dolor amet consectetur </p>
-                                </div>
+                    {customerReviewData?.slice(2, 4).map((review, index) => (
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="client_review_box client_box_4">
-                            <div class="client_review_img_outer">
-                                <div class="client_review_img">
-                                    <img src={review4} alt="review_img_4" />
-                                </div>
-                                <div class="review_quote">
-                                    <img src={quote} alt="quote" />
-                                </div>
-                            </div>
-                            <div class="reviw_second_box">
-                                <div class="review_outer d-flex justify-content-between">
-                                    <div class="client_review_detail_outer">
-                                        <div class="clinet_review_name">
-                                            <p>Alisha Brown</p>
-                                        </div>
-                                        <div class="clinet_review_days">
-                                            <p>2 day ago</p>
-                                        </div>
+                        <div class="col-lg-6" key={index}>
+                            <div className={`client_review_box ${index === 3 ? 'client_box_4' : ''}`}>
+                                <div class="client_review_img_outer">
+                                    <div class="client_review_img">
+                                        <img src={`https://admin-fixify.glascutr.com${review.customer_image}`} alt={`review_img_${index + 1}`} />
                                     </div>
-                                    <div class="clinet_review_star">
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
+                                    <div class="review_quote">
+                                        <img src={quote} alt="quote" />
                                     </div>
                                 </div>
-                                <div class="review_content">
-                                    <p>Lorem ipsum dolor amet consectetur do & eiusmod tempor incididunt & labore they enim
-                                        minim veniam Lorem ipsum dolor amet consectetur </p>
+                                <div class="reviw_second_box">
+                                    <div class="review_outer d-flex justify-content-between">
+                                        <div class="client_review_detail_outer">
+                                            <div class="clinet_review_name">
+                                                <p>{review.customer}</p>
+                                            </div>
+                                            <div className="clinet_review_days">
+                                                <p>{new Date(review.creation).toDateString()}</p>
+                                            </div>
+                                        </div>
+                                        <div className="clinet_review_star">
+                                            {renderStars(parseInt(review.rating))}
+                                        </div>
+                                    </div>
+                                    <div class="review_content">
+                                        <p>{review.comment}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                    ))}
                 </div>
                 <div class="troo_da_about_we_r_done_btn text-center">
                     <Link to="/Home/Testimonial">

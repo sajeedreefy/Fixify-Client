@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ApiFacade from '../../api/facade'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 const Appointment = () => {
@@ -60,6 +60,7 @@ const Appointment = () => {
         }],
         additional_info: formData.additionalInfo
       };
+      
       const quotationResponse = await ApiFacade.createQuotation(quotationPayload);
 
       setFormData({
@@ -73,8 +74,6 @@ const Appointment = () => {
         time: '',
         additionalInfo: ''
       });
-
-      console.log(quotationResponse);
 
       // toast.success('Quotation created successfully!');
       
@@ -244,7 +243,6 @@ const Appointment = () => {
             </div>
           </div>
         </div>
-        <ToastContainer />
       </div>
     </section>
   );
