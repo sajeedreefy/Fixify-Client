@@ -119,6 +119,7 @@ const FormComponent = () => {
               </div>
               <div class="form_title">
                 <h2>Book online for appointment and get free quote</h2>
+            
                 {/* <h4>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry.
@@ -126,11 +127,7 @@ const FormComponent = () => {
               </div>
               {/* <div class="form_content">
                 <p>
-                  Lorem Ipsum is simply dummy and is text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's and
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took and galley of type and scrambled it to make a
-                  type specimen book. It has survived not only five centuries.
+                  Ready to start your home improvement project? Book a free consultation with one of our experts to discuss your needs and get a personalized quote. Whether it’s a small repair or a major renovation, we’re here to provide transparent pricing and exceptional service. Simply fill out the form, and we’ll get back to you to confirm your appointment.
                 </p>
               </div> */}
               <div class="form_msg_box_outer d-flex">
@@ -153,10 +150,10 @@ const FormComponent = () => {
                     
                     <br />
 
+
                     {preferenceItems?.email_addresses.slice(0,1).map((mail,i)=>(
                       <a key={i} href={`mailto:${mail.email}`}>{mail.email}</a>
                     ))}
-                    
                   </div>
                 </div>
               </div>
