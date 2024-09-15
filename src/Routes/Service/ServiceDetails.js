@@ -12,7 +12,7 @@ import useDocumentTitle from '../../PageTitle'
 
 
 const ServiceDetails = () => {
-  useDocumentTitle("Handyman | Service Details")
+  useDocumentTitle("Fixify | Service Details")
   return (
     <div>
         <Header/>

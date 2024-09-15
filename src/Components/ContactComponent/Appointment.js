@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FaCalendar } from 'react-icons/fa';
-import { fetchAllServiceData } from '../../api/services/allServicesAPI';
-import { createCustomer, createQuotation } from '../../api/quotation/quotationAPI';  // Import your API calls here
+import ApiFacade from '../../api/facade'
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
 
 const Appointment = () => {
   const [allServiceData, setAllServiceData] = useState(null);
@@ -20,7 +21,7 @@ const Appointment = () => {
   useEffect(() => {
     const loadAllServiceData = async () => {
       try {
-        const data = await fetchAllServiceData();
+        const data = await ApiFacade.fetchAllServices();
         setAllServiceData(data);
       } catch (error) {
         console.error('Error loading services:', error);
@@ -45,19 +46,37 @@ const Appointment = () => {
         customer_phone: formData.phone,
         city: formData.city
       };
-      const customerResponse = await createCustomer(customerPayload);
+      const customerResponse = await ApiFacade.createCustomer(customerPayload);
 
       // Create quotation
       const quotationPayload = {
-        customer: customerResponse.name, // Use the created customer ID/name
+        // Use the created customer ID/name
+        customer: customerResponse.name,
+        appointment_date: formData.date,
+        appointment_time: formData.time,
         items: [{
           service: formData.service,
-          appointment_date: formData.date,
-          appointment_time: formData.time
+
         }],
         additional_info: formData.additionalInfo
       };
-      const quotationResponse = await createQuotation(quotationPayload);
+      
+      const quotationResponse = await ApiFacade.createQuotation(quotationPayload);
+
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        city: '',
+        areaCode: '',
+        service: '',
+        date: '',
+        time: '',
+        additionalInfo: ''
+      });
+
+      // toast.success('Quotation created successfully!');
+      
 
       alert('Quotation created successfully!');
     } catch (error) {
@@ -85,7 +104,7 @@ const Appointment = () => {
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                      <input
+                        <input
                           type="text"
                           className="form-control"
                           id="name"
@@ -98,7 +117,7 @@ const Appointment = () => {
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
-                      <input
+                        <input
                           type="email"
                           className="form-control"
                           id="email"
@@ -114,7 +133,7 @@ const Appointment = () => {
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                      <input
+                        <input
                           type="text"
                           className="form-control"
                           id="phone"
@@ -127,7 +146,7 @@ const Appointment = () => {
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
-                      <input
+                        <input
                           type="text"
                           className="form-control"
                           id="city"
@@ -142,7 +161,7 @@ const Appointment = () => {
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                      <input
+                        <input
                           type="text"
                           className="form-control"
                           id="areaCode"
@@ -154,7 +173,7 @@ const Appointment = () => {
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
-                      <select
+                        <select
                           className="form-control"
                           id="service"
                           value={formData.service}
@@ -173,7 +192,7 @@ const Appointment = () => {
                     <div class="col-lg-6">
                       <div class="form-group">
                         <div class="input-group date" id="datepicker">
-                        <input
+                          <input
                             type="date"
                             className="form-control"
                             id="date"
@@ -192,7 +211,7 @@ const Appointment = () => {
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
-                      <input
+                        <input
                           type="time"
                           className="form-control"
                           id="time"
@@ -205,7 +224,7 @@ const Appointment = () => {
                     </div>
                   </div>
                   <div class="form-group">
-                  <textarea
+                    <textarea
                       className="form-control"
                       id="additionalInfo"
                       value={formData.additionalInfo}

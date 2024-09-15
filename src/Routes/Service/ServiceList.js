@@ -11,7 +11,7 @@ import BrandLogo from "../../Components/BrandLogo/BrandLogo";
 import useDocumentTitle from "../../PageTitle";
 
 const ServiceList = () => {
-  useDocumentTitle("Handyman | ServiceList")
+  useDocumentTitle("Fixify | ServiceList")
   return (
     <div>
       <Header />

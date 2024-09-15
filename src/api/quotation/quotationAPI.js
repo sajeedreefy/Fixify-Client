@@ -27,14 +27,16 @@ export const createQuotation = async (quotationData) => {
     const response = await axiosInstance.post('/Quotation', {
       data: {
         customer: quotationData.customer,
+        party_name: quotationData.customer,
         transaction_date: new Date().toISOString().slice(0, 10), // Set the current date for the quotation
+        custom_appointment_date: quotationData.appointment_date,
         items: quotationData.items.map((item) => ({
           item_code: item.service,
           qty: 1,  // Default quantity can be set to 1 or dynamic based on your input
           schedule_date: item.appointment_date,  // Custom field for appointment date
           rate: 0  // You can fetch or calculate the rate for the service here
         })),
-        additional_info: quotationData.additional_info,  // Add other fields as needed from your ERPNext Quotation DocType
+        custom_remarks: quotationData.additional_info,  // Add other fields as needed from your ERPNext Quotation DocType
         // Add more fields as needed from your ERPNext Quotation DocType
       }
     });

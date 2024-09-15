@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Header from '../../Components/Header/Header'
 import Footer from '../../Components/Footer/Footer'
 import BannerGlobal from '../../Components/Banner/BannerGlobal'
@@ -10,7 +10,7 @@ import useDocumentTitle from '../../PageTitle'
 
 
 const BlogDetails = () => {
-  useDocumentTitle("Handyman | Blog Details")
+  useDocumentTitle("Fixify | Blog Details")
 
   return (
     <div>

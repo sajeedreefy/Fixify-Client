@@ -269,7 +269,7 @@ const Footer = () => {
           <div class="col-lg-5">
             <div class="footer_bottom_box">
               <p>
-                © 2022 Restaurant Theme by <span>Troo Theme</span>. All rights
+                © 2024 Fixify Web App by <span>Glascutr Limited</span>. All rights
                 reserved
               </p>
             </div>

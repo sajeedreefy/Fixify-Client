@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./BlogComponent.css";
 import title from "../../images/title_img.png";
-import { BlogData } from "./BlogData";
 import { Link, createSearchParams } from "react-router-dom";
 import { fetchBlogPostData } from "../../api/blog_section/blogSectionAPI";
 
@@ -14,9 +13,7 @@ const BlogComponent = () => {
       try {
         const data = await fetchBlogPostData();
         setBlogList(data)
-        if(blogList){
-          console.log(blogList)
-        }
+       
       } catch (error) {
         console.error("Blog Post Data Fetching Error: ", error);
       }

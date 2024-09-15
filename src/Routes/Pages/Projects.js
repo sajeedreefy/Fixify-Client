@@ -8,7 +8,7 @@ import ProjectCompoenent from '../../Components/ProjectComponent/ProjectCompoene
 import useDocumentTitle from '../../PageTitle'
 
 const Projects = () => {
-  useDocumentTitle("Handyman | Projects")
+  useDocumentTitle("Fixify | Projects")
   return (
     <div>
         <Header/>
