@@ -99,7 +99,7 @@ const Header = () => {
             <Navbar.Brand>
               <Link to="/">
                 <img
-                  src={`https://admin-fixify.glascutr.com${preferenceItems?.site_logo}`}
+                  src={`${process.env.REACT_APP_BASE_URL}${preferenceItems?.site_logo}`}
                   style={{ height: "58px" }}
                   alt="logo"
                 />
@@ -200,7 +200,7 @@ const Header = () => {
             <Navbar.Brand>
               <Link to="/">
                 <img
-                  src={`https://admin-fixify.glascutr.com${preferenceItems?.site_logo}`}
+                  src={`${process.env.REACT_APP_BASE_URL}${preferenceItems?.site_logo}`}
                   style={{ height: "58px" }}
                   alt="logo"
                 />

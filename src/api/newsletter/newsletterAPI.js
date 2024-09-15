@@ -3,7 +3,7 @@ import axiosInstance from '../axiosInstance';
 
 async function postNewsletterAPI(emailGroupMember) {
   try {
-    const response = await axiosInstance.post('/Email Group Member', {
+    const response = await axiosInstance.post('Email Group Member', {
       data: {
         email_group: "Fixify-Newsletter",
         email: emailGroupMember.newsLetter_email

@@ -75,7 +75,7 @@ const AboutComponent = () => {
           </div>
           <div class="col-lg-6">
             <div class="troo_da_handyman_img">
-              <img src={`https://admin-fixify.glascutr.com${aboutComponentData?.image}`} alt="year_of_experience" />
+              <img src={`${process.env.REACT_APP_BASE_URL}${aboutComponentData?.image}`} alt="year_of_experience" />
             </div>
 
             <div class="about_year_box_outer">

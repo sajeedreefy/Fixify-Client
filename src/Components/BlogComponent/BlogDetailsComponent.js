@@ -42,7 +42,7 @@ const BlogDetailsComponent = () => {
             </div>
             <div class="blog_detail_title">
               <h2>{singleData?.title}</h2>
-              <img src={`https://admin-fixify.glascutr.com${singleData?.meta_image}`} alt="blog" />
+              <img src={`${process.env.REACT_APP_BASE_URL}${singleData?.meta_image}`} alt="blog" />
               <h3>
                 {singleData?.blog_intro}
               </h3>

@@ -84,7 +84,7 @@ const ReviewComponent = () => {
                             <div className={`client_review_box ${index === 1 ? 'client_box_2' : ''}`}>
                                 <div className="client_review_img_outer">
                                     <div className="client_review_img">
-                                        <img src={`https://admin-fixify.glascutr.com${review.customer_image}`} alt={`review_img_${index + 1}`} />
+                                        <img src={`${process.env.REACT_APP_BASE_URL}${review.customer_image}`} alt={`review_img_${index + 1}`} />
                                     </div>
                                     <div className="review_quote">
                                         <img src={quote} alt="quote" />
@@ -120,7 +120,7 @@ const ReviewComponent = () => {
                             <div className={`client_review_box ${index === 3 ? 'client_box_4' : ''}`}>
                                 <div class="client_review_img_outer">
                                     <div class="client_review_img">
-                                        <img src={`https://admin-fixify.glascutr.com${review.customer_image}`} alt={`review_img_${index + 1}`} />
+                                        <img src={`${process.env.REACT_APP_BASE_URL}${review.customer_image}`} alt={`review_img_${index + 1}`} />
                                     </div>
                                     <div class="review_quote">
                                         <img src={quote} alt="quote" />
