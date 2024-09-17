@@ -3,7 +3,7 @@ import axiosInstance from "../axiosInstance";
 
 async function fetchPreferenceAPI() {
   try {
-    const prefereceCall = await axiosInstance.get(`/Preference/Preferece`);
+    const prefereceCall = await axiosInstance.get(`Preference/Preferece`);
 
     const preferenceData = prefereceCall.data.data;
     return preferenceData;

@@ -26,7 +26,7 @@ const Banner = () => {
   useEffect(() => {
     if (bannerData && bannerRef.current) {
       // Set the background image using JavaScript
-      bannerRef.current.style.backgroundImage = `url(https://admin-fixify.glascutr.com${bannerData.background_image})`;
+      bannerRef.current.style.backgroundImage = `url(${process.env.REACT_APP_BASE_URL}${bannerData.background_image})`;
     }
   }, [bannerData]);
 
@@ -79,7 +79,7 @@ const Banner = () => {
           <div class="col-lg-6 hero_right">
             <div class="troo_da_hero_img">
               <img
-                src={`https://admin-fixify.glascutr.com${bannerData.hero_image}`}
+                src={`${process.env.REACT_APP_BASE_URL}${bannerData.hero_image}`}
                 alt="hero_img"
               />
             </div>

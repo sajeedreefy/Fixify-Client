@@ -4,7 +4,7 @@ import axiosInstance from "../axiosInstance";
 async function fetchAboutHighlight() {
   try {
     const aboutHighlight = await axiosInstance.get(
-      `/Highlight Cards?fields=["*"]`
+      `Highlight Cards?fields=["*"]`
     );
 
     const highlightCards = aboutHighlight.data.data;

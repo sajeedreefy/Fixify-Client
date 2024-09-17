@@ -4,11 +4,11 @@ import axiosInstance from "../axiosInstance";
 // Function to fetch some other data
 export const fetchNavItems = async () => {
   try {
-    const test = await axiosInstance.get('/Navigation Items?fields=["*"]');
+    const test = await axiosInstance.get('Navigation Items?fields=["*"]');
     // console.log(test);
 
     const navigationItems = test.data.data;
-    const HeroSection = await axiosInstance.get('/Hero Section?filters=[["enable","=","1"]]&fields=["*"]');
+    const HeroSection = await axiosInstance.get('Hero Section?filters=[["enable","=","1"]]&fields=["*"]');
     // console.log(test);
 
     
