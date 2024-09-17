@@ -40,7 +40,7 @@ const BlogComponent3 = () => {
               <div class="troo_da_hand_we_r_done_box">
                 <div class="troo_da_hand_we_r_done_box_inner">
                   <div class="troo_da_hand_we_r_done_box_img">
-                    <img src={`https://admin-fixify.glascutr.com/${e.meta_image}`} alt="lastest_blog" />
+                    <img src={`${process.env.REACT_APP_BASE_URL}${e.meta_image}`} alt="lastest_blog" />
                   </div>
                   <div class="troo_da_hand_we_r_done_box_hover_detail">
                     <h3>{e.title} </h3>

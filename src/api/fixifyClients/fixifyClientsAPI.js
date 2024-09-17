@@ -3,7 +3,7 @@ import axiosInstance from '../axiosInstance'
 
 async function fetchFixifyClientsAPI() {
   try{
-    const clients = await axiosInstance.get(`/Fixify Clients?fields=["*"]`)
+    const clients = await axiosInstance.get(`Fixify Clients?fields=["*"]`)
     const clientList = clients.data.data
 
     return clientList

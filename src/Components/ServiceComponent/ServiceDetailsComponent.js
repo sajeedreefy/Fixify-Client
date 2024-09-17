@@ -71,7 +71,7 @@ const ServiceDetailsComponent = () => {
           <div class="col-lg-12">
             <div class="service_box_wrapper_img_outer">
               <div class="service_box_wrapper_img">
-                <img src={`https://admin-fixify.glascutr.com/${singleServiceData?.custom_banner_image}`} alt="service_detail_img" />
+                <img src={`${process.env.REACT_APP_BASE_URL}/${singleServiceData?.custom_banner_image}`} alt="service_detail_img" />
               </div>
               <div class="play_btn">
                 <a
@@ -128,7 +128,7 @@ const ServiceDetailsComponent = () => {
                 </div>
                 <div class="col-lg-5">
                   <div class="latest_tech_box_img">
-                    <img src={`https://admin-fixify.glascutr.com/${singleServiceData?.image}`} alt="service_box_detail_img" />
+                    <img src={`${process.env.REACT_APP_BASE_URL}/${singleServiceData?.image}`} alt="service_box_detail_img" />
                   </div>
                 </div>
               </div>
