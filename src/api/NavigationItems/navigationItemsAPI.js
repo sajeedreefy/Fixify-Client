@@ -5,11 +5,9 @@ import axiosInstance from "../axiosInstance";
 export const fetchNavItems = async () => {
   try {
     const test = await axiosInstance.get('Navigation Items?fields=["*"]');
-    // console.log(test);
 
     const navigationItems = test.data.data;
     const HeroSection = await axiosInstance.get('Hero Section?filters=[["enable","=","1"]]&fields=["*"]');
-    // console.log(test);
 
     
     // Helper function to find children of a parent navigation item
