@@ -2,9 +2,16 @@ import React, { useEffect, useState } from "react";
 import ApiFacade from '../../api/facade'
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
+import { useLocation } from 'react-router-dom';
+
 
 
 const Appointment = () => {
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const serviceId = queryParams.get('s_id');
+
   const [allServiceData, setAllServiceData] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -12,7 +19,7 @@ const Appointment = () => {
     phone: '',
     city: '',
     areaCode: '',
-    service: '',
+    service: serviceId ? serviceId : '',
     date: '',
     time: '',
     additionalInfo: ''
@@ -74,6 +81,7 @@ const Appointment = () => {
         time: '',
         additionalInfo: ''
       });
+      console.log(quotationResponse, '>>>>>>>');
 
       // toast.success('Quotation created successfully!');
       
