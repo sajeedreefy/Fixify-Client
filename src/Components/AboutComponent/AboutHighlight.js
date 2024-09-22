@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./AboutComponent.css";
-import fetchAboutHighlight from "../../api/about/aboutHighlightAPI"
-import { ShimmerPostItem } from 'react-shimmer-effects';
-
+import { ShimmerPostItem, ShimmerPostList } from "react-shimmer-effects";
+import ApiFacade from "../../api/facade";
 
 const AboutHighlight = () => {
-  const [highlightData, setHighlightData] = useState(null)
+  const [highlightData, setHighlightData] = useState(null);
   const [highlightLoading, setHighlightLoading] = useState(true);
-
 
   useEffect(() => {
     const getHighlightCards = async () => {
       try {
-        const cards = await fetchAboutHighlight();
+        const cards = await ApiFacade.fetchAboutHighlight();
         setHighlightData(cards);
       } catch (error) {
         console.error("Failed to fetch highlight cards:", error);
-      }finally{
+      } finally {
         setHighlightLoading(false);
       }
     };
@@ -25,14 +23,20 @@ const AboutHighlight = () => {
   }, []);
   return (
     <>
-      {highlightLoading ? (
-        <>
-          <ShimmerPostItem card cta />
-
-        </>
-      ) : (
-        <section class="troo_da_detail_box_wrapper">
-          <div class="container">
+      
+      <section class="troo_da_detail_box_wrapper">
+        <div class="container">
+          {highlightLoading ? (
+            <>
+              <ShimmerPostList
+                postStyle="STYLE_FOUR"
+                col={3}
+                row={1}
+                gap={30}
+              />
+              ;
+            </>
+          ) : (
             <div class="row">
               <div class="col-lg-4">
                 <div class="troo_da_detail_box">
@@ -57,9 +61,7 @@ const AboutHighlight = () => {
                     <h3>{highlightData[0].title}</h3>
                   </div>
                   <div class="troo_da_detail_box_content">
-                    <p>
-                      {highlightData[0].description}
-                    </p>
+                    <p>{highlightData[0].description}</p>
                   </div>
                 </div>
               </div>
@@ -86,9 +88,7 @@ const AboutHighlight = () => {
                     <h3>{highlightData[1].title}</h3>
                   </div>
                   <div class="troo_da_detail_box_content">
-                    <p>
-                      {highlightData[1].description}
-                    </p>
+                    <p>{highlightData[1].description}</p>
                   </div>
                 </div>
               </div>
@@ -115,16 +115,14 @@ const AboutHighlight = () => {
                     <h3>{highlightData[2].title}</h3>
                   </div>
                   <div class="troo_da_detail_box_content">
-                    <p>
-                      {highlightData[2].description}
-                    </p>
+                    <p>{highlightData[2].description}</p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      )}
+          )}
+        </div>
+      </section>
     </>
   );
 };

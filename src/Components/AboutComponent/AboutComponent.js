@@ -8,6 +8,7 @@ import title from "../../images/title_img.png";
 import { Link } from "react-router-dom";
 import { fetchAboutComponent } from "../../api/about/aboutComponentAPI";
 import { ShimmerPostItem } from 'react-shimmer-effects';
+import ApiFacade from "../../api/facade";
 
 
 const AboutComponent = () => {
@@ -18,7 +19,7 @@ const AboutComponent = () => {
   useEffect(() => {
     const loadAboutComponentItems = async () => {
       try {
-        const data = await fetchAboutComponent();
+        const data = await ApiFacade.fetchAboutComponent();
         setAboutComponent(data);
       } catch (error) {
         console.error("Error loading user data:", error);
