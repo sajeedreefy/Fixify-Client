@@ -4,6 +4,7 @@ import "./Banner.css";
 import { Link } from "react-router-dom";
 import { fetchBannerItems } from "../../api/banner/bannerAPI";
 import { ShimmerTitle } from 'react-shimmer-effects';
+import ApiFacade from "../../api/facade";
 
 const Banner = () => {
   const [bannerData, setBannerData] = useState(null);
@@ -14,7 +15,7 @@ const Banner = () => {
   useEffect(() => {
     const loadBannerItems = async () => {
       try {
-        const data = await fetchBannerItems();
+        const data = await ApiFacade.fetchBannerItems();
         setBannerData(data);
       } catch (error) {
         console.error('Error loading user data:', error);
@@ -40,7 +41,7 @@ const Banner = () => {
         <>
           {/* <ShimmerPostItem card cta />
           <ShimmerPostItem card cta /> */}
-          <ShimmerTitle line={2} gap={10} />;
+          <ShimmerTitle line={2} gap={10} />
         </>
 
       ) : (
