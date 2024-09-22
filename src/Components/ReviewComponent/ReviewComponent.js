@@ -97,7 +97,7 @@ const ReviewComponent = () => {
                                     <div className={`client_review_box ${index === 1 ? 'client_box_2' : ''}`}>
                                         <div className="client_review_img_outer">
                                             <div className="client_review_img">
-                                                <img src={`${process.env.REACT_APP_BASE_URL}${review.customer_image}`} alt={`review_img_${index + 1}`} />
+                                                <img src={`${process.env.REACT_APP_BASE_URL}${review.customer_image}`} alt={`review_img_${index + 1}`} className="rounded-circle" style={{height: '60px', width: '60px'}}/>
                                             </div>
                                             <div className="review_quote">
                                                 <img src={quote} alt="quote" />
