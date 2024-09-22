@@ -17,11 +17,9 @@ const Appointment = () => {
     name: '',
     email: '',
     phone: '',
-    city: '',
-    areaCode: '',
+    address: '',
     service: serviceId ? serviceId : '',
     date: '',
-    time: '',
     additionalInfo: ''
   });
 
@@ -51,7 +49,7 @@ const Appointment = () => {
         customer_name: formData.name,
         customer_email: formData.email,
         customer_phone: formData.phone,
-        city: formData.city
+        address: formData.address
       };
       const customerResponse = await ApiFacade.createCustomer(customerPayload);
 
@@ -60,7 +58,6 @@ const Appointment = () => {
         // Use the created customer ID/name
         customer: customerResponse.name,
         appointment_date: formData.date,
-        appointment_time: formData.time,
         items: [{
           service: formData.service,
 
@@ -74,11 +71,9 @@ const Appointment = () => {
         name: '',
         email: '',
         phone: '',
-        city: '',
-        areaCode: '',
+        address: '',
         service: '',
         date: '',
-        time: '',
         additionalInfo: ''
       });
 
@@ -89,12 +84,8 @@ const Appointment = () => {
         toast.error('There is something wrong!');
       }
 
-
-
-      // alert('Quotation created successfully!');
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('There was an error processing your request.');
+      toast.error('There is something wrong!');
     }
   };
 
@@ -166,42 +157,11 @@ const Appointment = () => {
                           <input
                             type="text"
                             className="form-control"
-                            id="city"
-                            value={formData.city}
+                            id="address"
+                            value={formData.address}
                             onChange={handleInputChange}
-                            placeholder="City"
-                            required
+                            placeholder="Address"
                           />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="areaCode"
-                            value={formData.areaCode}
-                            onChange={handleInputChange}
-                            placeholder="Area code"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <select
-                            className="form-control"
-                            id="service"
-                            value={formData.service}
-                            onChange={handleInputChange}
-                            required
-                          >
-                            <option value="">Select service</option>
-                            {allServiceData?.map((service, index) => (
-                              <option key={index} value={service.name}>{service.name}</option>
-                            ))}
-                          </select>
                         </div>
                       </div>
                     </div>
@@ -225,30 +185,42 @@ const Appointment = () => {
                             </span>
                           </div>
                         </div>
+
                       </div>
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <input
-                            type="time"
+                          <select
                             className="form-control"
-                            id="time"
-                            value={formData.time}
+                            id="service"
+                            value={formData.service}
                             onChange={handleInputChange}
-                            placeholder="Time"
                             required
-                          />
+                          >
+                            <option value="">Select service</option>
+                            {allServiceData?.map((service, index) => (
+                              <option key={index} value={service.name}>{service.name}</option>
+                            ))}
+                          </select>
                         </div>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <textarea
-                        className="form-control"
-                        id="additionalInfo"
-                        value={formData.additionalInfo}
-                        onChange={handleInputChange}
-                        placeholder="Write something if you wish"
-                      ></textarea>
+                    <div class="row">
+                      {/* <div class="col-lg-6">
+
+                      </div> */}
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <textarea
+                            className="form-control"
+                            id="additionalInfo"
+                            value={formData.additionalInfo}
+                            onChange={handleInputChange}
+                            placeholder="Write something if you wish"
+                          ></textarea>
+                        </div>
+                      </div>
                     </div>
+
 
                     <div class="form_submit">
                       <button type="submit" class="btn btn-primary">

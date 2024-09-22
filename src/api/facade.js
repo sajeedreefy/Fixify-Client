@@ -6,6 +6,8 @@ import { fetchTopMenuData } from './topMenu/topMenuAPI';
 import { fetchNavItems } from './NavigationItems/navigationItemsAPI';
 import { fetchSingleServiceData } from './services/singleServiceAPI';
 import { fetchBannerItems } from './banner/bannerAPI';
+import { fetchAppointmentSectionData } from './AppointmentSection/appointmentSectionAPI';
+
 import fetchAboutHighlight from './about/aboutHighlightAPI';
 import fetchFixifyClientsAPI from './fixifyClients/fixifyClientsAPI';
 
@@ -61,6 +63,10 @@ class ApiFacade {
 
   static fetchBannerItems() {
     return fetchBannerItems();
+  }
+
+  static fetchAppointmentSection(){
+    return fetchAppointmentSectionData();
   }
   
 }

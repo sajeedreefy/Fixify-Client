@@ -10,7 +10,7 @@ export const createCustomer = async (customerData) => {
         territory: "All Territories",         // Adjust this based on your needs
         email_id: customerData.customer_email,
         mobile_no: customerData.customer_phone,
-        city: customerData.city,
+        primary_address: customerData.address,
         // Add more fields as needed from your ERPNext Customer DocType
       }
     });

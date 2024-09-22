@@ -6,9 +6,14 @@ import mail from "../../images/form_mail_box.png"
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
+import { ShimmerTitle } from 'react-shimmer-effects';
+
 
 
 const FormComponent = () => {
+
+  const [appointmentSectionData, setAppointmentSectionData] = useState(null);
+  const [appointmentLoading, setAppointmentLoading] = useState(true);
 
   const [allServiceData, setAllServiceData] = useState(null);
   const [formData, setFormData] = useState({
@@ -37,6 +42,22 @@ const FormComponent = () => {
 
     loadPreference();
   }, []);
+
+  useEffect(() => {
+    const loadAppointmentSection = async () => {
+      try {
+        const data = await ApiFacade.fetchAppointmentSection();
+        setAppointmentSectionData(data);
+      } catch (error) {
+        console.error("Error loading appointment section data:", error);
+      } finally {
+        setAppointmentLoading(false);
+      }
+    };
+
+    loadAppointmentSection();
+  }, []);
+
 
   useEffect(() => {
     const loadAllServiceData = async () => {
@@ -105,6 +126,7 @@ const FormComponent = () => {
     }
   };
 
+
   return (
     <>
       <ToastContainer position="bottom-right" />
@@ -122,19 +144,22 @@ const FormComponent = () => {
                     <h4>Feel appointmet form</h4>
                   </div>
                 </div>
-                <div class="form_title">
-                  <h2>Book online for appointment and get free quote</h2>
+                {appointmentLoading ? (
+                  <ShimmerTitle line={2} gap={10} />
+                ) : (
+                  <>
+                    <div class="form_title">
+                      <h2>{appointmentSectionData?.title}</h2>
 
-                  {/* <h4>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </h4> */}
-                </div>
-                {/* <div class="form_content">
-                <p>
-                  Ready to start your home improvement project? Book a free consultation with one of our experts to discuss your needs and get a personalized quote. Whether it’s a small repair or a major renovation, we’re here to provide transparent pricing and exceptional service. Simply fill out the form, and we’ll get back to you to confirm your appointment.
-                </p>
-              </div> */}
+                    </div>
+
+                    <div class="form_content">
+                      <p>
+                        {appointmentSectionData?.sub_title}
+                      </p>
+                    </div>
+                  </>
+                )}
                 <div class="form_msg_box_outer d-flex">
                   <div class="form_msg_txt">
                     <h4>In emergency?</h4>
