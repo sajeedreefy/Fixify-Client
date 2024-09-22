@@ -3,6 +3,8 @@ import "./BlogDetails.css";
 import { useLocation } from "react-router-dom";
 import { fetchSingleBlogPostData } from "../../api/blog_section/blogSectionAPI";
 import { FaTwitter, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
+import { ShimmerTitle, ShimmerText, ShimmerThumbnail } from 'react-shimmer-effects';
+
 // import { fetchingSingleBlogPostComment } from "../../api/blog_section/blogSectionAPI";
 
 const BlogDetailsComponent = () => {
@@ -11,6 +13,7 @@ const BlogDetailsComponent = () => {
   const queryParams = new URLSearchParams(location.search);
   const blog_postName = queryParams.get('name');
   const [singleData, setSingleData] = useState(null);
+  const [blogDetailsLoad, setBlogDetailsLoad] = useState(true);
 
 
   useEffect(()=>{
@@ -21,6 +24,8 @@ const BlogDetailsComponent = () => {
         setSingleData(data);
       } catch (error) {
         console.error("Blog Post Data Fetching Error: ", error);
+      } finally {
+        setBlogDetailsLoad(false);
       }
     }
 
@@ -36,17 +41,27 @@ const BlogDetailsComponent = () => {
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
+            {blogDetailsLoad?<ShimmerTitle line={2} gap={10} />:
             <div class="blog_top_detail">
               <p>
                 By {singleData?.blogger}, Published On: {singleData?.published_on}, Categories: {singleData?.blog_category},
               </p>
-            </div>
+            </div>}
             <div class="blog_detail_title">
-              <h2>{singleData?.title}</h2>
-              <img src={`${process.env.REACT_APP_BASE_URL}${singleData?.meta_image}`} alt="blog" />
-              <h3 style={{"marginTop":"18px"}}>
-                {singleData?.blog_intro}
-              </h3>
+              {blogDetailsLoad?<ShimmerTitle line={2} gap={10}/>:
+              <h2>{singleData?.title}</h2>}
+              {blogDetailsLoad?<ShimmerThumbnail height={500}/>:
+              <img src={`${process.env.REACT_APP_BASE_URL}${singleData?.meta_image}`} alt="blog" />}
+              {blogDetailsLoad?
+                <>
+                  <ShimmerText line={5} gap={10} />
+                  <ShimmerText line={4} gap={10} />
+                  <ShimmerText line={6} gap={10} />
+                </>:
+                <h3 style={{"marginTop":"18px"}}>
+                  {singleData?.blog_intro}
+                </h3>
+              }
               <p>
                 {singleData?.meta_description}
               </p>

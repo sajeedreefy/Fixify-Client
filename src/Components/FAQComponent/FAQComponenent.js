@@ -6,12 +6,14 @@ import title from "../../images/title_img.png";
 import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";
 import { fetchFAQData } from "../../api/FAQ/faqDataApi";
+import { ShimmerSimpleGallery, ShimmerTitle } from "react-shimmer-effects";
 
 const FAQComponenent = ({expand}) => {
 
   const [FAQdata, setFAQdata] = useState(null)
   const [firstHalf, setFirstHalf] = useState([]);
   const [secondHalf, setSecondHalf] = useState([]);
+  const [loadFAQData, setLoadFAQData] = useState(true);
   let middleIndex = null;
 
 
@@ -22,6 +24,8 @@ const FAQComponenent = ({expand}) => {
         setFAQdata(data)
       } catch (error) {
         console.error("Error Loading FAQ Data", error)
+      } finally {
+        setLoadFAQData(false);
       }
     }
 
@@ -53,6 +57,19 @@ const FAQComponenent = ({expand}) => {
       <div class="faq_bg_2 action ">
         <img src={faqBG} alt="faq_bg_2" />
       </div>
+      {loadFAQData?
+        <div className="container">
+          {/* Top title shimmer */}
+          <ShimmerTitle card imageHeight={50} caption height={25} />
+          
+          {/* FAQs shimmer */}
+          <ShimmerTitle card imageHeight={30} caption height={15} />
+
+          {/* For each FAQ card */}
+          <div style={{ marginTop: '20px' }}>
+            <ShimmerSimpleGallery card imageHeight={50} caption height={25} />
+          </div>
+        </div>: 
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -113,7 +130,7 @@ const FAQComponenent = ({expand}) => {
           </button>
           </Link>
         </div>}
-      </div>
+      </div>}
     </section>
   );
 };
