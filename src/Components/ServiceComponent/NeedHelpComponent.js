@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./ServiceDetails.css";
 import ApiFacade from '../../api/facade';
+import { Link } from "react-router-dom";
+import { ShimmerTitle } from 'react-shimmer-effects';
 
 
-const NeedHelp = () => {
+
+const NeedHelp = ({ serviceId }) => {
 
   const [preferenceItems, setPreferenceItems] = useState(null);
 
@@ -29,24 +32,41 @@ const NeedHelp = () => {
         <p>Call us</p>
       </div>
       <div className="footer_call">
-        {preferenceItems?.phone_numbers.slice(0, 1).map((num, i) => (
-          <a key={i} href={`tel:${num.phone}`}>{num.phone}</a>
+        {preferenceItems ? (
+          <>
+            {preferenceItems?.phone_numbers.slice(0, 1).map((num, i) => (
+              <a key={i} href={`tel:${num.phone}`}>{num.phone}</a>
 
-        ))}
+            ))}
+          </>
+        ) : (
+          <ShimmerTitle line={1} gap={5} />
+        )}
+
       </div>
       <div className="footer_mail_detail">
         <p>Email us</p>
       </div>
       <div className="footer_call">
-        {preferenceItems?.email_addresses.slice(0, 1).map((mail, i) => (
-          <a key={i} href={`mailto:${mail.email}`}>{mail.email}</a>
-        ))}
+        {preferenceItems ? (
+          <>
+            {preferenceItems?.email_addresses.slice(0, 1).map((mail, i) => (
+              <a key={i} href={`mailto:${mail.email}`}>{mail.email}</a>
+            ))}
+          </>
+        ) : (
+          <ShimmerTitle line={1} gap={5} />
+        )}
       </div>
-      <div className="need_any_help_conct_btn">
-        <button type="button" className="btn btn-primary">
-          Get Service
-        </button>
-      </div>
+      <Link
+        to={`/Home/Quote_Request?s_id=${serviceId}`}
+      >
+        <div className="need_any_help_conct_btn">
+          <button type="button" className="btn btn-primary">
+            Get Service
+          </button>
+        </div>
+      </Link>
     </div>
   );
 };
