@@ -8,6 +8,8 @@ import { fetchSingleServiceData } from './services/singleServiceAPI';
 import { fetchBannerItems } from './banner/bannerAPI';
 import { fetchAppointmentSectionData } from './AppointmentSection/appointmentSectionAPI';
 
+
+import { fetchAboutComponent } from './about/aboutComponentAPI';
 import fetchAboutHighlight from './about/aboutHighlightAPI';
 import fetchFixifyClientsAPI from './fixifyClients/fixifyClientsAPI';
 
@@ -67,6 +69,9 @@ class ApiFacade {
 
   static fetchAppointmentSection(){
     return fetchAppointmentSectionData();
+  }
+  static fetchAboutComponent() {
+    return fetchAboutComponent();
   }
   
 }
