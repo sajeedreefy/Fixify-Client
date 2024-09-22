@@ -3,7 +3,7 @@ import axiosInstance from '../axiosInstance';
 // Function to create a new customer
 export const createCustomer = async (customerData) => {
   try {
-    const response = await axiosInstance.post('/Customer', {
+    const response = await axiosInstance.post('Customer', {
       data: {
         customer_name: customerData.customer_name,
         customer_group: "All Customer Groups", // This could be dynamic or a fixed value based on your ERPNext setup
@@ -24,7 +24,7 @@ export const createCustomer = async (customerData) => {
 // Function to create a new quotation
 export const createQuotation = async (quotationData) => {
   try {
-    const response = await axiosInstance.post('/Quotation', {
+    const response = await axiosInstance.post('Quotation', {
       data: {
         customer: quotationData.customer,
         party_name: quotationData.customer,

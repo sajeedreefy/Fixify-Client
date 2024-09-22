@@ -90,7 +90,7 @@ const ReviewComponent2 = () => {
                         <div className="client_review_img_outer">
                           <div className="client_review_img">
                             <img
-                              src={`https://admin-fixify.glascutr.com${reviewItem.customer_image}`}
+                              src={`${process.env.REACT_APP_BASE_URL}${reviewItem.customer_image}`}
                               alt={`review_img_${index + subIndex + 1}`}
                             />
                           </div>

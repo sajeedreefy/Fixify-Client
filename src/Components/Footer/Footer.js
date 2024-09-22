@@ -12,8 +12,7 @@ import call from "../../images/call.png";
 import mail from "../../images/maill.png";
 import location from "../../images/location.png";
 import arrow from "../../images/rightt_arrow.png";
-import logo from "../../images/Footer_Logo.png";
-import { fetchNavItems } from "../../api/navigation_items/navigationItemsAPI";
+import { fetchNavItems } from "../../api/NavigationItems/navigationItemsAPI";
 import fetchPreferenceAPI from "../../api/preference/preferenceAPI";
 import { Link } from "react-router-dom";
 import postNewsletterAPI from "../../api/newsletter/newsletterAPI";
@@ -76,7 +75,7 @@ const Footer = () => {
     }
   };
 
-  if (!navItems) {
+  if (navItems === null || preferenceItems === null) {
     return <div>Loading...</div>; // Add a fallback while data is being fetched
   }
 
@@ -112,7 +111,7 @@ const Footer = () => {
             <div class="footer_Logo">
               <Link to="/">
                 <img
-                  src={`https://admin-fixify.glascutr.com${preferenceItems?.site_logo}`}
+                  src={`${process.env.REACT_APP_BASE_URL}${preferenceItems?.site_logo}`}
                   style={{ height: "58px" }}
                   alt="logo"
                 />
@@ -194,7 +193,7 @@ const Footer = () => {
                   <img src={location} alt="location" />
                 </div>
                 <div class="footer_call">
-                  <address>{preferenceItems.address}</address>
+                  <address>{preferenceItems?.address}</address>
                 </div>
               </div>
             </div>
@@ -212,7 +211,7 @@ const Footer = () => {
                   <img src={location} alt="location" />
                 </div>
                 <div class="footer_call">
-                  <p>{preferenceItems.opening_hours}</p>
+                  <p>{preferenceItems?.opening_hours}</p>
                 </div>
               </div>
             </div>
@@ -229,7 +228,7 @@ const Footer = () => {
                       type="email"
                       class="form-control"
                       id="email"
-                      value={formData.email}
+                      value={formData?.email}
                       aria-describedby="emailHelp"
                       placeholder="Your email address"
                       onChange={handleInputChange}

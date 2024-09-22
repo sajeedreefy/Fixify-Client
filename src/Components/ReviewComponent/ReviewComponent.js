@@ -9,12 +9,16 @@ import title from "../../images/title_img.png"
 import quote from '../../images/quote.png'
 import { Link } from 'react-router-dom';
 import ApiFacade from '../../api/facade';
+import { ShimmerPostItem } from 'react-shimmer-effects';
+
 
 
 const ReviewComponent = () => {
 
 
     const [customerReviewData, setCustomerReviewData] = useState(null);
+    const [reviewLoading, setReviewLoading] = useState(true);
+
 
     useEffect(() => {
         const loadCustomerReviewData = async () => {
@@ -23,6 +27,8 @@ const ReviewComponent = () => {
                 setCustomerReviewData(data.slice(0, 4)); // Slice to get only 4 reviews
             } catch (error) {
                 console.error('Error loading reviews:', error);
+            } finally {
+                setReviewLoading(false);
             }
         };
 
@@ -60,95 +66,104 @@ const ReviewComponent = () => {
                 <img src={reviewBG4} alt="client_review_bg_4" />
             </div>
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="our_team_title">
-                            <div class="troo_da_hero_small_outer about d-flex justify-content-center">
-                                <div class="troo_da_small_title_img zoom-in-zoom-out">
-                                    <img src={title} alt="title_img" />
-                                </div>
-                                <div class="troo_da_hero_left_small_title">
-                                    <h4>Clients Review</h4>
-                                </div>
-                            </div>
-                            <div class="troo_da_hero_we_r_done_title">
-                                <h2>See our trusted clients
-                                    what say about us</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    {customerReviewData?.slice(0, 2).map((review, index) => (
-                        <div className="col-lg-6" key={index}>
-                            <div className={`client_review_box ${index === 1 ? 'client_box_2' : ''}`}>
-                                <div className="client_review_img_outer">
-                                    <div className="client_review_img">
-                                        <img src={`https://admin-fixify.glascutr.com${review.customer_image}`} alt={`review_img_${index + 1}`} />
-                                    </div>
-                                    <div className="review_quote">
-                                        <img src={quote} alt="quote" />
-                                    </div>
-                                </div>
-                                <div className="reviw_second_box">
-                                    <div className="review_outer d-flex justify-content-between">
-                                        <div className="client_review_detail_outer">
-                                            <div className="clinet_review_name">
-                                                <p>{review.customer}</p>
-                                            </div>
-                                            <div className="clinet_review_days">
-                                                <p>{new Date(review.creation).toDateString()}</p>
-                                            </div>
+                {reviewLoading ? (
+                    <>
+                        <ShimmerPostItem card cta />
+                        <ShimmerPostItem card cta />
+                    </>
+                ) : (
+                    <>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="our_team_title">
+                                    <div class="troo_da_hero_small_outer about d-flex justify-content-center">
+                                        <div class="troo_da_small_title_img zoom-in-zoom-out">
+                                            <img src={title} alt="title_img" />
                                         </div>
-                                        <div className="clinet_review_star">
-                                            {renderStars(parseInt(review.rating))}
+                                        <div class="troo_da_hero_left_small_title">
+                                            <h4>Clients Review</h4>
                                         </div>
                                     </div>
-                                    <div className="review_content">
-                                        <p>{review.comment}</p>
+                                    <div class="troo_da_hero_we_r_done_title">
+                                        <h2>See our trusted clients
+                                            what say about us</h2>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    ))}
-
-                </div>
-                <div class="row review_row">
-                    {customerReviewData?.slice(2, 4).map((review, index) => (
-
-                        <div class="col-lg-6" key={index}>
-                            <div className={`client_review_box ${index === 3 ? 'client_box_4' : ''}`}>
-                                <div class="client_review_img_outer">
-                                    <div class="client_review_img">
-                                        <img src={`https://admin-fixify.glascutr.com${review.customer_image}`} alt={`review_img_${index + 1}`} />
-                                    </div>
-                                    <div class="review_quote">
-                                        <img src={quote} alt="quote" />
-                                    </div>
-                                </div>
-                                <div class="reviw_second_box">
-                                    <div class="review_outer d-flex justify-content-between">
-                                        <div class="client_review_detail_outer">
-                                            <div class="clinet_review_name">
-                                                <p>{review.customer}</p>
+                        <div class="row">
+                            {customerReviewData?.slice(0, 2).map((review, index) => (
+                                <div className="col-lg-6" key={index}>
+                                    <div className={`client_review_box ${index === 1 ? 'client_box_2' : ''}`}>
+                                        <div className="client_review_img_outer">
+                                            <div className="client_review_img">
+                                                <img src={`${process.env.REACT_APP_BASE_URL}${review.customer_image}`} alt={`review_img_${index + 1}`} />
                                             </div>
-                                            <div className="clinet_review_days">
-                                                <p>{new Date(review.creation).toDateString()}</p>
+                                            <div className="review_quote">
+                                                <img src={quote} alt="quote" />
                                             </div>
                                         </div>
-                                        <div className="clinet_review_star">
-                                            {renderStars(parseInt(review.rating))}
+                                        <div className="reviw_second_box">
+                                            <div className="review_outer d-flex justify-content-between">
+                                                <div className="client_review_detail_outer">
+                                                    <div className="clinet_review_name">
+                                                        <p>{review.customer}</p>
+                                                    </div>
+                                                    <div className="clinet_review_days">
+                                                        <p>{new Date(review.creation).toDateString()}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="clinet_review_star">
+                                                    {renderStars(parseInt(review.rating))}
+                                                </div>
+                                            </div>
+                                            <div className="review_content">
+                                                <p>{review.comment}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="review_content">
-                                        <p>{review.comment}</p>
-                                    </div>
                                 </div>
-                            </div>
+                            ))}
+
                         </div>
+                        <div class="row review_row">
+                            {customerReviewData?.slice(2, 4).map((review, index) => (
 
-                    ))}
-                </div>
+                                <div class="col-lg-6" key={index}>
+                                    <div className={`client_review_box ${index === 3 ? 'client_box_4' : ''}`}>
+                                        <div class="client_review_img_outer">
+                                            <div class="client_review_img">
+                                                <img src={`${process.env.REACT_APP_BASE_URL}${review.customer_image}`} alt={`review_img_${index + 1}`} />
+                                            </div>
+                                            <div class="review_quote">
+                                                <img src={quote} alt="quote" />
+                                            </div>
+                                        </div>
+                                        <div class="reviw_second_box">
+                                            <div class="review_outer d-flex justify-content-between">
+                                                <div class="client_review_detail_outer">
+                                                    <div class="clinet_review_name">
+                                                        <p>{review.customer}</p>
+                                                    </div>
+                                                    <div className="clinet_review_days">
+                                                        <p>{new Date(review.creation).toDateString()}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="clinet_review_star">
+                                                    {renderStars(parseInt(review.rating))}
+                                                </div>
+                                            </div>
+                                            <div class="review_content">
+                                                <p>{review.comment}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            ))}
+                        </div>
+                    </>
+                )}
                 <div class="troo_da_about_we_r_done_btn text-center">
                     <Link to="/Home/Testimonial">
                         <button type="button" class="btn btn-primary">See More Review</button>

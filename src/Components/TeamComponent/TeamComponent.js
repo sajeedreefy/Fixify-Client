@@ -48,7 +48,7 @@ const TeamComponent = () => {
               <div class="troo_da_hand_we_r_done_box">
                 <div class="troo_da_hand_we_r_done_box_inner">
                   <div class="troo_da_hand_we_r_done_box_img">
-                    <img src={`https://admin-fixify.glascutr.com/${mem.image}`} alt="service_img-1" />
+                    <img src={`${process.env.REACT_APP_BASE_URL}/${mem.image}`} alt="service_img-1" />
                   </div>
                   <div class="troo_da_hand_we_r_done_box_hover_detail our_team_hoverBox">
                     <h4>{mem.employee_name}</h4>

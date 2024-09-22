@@ -3,7 +3,7 @@ import axiosInstance from "../axiosInstance";
 export const fetchAboutComponent = async () => {
   try {
     const aboutSection = await axiosInstance.get(
-      `/About Us?fields=["*"]&filters=[["enable","=","1"]]`
+      `About Us?fields=["*"]&filters=[["enable","=","1"]]`
     );
     // console.log(test);
 
