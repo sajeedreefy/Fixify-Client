@@ -5,6 +5,9 @@ import { fetchCustomerReviewData } from './customerReview/customerReviewsAPI';
 import { fetchTopMenuData } from './topMenu/topMenuAPI';
 import { fetchNavItems } from './NavigationItems/navigationItemsAPI';
 import { fetchSingleServiceData } from './services/singleServiceAPI';
+import { fetchBannerItems } from './banner/bannerAPI';
+import fetchAboutHighlight from './about/aboutHighlightAPI';
+import fetchFixifyClientsAPI from './fixifyClients/fixifyClientsAPI';
 
 import fetchPreferenceAPI from './preference/preferenceAPI';
 
@@ -46,6 +49,18 @@ class ApiFacade {
 
   static fetchCustomerReviews() {
     return fetchCustomerReviewData();
+  }
+
+  static fetchAboutHighlight() {
+    return fetchAboutHighlight();
+  }
+
+  static fetchFixifyClientsAPI() {
+    return fetchFixifyClientsAPI();
+  }
+
+  static fetchBannerItems() {
+    return fetchBannerItems();
   }
   
 }
