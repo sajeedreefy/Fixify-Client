@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./BlogDetails.css";
 import { useLocation } from "react-router-dom";
 import { fetchSingleBlogPostData } from "../../api/blog_section/blogSectionAPI";
+import { FaTwitter, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 // import { fetchingSingleBlogPostComment } from "../../api/blog_section/blogSectionAPI";
 
 const BlogDetailsComponent = () => {
@@ -43,7 +44,7 @@ const BlogDetailsComponent = () => {
             <div class="blog_detail_title">
               <h2>{singleData?.title}</h2>
               <img src={`${process.env.REACT_APP_BASE_URL}${singleData?.meta_image}`} alt="blog" />
-              <h3>
+              <h3 style={{"marginTop":"18px"}}>
                 {singleData?.blog_intro}
               </h3>
               <p>
@@ -53,42 +54,44 @@ const BlogDetailsComponent = () => {
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="blog_detail_benifits_title">
-              <h4>Benefits</h4>
+        {singleData?.custom_benefits.length!==0 && <>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="blog_detail_benifits_title">
+                <h4>Benefits</h4>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4">
-              <div class="blog_detail_benifits_outer">
-                <ul class="blog_detail_benifits_ul">
-                  {singleData?.custom_benefits.slice(0,3).map((each,index)=>(
-                    <li key={index}>{each.benefit}</li>
-                  ))}
-                </ul>
-              </div>
+          <div class="row">
+            <div class="col-lg-4">
+                <div class="blog_detail_benifits_outer">
+                  <ul class="blog_detail_benifits_ul">
+                    {singleData?.custom_benefits.slice(0,3).map((each,index)=>(
+                      <li key={index}>{each.benefit}</li>
+                    ))}
+                  </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="blog_detail_benifits_outer">
+                  <ul class="blog_detail_benifits_ul">
+                    {singleData?.custom_benefits.slice(3,6).map((each,index)=>(
+                      <li key={index}>{each.benefit}</li>
+                    ))}
+                  </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="blog_detail_benifits_outer">
+                  <ul class="blog_detail_benifits_ul">
+                    {singleData?.custom_benefits.slice(6).map((each,index)=>(
+                      <li key={index}>{each.benefit}</li>
+                    ))}
+                  </ul>
+                </div>
+            </div>
           </div>
-          <div class="col-lg-4">
-              <div class="blog_detail_benifits_outer">
-                <ul class="blog_detail_benifits_ul">
-                  {singleData?.custom_benefits.slice(3,6).map((each,index)=>(
-                    <li key={index}>{each.benefit}</li>
-                  ))}
-                </ul>
-              </div>
-          </div>
-          <div class="col-lg-4">
-              <div class="blog_detail_benifits_outer">
-                <ul class="blog_detail_benifits_ul">
-                  {singleData?.custom_benefits.slice(6).map((each,index)=>(
-                    <li key={index}>{each.benefit}</li>
-                  ))}
-                </ul>
-              </div>
-          </div>
-        </div>
+        </>}
         <div class="row">
           <div class="col-lg-12">
             <div class="blog_detail_social_icon">
@@ -96,14 +99,14 @@ const BlogDetailsComponent = () => {
                 <div class="troo_da_top_header_inner d-flex">
                   <span>Share on:</span>
                   <ul class="top_header_list d-flex">
-                    <li>
-                      <i class="fa fa-facebook" aria-hidden="true"></i>
+                    <li style={{"marginRight":"5px"}}>
+                      <button style={{"border": "none", "backgroundColor": "#fcecd7"}}> <FaFacebookF /></button>  
                     </li>
-                    <li>
-                      <i class="fa fa-twitter" aria-hidden="true"></i>
+                    <li style={{"marginRight":"5px"}}>
+                      <button style={{"border": "none", "backgroundColor": "#fcecd7"}}><FaTwitter/></button>
                     </li>
-                    <li>
-                      <i class="fa fa-linkedin" aria-hidden="true"></i>
+                    <li style={{"marginRight":"5px"}}>
+                      <button style={{"border": "none", "backgroundColor": "#fcecd7"}}><FaLinkedinIn/></button>
                     </li>
                   </ul>
                 </div>

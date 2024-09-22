@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./BlogDetails.css"
 import { Link, createSearchParams} from "react-router-dom";
 import { fetchBlogPostData } from "../../api/blog_section/blogSectionAPI";
+import BlogComponent2 from "./BlogComponent2";
 
 
 const BlogComponent3 = () => {
@@ -24,7 +25,7 @@ const BlogComponent3 = () => {
 
 
   return (
-    <section class="read_ur_latest_blox_wrapper blog_detail_latest">
+    <section class=" blog_detail_latest">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">

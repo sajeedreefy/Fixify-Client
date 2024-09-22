@@ -5,7 +5,7 @@ import axiosInstance from "../axiosInstance";
 export const fetchBlogPostData = async () => {
     try {
         const blogPostData = [];
-        const response = await axiosInstance.get('Blog Post?fields=["*"]');
+        const response = await axiosInstance.get('Blog Post?fields=["*"]&filters=[["published","=","1"]]');
         
         const blogPostPromises = response.data.data.map(each => 
             axiosInstance.get(`Blog Post/${each.name}`).then(res => res.data.data)
