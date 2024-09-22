@@ -4,6 +4,8 @@ import "./ContactComponent.css";
 import location from "../../images/Contct_location.png"
 import call from "../../images/Contct_call.png"
 import time from "../../images/Contct_time.png"
+import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 const ContactCompoent = () => {
   const [allServiceData, setAllServiceData] = useState(null);
@@ -89,9 +91,15 @@ const ContactCompoent = () => {
         additionalInfo: ''
       });
 
-      console.log(quotationResponse);
+      if (quotationResponse) {
+        toast.success('Quotation created successfully!');
 
-      alert('Contact created successfully!');
+      }
+      else {
+        toast.error('There is something wrong!');
+      }
+
+
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('There was an error processing your request.');
@@ -100,6 +108,7 @@ const ContactCompoent = () => {
 
   return (
     <>
+      <ToastContainer position="bottom-right" />
       <section class="contact_us_wrapper">
         <div class="container">
           <div class="row">
@@ -154,7 +163,7 @@ const ContactCompoent = () => {
                 <div class="conct_box_detail">
                   <h4>Opening time</h4>
                   <div class="contct_timing">
-                   {preferenceItems?.opening_hours}
+                    {preferenceItems?.opening_hours}
                   </div>
                 </div>
               </div>
