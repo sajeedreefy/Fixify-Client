@@ -10,6 +10,7 @@ import { fetchAppointmentSectionData } from './AppointmentSection/appointmentSec
 
 
 import { fetchAboutComponent } from './about/aboutComponentAPI';
+
 import fetchAboutHighlight from './about/aboutHighlightAPI';
 import fetchFixifyClientsAPI from './fixifyClients/fixifyClientsAPI';
 
@@ -73,6 +74,7 @@ class ApiFacade {
   static fetchAboutComponent() {
     return fetchAboutComponent();
   }
+
   
 }
 
