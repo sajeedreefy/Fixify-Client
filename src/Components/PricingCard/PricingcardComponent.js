@@ -3,11 +3,13 @@ import "./PricingcardComponent.css"
 import title from "../../images/title_img.png"
 import { Link } from 'react-router-dom'
 import { fetchPricingPlanData } from '../../api/pricing_plan/pricingPlanAPI'
-
+import { ShimmerTitle, ShimmerText, ShimmerButton } from 'react-shimmer-effects'
+import ShimmerThreeCards from './ShimmerThreeCards'
 
 const PricingcardComponent = () => {
 
     const [data, setData] = useState(null);
+    const [loadData, setLoadData] = useState(true);
 
     useEffect(()=>{
         const loadPricingPlanData = async()=>{
@@ -16,6 +18,8 @@ const PricingcardComponent = () => {
                setData(data);
             } catch (error) {
                 console.error("Pricing Plan Data Fetching Error: ", error)
+            } finally {
+                setLoadData(false)
             }
         }
     
@@ -28,34 +32,55 @@ const PricingcardComponent = () => {
             <div class="row">
                 <div class="col-lg-4">
                     <div class="priciing_title_outer">
-                        <div class="troo_da_hero_small_outer about d-flex">
-                            <div class="troo_da_small_title_img zoom-in-zoom-out">
-                                <img src={title} alt="title_img"/>
+                        {loadData? 
+                            <div style={{ marginBottom: '20px'}}>
+                                <ShimmerTitle line={1} gap={10} />
+                            </div>:
+                            <div class="troo_da_hero_small_outer about d-flex">
+                                <div class="troo_da_small_title_img zoom-in-zoom-out">
+                                    <img src={title} alt="title_img"/>
+                                </div>
+                                <div class="troo_da_hero_left_small_title">
+                                    <h4>{data?.section_data.section_title}</h4>
+                                </div>
                             </div>
-                            <div class="troo_da_hero_left_small_title">
-                                <h4>{data?.section_data.section_title}</h4>
+                        }
+                        {loadData? 
+                            <div style={{ marginBottom: '20px'}}>
+                                <ShimmerTitle line={1} gap={10} />
+                            </div>:
+                            <div class="troo_da_about_hero_handyman_title">
+                                <h2>{data?.section_data.title}</h2>
                             </div>
-                        </div>
-                        <div class="troo_da_about_hero_handyman_title">
-                            <h2>{data?.section_data.title}</h2>
-                        </div>
+                        }
                     </div>
 
                 </div>
                 <div class="col-lg-4">
-                    <div class="pricing_title_content">
-                        <p>{data?.section_data.subtitle}</p>
-                    </div>
+                    {loadData? 
+                        <div style={{ marginBottom: '15px'}}>
+                            <ShimmerText line={5} gap={10} />
+                        </div>:
+                        <div class="pricing_title_content">
+                            <p>{data?.section_data.subtitle}</p>
+                        </div>
+                    }
                 </div>
                 <div class="col-lg-4">
-                    <div class="troo_da_about_we_r_done_btn text-end">
-                        <Link to="/">
-                        <button type="button" class="btn btn-primary">See All Plans</button>
-                        </Link>
-                    </div>
+                    {loadData?
+                        <div style={{ padding: '20px', width:"100%", display:'flex', justifyContent:'end', alignItems:'center'}}>
+                            <ShimmerButton size="lg"/>
+                        </div>:
+                        <div class="troo_da_about_we_r_done_btn text-end">
+                            <Link to="/">
+                            <button type="button" class="btn btn-primary">See All Plans</button>
+                            </Link>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="row">
+                {loadData? <ShimmerThreeCards/>:<>
                 {data && data.plan_data.map((each,index)=>(
                     <div key={index} class="col-lg-4">
                         <div class={`pricing_box ${each.is_active?"hover_box":""}`}>
@@ -82,10 +107,11 @@ const PricingcardComponent = () => {
                         </div>
                     </div>
                 ))}
+                </>}
             </div>
         </div>
     </section>
   )
 }
 
-export default PricingcardComponent
+export default PricingcardComponent;
