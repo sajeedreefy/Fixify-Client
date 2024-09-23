@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
-import ApiFacade from '../../api/facade'
+import ApiFacade from '../../api/facade';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from 'react-router-dom';
-
-
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Appointment = () => {
-
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const serviceId = queryParams.get('s_id');
 
-  const [allServiceData, setAllServiceData] = useState(null);
+  const [captchaToken, setCaptchaToken] = useState(null);
+
+  // This function will trigger when captcha is successfully solved
+  const handleCaptcha = (token) => {
+    setCaptchaToken(token);
+  };
+
+  const [allServiceData, setAllServiceData] = useState([]);
+  const [selectedServices, setSelectedServices] = useState(serviceId ? [serviceId] : []);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     address: '',
-    service: serviceId ? serviceId : '',
     date: '',
     additionalInfo: ''
   });
@@ -41,6 +46,19 @@ const Appointment = () => {
     setFormData({ ...formData, [id]: value });
   };
 
+  // Add a service to selected list
+  const handleServiceSelect = (e) => {
+    const selectedService = e.target.value;
+    if (selectedService && !selectedServices.includes(selectedService)) {
+      setSelectedServices([...selectedServices, selectedService]);
+    }
+  };
+
+  // Remove a service from selected list
+  const removeService = (service) => {
+    setSelectedServices(selectedServices.filter((item) => item !== service));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -53,34 +71,32 @@ const Appointment = () => {
       };
       const customerResponse = await ApiFacade.createCustomer(customerPayload);
 
-      // Create quotation
+      // Create quotation with multiple services
       const quotationPayload = {
-        // Use the created customer ID/name
         customer: customerResponse.name,
         appointment_date: formData.date,
-        items: [{
-          service: formData.service,
-
-        }],
+        items: selectedServices.map(service => ({
+          service: service,
+        })),
         additional_info: formData.additionalInfo
       };
 
       const quotationResponse = await ApiFacade.createQuotation(quotationPayload);
 
+      // Reset form
       setFormData({
         name: '',
         email: '',
         phone: '',
         address: '',
-        service: '',
         date: '',
         additionalInfo: ''
       });
+      setSelectedServices([]);
 
       if (quotationResponse) {
         toast.success('Quotation created successfully!');
-      }
-      else {
+      } else {
         toast.error('There is something wrong!');
       }
 
@@ -89,29 +105,28 @@ const Appointment = () => {
     }
   };
 
-
   return (
     <>
       <ToastContainer position="bottom-right" />
-
-      <section class="book_an_appoimnet_wrapper">
-        <div class="container">
-
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="book_an_appoinment_title text-center">
+      <section className="book_an_appoimnet_wrapper">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="book_an_appoinment_title text-center">
                 <h2>Book an appointment</h2>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="contact_form_box">
-                <div class="blog_detail_form">
+
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="contact_form_box">
+                <div className="blog_detail_form">
                   <form onSubmit={handleSubmit}>
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="form-group">
+                    {/* Input fields */}
+                    <div className="row">
+                      <div className="col-lg-6">
+                        <div className="form-group">
                           <input
                             type="text"
                             className="form-control"
@@ -123,8 +138,8 @@ const Appointment = () => {
                           />
                         </div>
                       </div>
-                      <div class="col-lg-6">
-                        <div class="form-group">
+                      <div className="col-lg-6">
+                        <div className="form-group">
                           <input
                             type="email"
                             className="form-control"
@@ -138,9 +153,9 @@ const Appointment = () => {
                       </div>
                     </div>
 
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="form-group">
+                    <div className="row">
+                      <div className="col-lg-6">
+                        <div className="form-group">
                           <input
                             type="text"
                             className="form-control"
@@ -152,8 +167,8 @@ const Appointment = () => {
                           />
                         </div>
                       </div>
-                      <div class="col-lg-6">
-                        <div class="form-group">
+                      <div className="col-lg-6">
+                        <div className="form-group">
                           <input
                             type="text"
                             className="form-control"
@@ -165,51 +180,71 @@ const Appointment = () => {
                         </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <div class="input-group date" id="datepicker">
-                            <input
-                              type="date"
-                              className="form-control"
-                              id="date"
-                              value={formData.date}
-                              onChange={handleInputChange}
-                              placeholder="Select date"
-                              required
-                            />
-                            <span class="input-group-append">
-                              <span class="input-group-text  d-block">
-                                {/* <FaCalendar /> */}
-                              </span>
-                            </span>
-                          </div>
-                        </div>
 
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="form-group">
+                    <div className="row">
+
+                      <div className="col-lg-6">
+                        <div className="form-group">
+                          {/* Service selection dropdown */}
                           <select
                             className="form-control"
-                            id="service"
-                            value={formData.service}
-                            onChange={handleInputChange}
-                            required
+                            onChange={handleServiceSelect}
+                            value="" // Keep the dropdown open for selection
                           >
-                            <option value="">Select service</option>
-                            {allServiceData?.map((service, index) => (
-                              <option key={index} value={service.name}>{service.name}</option>
+                            <option value="" disabled>Select service</option>
+                            {allServiceData.map((service, index) => (
+                              <option key={index} value={service.name}>
+                                {service.name}
+                              </option>
                             ))}
                           </select>
+
+                          {/* Selected services displayed as tags */}
+                          <div className="selected-services">
+                            {selectedServices.map((service, index) => (
+                              <span key={index} className="service-tag">
+                                {service}
+                                <button
+                                  type="button"
+                                  onClick={() => removeService(service)}
+                                  className="remove-service-btn"
+                                >
+                                  &times;
+                                </button>
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-6">
+                        <div className="form-group">
+                          <input
+                            type="date"
+                            className="form-control"
+                            id="date"
+                            value={formData.date}
+                            onChange={handleInputChange}
+                            placeholder="Select date"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
-                    <div class="row">
-                      {/* <div class="col-lg-6">
 
-                      </div> */}
-                      <div class="col-lg-6">
-                        <div class="form-group">
+                    {/* Additional Info */}
+                    <div className="row">
+                      <div className="col-lg-6">
+
+                        <div className="form-group">
+                          <ReCAPTCHA
+                            sitekey={`${process.env.REACT_APP_FORM_CAPTCHA_KEY}`}  // Replace with your Google reCAPTCHA site key
+                            onChange={handleCaptcha}
+                          />
+                        </div>
+
+                      </div>
+                      <div className="col-lg-6">
+                        <div className="form-group">
                           <textarea
                             className="form-control"
                             id="additionalInfo"
@@ -219,11 +254,11 @@ const Appointment = () => {
                           ></textarea>
                         </div>
                       </div>
+
                     </div>
 
-
-                    <div class="form_submit">
-                      <button type="submit" class="btn btn-primary">
+                    <div className="form_submit">
+                      <button type="submit" className="btn btn-primary">
                         Submit
                       </button>
                     </div>
