@@ -250,4 +250,37 @@ select {
   .book_an_appoinment_title {
     padding-bottom: 25px;
   }
+  
+}
+
+
+.selected-services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.service-tag {
+  background-color:  #f4f9fd;; /* Blue background */
+  color: rgb(97, 97, 97);
+  border-radius: 20px;
+  padding: 5px 10px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  border: .1px solid rgb(230, 230, 230);
+}
+
+.service-tag button {
+  background: none;
+  border: none;
+  color: rgb(151, 151, 151);
+  margin-left: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.service-tag button:hover {
+  color: #fb991c; /* Red color on hover */
 }
