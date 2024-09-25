@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./BrandLogo.css";
-import fetchFixifyClientsAPI from "../../api/fixifyClients/fixifyClientsAPI";
 import { ShimmerSimpleGallery } from "react-shimmer-effects";
 import ApiFacade from "../../api/facade";
 

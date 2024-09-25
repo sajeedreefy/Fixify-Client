@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./BlogDetails.css"
 import { Link, createSearchParams} from "react-router-dom";
 import { fetchBlogPostData } from "../../api/blog_section/blogSectionAPI";
-import BlogComponent2 from "./BlogComponent2";
 
 
 const BlogComponent3 = () => {

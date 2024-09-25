@@ -1,4 +1,3 @@
-import React from 'react'
 import axiosInstance from '../axiosInstance'
 
 async function fetchFixifyClientsAPI() {

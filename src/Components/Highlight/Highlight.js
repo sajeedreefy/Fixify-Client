@@ -182,7 +182,7 @@ const Highlight = () => {
                           </ScrollTrigger>
                           <p>{highlight?.cards[0].count_type}</p>
                         </div>
-                      </div>}
+                      </div>
                     </div>
                     <div class="col-lg-6">
                       {/* second */}

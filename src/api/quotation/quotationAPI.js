@@ -10,7 +10,7 @@ export const createCustomer = async (customerData) => {
         territory: "All Territories",         // Adjust this based on your needs
         email_id: customerData.customer_email,
         mobile_no: customerData.customer_phone,
-        primary_address: customerData.address,
+        primary_address: customerData.customer_address,
         // Add more fields as needed from your ERPNext Customer DocType
       }
     });
@@ -36,7 +36,6 @@ export const createQuotation = async (quotationData) => {
           schedule_date: item.appointment_date,  // Custom field for appointment date
           rate: 0  // You can fetch or calculate the rate for the service here
         })),
-        custom_remarks: quotationData.additional_info,  // Add other fields as needed from your ERPNext Quotation DocType
         // Add more fields as needed from your ERPNext Quotation DocType
       }
     });

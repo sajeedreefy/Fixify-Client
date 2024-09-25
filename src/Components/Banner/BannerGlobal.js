@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import "./BannerGlobal.css";
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
-import { ServiceData } from '../ServiceComponent/ServiceData';
 import { BlogData } from '../BlogComponent/BlogData';
 import { ProjectData } from '../ProjectComponent/ProjectData';
 import { HeaderData } from '../Header/HeaderData';
-import { fetchAllServiceData } from '../../api/services/allServicesAPI';
+import ApiFacade from '../../api/facade';
 
 const BannerGlobal = () => {
     const [heading, setHeading] = useState('');
@@ -19,7 +18,7 @@ const BannerGlobal = () => {
     useEffect(() => {
       const loadAllServiceData = async () => {
         try {
-          const data = await fetchAllServiceData();
+          const data = await ApiFacade.fetchAllServices();
           setAllServiceData(data || []); // Ensure that even if data is null, it doesn't break
         } catch (error) {
           console.error('Error loading services:', error);
