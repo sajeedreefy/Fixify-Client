@@ -25,7 +25,6 @@ const Appointment = () => {
     phone: '',
     address: '',
     date: '',
-    additionalInfo: ''
   });
 
   useEffect(() => {
@@ -59,15 +58,36 @@ const Appointment = () => {
     setSelectedServices(selectedServices.filter((item) => item !== service));
   };
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateEmail(formData.email)) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+  
+    if (!captchaToken) {
+      toast.warn("Please verify that you are not a robot!");
+      return;
+    }
+    if (selectedServices.length === 0) {
+
+      toast.warn("Please select at least one service!");
+      return;
+    }
+
     try {
       // Create customer
       const customerPayload = {
         customer_name: formData.name,
         customer_email: formData.email,
         customer_phone: formData.phone,
-        address: formData.address
+        customer_address: formData.address
       };
       const customerResponse = await ApiFacade.createCustomer(customerPayload);
 
@@ -78,7 +98,7 @@ const Appointment = () => {
         items: selectedServices.map(service => ({
           service: service,
         })),
-        additional_info: formData.additionalInfo
+        // additional_info: formData.additionalInfo
       };
 
       const quotationResponse = await ApiFacade.createQuotation(quotationPayload);
@@ -90,7 +110,7 @@ const Appointment = () => {
         phone: '',
         address: '',
         date: '',
-        additionalInfo: ''
+        // additionalInfo: ''
       });
       setSelectedServices([]);
 
@@ -113,7 +133,7 @@ const Appointment = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="book_an_appoinment_title text-center">
-                <h2>Book an appointment</h2>
+                <h2>Request For Quotation</h2>
               </div>
             </div>
           </div>
@@ -133,7 +153,7 @@ const Appointment = () => {
                             id="name"
                             value={formData.name}
                             onChange={handleInputChange}
-                            placeholder="Enter your name"
+                            placeholder="Enter your name *"
                             required
                           />
                         </div>
@@ -147,7 +167,7 @@ const Appointment = () => {
                             value={formData.email}
                             onChange={handleInputChange}
                             placeholder="Your email"
-                            required
+                            
                           />
                         </div>
                       </div>
@@ -162,7 +182,7 @@ const Appointment = () => {
                             id="phone"
                             value={formData.phone}
                             onChange={handleInputChange}
-                            placeholder="Your phone"
+                            placeholder="Your phone *"
                             required
                           />
                         </div>
@@ -184,14 +204,18 @@ const Appointment = () => {
                     <div className="row">
 
                       <div className="col-lg-6">
+
                         <div className="form-group">
                           {/* Service selection dropdown */}
+                          {selectedServices.length !== 0 ? <>
+                            &nbsp;<small style={{ color: 'gray' }}>[Note: You can select multiple services.]</small><br />
+                          </> : <></>}
                           <select
                             className="form-control"
                             onChange={handleServiceSelect}
                             value="" // Keep the dropdown open for selection
                           >
-                            <option value="" disabled>Select service</option>
+                            <option value="" disabled>Select Services</option>
                             {allServiceData.map((service, index) => (
                               <option key={index} value={service.name}>
                                 {service.name}
@@ -199,8 +223,13 @@ const Appointment = () => {
                             ))}
                           </select>
 
+
                           {/* Selected services displayed as tags */}
+                          {selectedServices.length !== 0 ? <>
+                            &nbsp;<small style={{ color: 'gray' }}>Selected Services:</small>
+                          </> : <></>}
                           <div className="selected-services">
+
                             {selectedServices.map((service, index) => (
                               <span key={index} className="service-tag">
                                 {service}
@@ -218,21 +247,21 @@ const Appointment = () => {
                       </div>
                       <div className="col-lg-6">
                         <div className="form-group">
+                          {/* &nbsp;<label style={{marginBottom: '10px', color: 'gray'}}>Appointment Date</label> */}
                           <input
                             type="date"
                             className="form-control"
                             id="date"
                             value={formData.date}
                             onChange={handleInputChange}
-                            placeholder="Select date"
-                            required
+                            placeholder="Select Date"
                           />
                         </div>
                       </div>
                     </div>
 
                     {/* Additional Info */}
-                    <div className="row">
+                    <div className="row mt-3">
                       <div className="col-lg-6">
 
                         <div className="form-group">
@@ -244,15 +273,7 @@ const Appointment = () => {
 
                       </div>
                       <div className="col-lg-6">
-                        <div className="form-group">
-                          <textarea
-                            className="form-control"
-                            id="additionalInfo"
-                            value={formData.additionalInfo}
-                            onChange={handleInputChange}
-                            placeholder="Write something if you wish"
-                          ></textarea>
-                        </div>
+
                       </div>
 
                     </div>

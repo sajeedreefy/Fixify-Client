@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./AboutComponent.css";
-import { ShimmerPostItem, ShimmerPostList } from "react-shimmer-effects";
+import { ShimmerPostList } from "react-shimmer-effects";
 import ApiFacade from "../../api/facade";
 
 const AboutHighlight = () => {
@@ -34,7 +34,6 @@ const AboutHighlight = () => {
                 row={1}
                 gap={30}
               />
-              ;
             </>
           ) : (
             <div class="row">

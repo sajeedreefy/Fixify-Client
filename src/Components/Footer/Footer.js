@@ -12,12 +12,10 @@ import call from "../../images/call.png";
 import mail from "../../images/maill.png";
 import location from "../../images/location.png";
 import arrow from "../../images/rightt_arrow.png";
-import { fetchNavItems } from "../../api/NavigationItems/navigationItemsAPI";
-import fetchPreferenceAPI from "../../api/preference/preferenceAPI";
 import { Link } from "react-router-dom";
 import postNewsletterAPI from "../../api/newsletter/newsletterAPI";
 import ApiFacade from "../../api/facade";
-import { ShimmerPostItem, ShimmerTable } from "react-shimmer-effects";
+import { ShimmerTable } from "react-shimmer-effects";
 
 const Footer = () => {
   const [navItems, setNavItems] = useState(null);

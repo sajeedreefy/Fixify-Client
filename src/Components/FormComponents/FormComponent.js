@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 import { ShimmerTitle } from 'react-shimmer-effects';
+import ReCAPTCHA from 'react-google-recaptcha';
+
 
 
 
@@ -15,17 +17,38 @@ const FormComponent = () => {
   const [appointmentSectionData, setAppointmentSectionData] = useState(null);
   const [appointmentLoading, setAppointmentLoading] = useState(true);
 
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [captchaToken, setCaptchaToken] = useState(null);
+
+
+  // Add a service to selected list
+  const handleServiceSelect = (e) => {
+    const selectedService = e.target.value;
+    if (selectedService && !selectedServices.includes(selectedService)) {
+      setSelectedServices([...selectedServices, selectedService]);
+    }
+  };
+
+  // Remove a service from selected list
+  const removeService = (service) => {
+    setSelectedServices(selectedServices.filter((item) => item !== service));
+  };
+
+  // This function will trigger when captcha is successfully solved
+  const handleCaptcha = (token) => {
+    setCaptchaToken(token);
+  };
+
+
+
   const [allServiceData, setAllServiceData] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    city: '',
-    areaCode: '',
-    service: '',
+    address: '',
     date: '',
-    time: '',
-    additionalInfo: ''
+
   });
 
   const [preferenceItems, setPreferenceItems] = useState(null);
@@ -76,29 +99,45 @@ const FormComponent = () => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateEmail(formData.email)) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+    if (!captchaToken) {
+      toast.warn("Please verify that you are not a robot!");
+      return;
+    }
+    if (selectedServices.length === 0) {
+
+      toast.warn("Please select at least one service!");
+      return;
+    }
     try {
       // Create customer
       const customerPayload = {
         customer_name: formData.name,
         customer_email: formData.email,
         customer_phone: formData.phone,
-        city: formData.city
+        customer_address: formData.address
       };
       const customerResponse = await ApiFacade.createCustomer(customerPayload);
 
       // Create quotation
       const quotationPayload = {
-        customer: customerResponse.name, // Use the created customer ID/name
+        // Use the created customer ID/name
+        customer: customerResponse.name,
         appointment_date: formData.date,
-        appointment_time: formData.time,
-        items: [{
-          service: formData.service,
-
-        }],
-        additional_info: formData.additionalInfo
+        items: selectedServices.map(service => ({
+          service: service,
+        })),
       };
       const quotationResponse = await ApiFacade.createQuotation(quotationPayload);
 
@@ -111,18 +150,20 @@ const FormComponent = () => {
         service: '',
         date: '',
         time: '',
-        additionalInfo: ''
       });
 
+      setSelectedServices([]);
+
       if (quotationResponse) {
-        toast.success('Quotation created successfully!');
-      }
-      else {
+        toast.success('Appointment submitted successfully!');
+      } else {
         toast.error('There is something wrong!');
       }
+
+
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('There was an error processing your request.');
+      toast.error('There was an error processing your request.');
+
     }
   };
 
@@ -206,7 +247,19 @@ const FormComponent = () => {
                       id="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="Enter your name"
+                      placeholder="Enter your name *"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="Your phone *"
                       required
                     />
                   </div>
@@ -218,33 +271,57 @@ const FormComponent = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="Your email"
-                      required
+
                     />
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                     <input
                       type="text"
                       className="form-control"
-                      id="phone"
-                      value={formData.phone}
+                      id="address"
+                      value={formData.address}
                       onChange={handleInputChange}
-                      placeholder="Your phone"
-                      required
+                      placeholder="Address"
                     />
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
+                    {/* Service selection dropdown */}
+                    {selectedServices.length !== 0 ? <>
+                      &nbsp;<small style={{ color: 'gray' }}>[Note: You can select multiple services.]</small><br />
+                    </> : <></>}
                     <select
                       className="form-control"
-                      id="service"
-                      value={formData.service}
-                      onChange={handleInputChange}
-                      required
+                      onChange={handleServiceSelect}
+                      value="" // Keep the dropdown open for selection
                     >
-                      <option value="">Select service</option>
+                      <option value="" disabled>Select Services</option>
                       {allServiceData?.map((service, index) => (
-                        <option key={index} value={service.name}>{service.name}</option>
+                        <option key={index} value={service.name}>
+                          {service.name}
+                        </option>
                       ))}
                     </select>
+
+
+                    {/* Selected services displayed as tags */}
+                    {selectedServices.length !== 0 ? <>
+                      &nbsp;<small style={{ color: 'gray' }}>Selected Services:</small>
+                    </> : <></>}
+                    <div className="selected-services">
+
+                      {selectedServices.map((service, index) => (
+                        <span key={index} className="service-tag">
+                          {service}
+                          <button
+                            type="button"
+                            onClick={() => removeService(service)}
+                            className="remove-service-btn"
+                          >
+                            &times;
+                          </button>
+                        </span>
+                      ))}
+                    </div>
                   </div>
                   <div class="form-group">
                     <div class="input-group date" id="datepicker">
@@ -255,19 +332,16 @@ const FormComponent = () => {
                         value={formData.date}
                         onChange={handleInputChange}
                         placeholder="Select date"
-                        required
                       />
                     </div>
                   </div>
-                  <div class="form-group">
-                    <textarea
-                      className="form-control"
-                      id="additionalInfo"
-                      value={formData.additionalInfo}
-                      onChange={handleInputChange}
-                      placeholder="Write something if you wish"
-                    ></textarea>
+                  <div className="form-group">
+                    <ReCAPTCHA
+                      sitekey={`${process.env.REACT_APP_FORM_CAPTCHA_KEY}`}  // Replace with your Google reCAPTCHA site key
+                      onChange={handleCaptcha}
+                    />
                   </div>
+
                   <div class="form_submit">
                     <button type="submit" class="btn btn-primary">
                       Submit

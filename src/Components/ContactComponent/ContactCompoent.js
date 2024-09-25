@@ -5,20 +5,42 @@ import location from "../../images/Contct_location.png"
 import call from "../../images/Contct_call.png"
 import time from "../../images/Contct_time.png"
 import { ToastContainer, toast } from 'react-toastify';
+import ReCAPTCHA from 'react-google-recaptcha';
+
 // import 'react-toastify/dist/ReactToastify.css';
 
 const ContactCompoent = () => {
   const [allServiceData, setAllServiceData] = useState(null);
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [captchaToken, setCaptchaToken] = useState(null);
+
+
+  // Add a service to selected list
+  const handleServiceSelect = (e) => {
+    const selectedService = e.target.value;
+    if (selectedService && !selectedServices.includes(selectedService)) {
+      setSelectedServices([...selectedServices, selectedService]);
+    }
+  };
+
+  // Remove a service from selected list
+  const removeService = (service) => {
+    setSelectedServices(selectedServices.filter((item) => item !== service));
+  };
+
+  // This function will trigger when captcha is successfully solved
+  const handleCaptcha = (token) => {
+    setCaptchaToken(token);
+  };
+
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    city: '',
-    areaCode: '',
-    service: '',
+    address: '',
     date: '',
-    time: '',
-    additionalInfo: ''
+
   });
   const [preferenceItems, setPreferenceItems] = useState(null);
 
@@ -53,15 +75,34 @@ const ContactCompoent = () => {
     setFormData({ ...formData, [id]: value });
   };
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateEmail(formData.email)) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+    if (!captchaToken) {
+      toast.warn("Please verify that you are not a robot!");
+      return;
+    }
+    else if (selectedServices.length === 0) {
+
+      toast.warn("Please select at least one service!");
+      return;
+    }
     try {
       // Create customer
       const customerPayload = {
         customer_name: formData.name,
         customer_email: formData.email,
         customer_phone: formData.phone,
-        city: formData.city
+        customer_address: formData.address
       };
       const customerResponse = await ApiFacade.createCustomer(customerPayload);
 
@@ -70,12 +111,9 @@ const ContactCompoent = () => {
         // Use the created customer ID/name
         customer: customerResponse.name,
         appointment_date: formData.date,
-        appointment_time: formData.time,
-        items: [{
-          service: formData.service,
-
-        }],
-        additional_info: formData.additionalInfo
+        items: selectedServices.map(service => ({
+          service: service,
+        })),
       };
       const quotationResponse = await ApiFacade.createQuotation(quotationPayload);
 
@@ -88,21 +126,20 @@ const ContactCompoent = () => {
         service: '',
         date: '',
         time: '',
-        additionalInfo: ''
       });
 
-      if (quotationResponse) {
-        toast.success('Quotation created successfully!');
+      setSelectedServices([]);
 
-      }
-      else {
+      if (quotationResponse) {
+        toast.success('Contact submitted successfully!');
+      } else {
         toast.error('There is something wrong!');
       }
 
 
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('There was an error processing your request.');
+      toast.error('There was an error processing your request.');
+
     }
   };
 
@@ -176,7 +213,7 @@ const ContactCompoent = () => {
           <div class="row">
             <div class="col-lg-6">
               <h4>Send us a message</h4>
-              <div class="contact_form_box">
+              <div class="contact_form_box" style={{ height: 'auto' }}>
                 <div class="blog_detail_form">
                   <form onSubmit={handleSubmit}>
                     <div class="form-group">
@@ -186,7 +223,19 @@ const ContactCompoent = () => {
                         id="name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        placeholder="Enter your name"
+                        placeholder="Enter your name *"
+                        required
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="Your phone *"
                         required
                       />
                     </div>
@@ -198,33 +247,57 @@ const ContactCompoent = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="Your email"
-                        required
+
                       />
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
                       <input
                         type="text"
                         className="form-control"
-                        id="phone"
-                        value={formData.phone}
+                        id="address"
+                        value={formData.address}
                         onChange={handleInputChange}
-                        placeholder="Your phone"
-                        required
+                        placeholder="Address"
                       />
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
+                      {/* Service selection dropdown */}
+                      {selectedServices.length !== 0 ? <>
+                        &nbsp;<small style={{ color: 'gray' }}>[Note: You can select multiple services.]</small><br />
+                      </> : <></>}
                       <select
                         className="form-control"
-                        id="service"
-                        value={formData.service}
-                        onChange={handleInputChange}
-                        required
+                        onChange={handleServiceSelect}
+                        value="" // Keep the dropdown open for selection
                       >
-                        <option value="">Select service</option>
+                        <option value="" disabled>Select Services</option>
                         {allServiceData?.map((service, index) => (
-                          <option key={index} value={service.name}>{service.name}</option>
+                          <option key={index} value={service.name}>
+                            {service.name}
+                          </option>
                         ))}
                       </select>
+
+
+                      {/* Selected services displayed as tags */}
+                      {selectedServices.length !== 0 ? <>
+                        &nbsp;<small style={{ color: 'gray' }}>Selected Services:</small>
+                      </> : <></>}
+                      <div className="selected-services">
+
+                        {selectedServices.map((service, index) => (
+                          <span key={index} className="service-tag">
+                            {service}
+                            <button
+                              type="button"
+                              onClick={() => removeService(service)}
+                              className="remove-service-btn"
+                            >
+                              &times;
+                            </button>
+                          </span>
+                        ))}
+                      </div>
                     </div>
                     <div class="form-group">
                       <div class="input-group date" id="datepicker">
@@ -235,7 +308,6 @@ const ContactCompoent = () => {
                           value={formData.date}
                           onChange={handleInputChange}
                           placeholder="Select date"
-                          required
                         />
                         <span class="input-group-append">
                           <span class="input-group-text  d-block">
@@ -244,14 +316,11 @@ const ContactCompoent = () => {
                         </span>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <textarea
-                        className="form-control"
-                        id="additionalInfo"
-                        value={formData.additionalInfo}
-                        onChange={handleInputChange}
-                        placeholder="Write something if you wish"
-                      ></textarea>
+                    <div className="form-group">
+                      <ReCAPTCHA
+                        sitekey={`${process.env.REACT_APP_FORM_CAPTCHA_KEY}`}  // Replace with your Google reCAPTCHA site key
+                        onChange={handleCaptcha}
+                      />
                     </div>
 
                     <div class="form_submit">
