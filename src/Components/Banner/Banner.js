@@ -2,8 +2,7 @@ import { React, useState, useEffect, useRef } from "react";
 import title from "../../images/title_img.png";
 import "./Banner.css";
 import { Link } from "react-router-dom";
-import { fetchBannerItems } from "../../api/banner/bannerAPI";
-import { ShimmerTitle } from 'react-shimmer-effects';
+import { ShimmerTitle, ShimmerPostItem } from 'react-shimmer-effects';
 import ApiFacade from "../../api/facade";
 
 const Banner = () => {
@@ -39,9 +38,8 @@ const Banner = () => {
 
       {bannerLoading ? (
         <>
-          {/* <ShimmerPostItem card cta />
-          <ShimmerPostItem card cta /> */}
-          <ShimmerTitle line={2} gap={10} />
+          <ShimmerPostItem card cta />
+          <ShimmerTitle line={4} gap={20} />
         </>
 
       ) : (
