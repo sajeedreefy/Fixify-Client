@@ -83,7 +83,7 @@ const ContactCompoent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateEmail(formData.email)) {
+    if (formData.email && !validateEmail(formData.email) ) {
       toast.error('Please enter a valid email address.');
       return;
     }
