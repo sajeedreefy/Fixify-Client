@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./BlogComponent.css";
 import { Link, createSearchParams } from "react-router-dom";
-import { fetchBlogPostData } from "../../api/blog_section/blogSectionAPI";
+import { fetchBlogPostData } from "../../api/BlogSection/blogSectionAPI";
 import {ShimmerSimpleGallery} from "react-shimmer-effects";
 
 const BlogComponent2 = () => {

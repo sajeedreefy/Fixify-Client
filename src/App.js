@@ -5,7 +5,7 @@ import About from "./Routes/About";
 
 import ServiceList from "./Routes/Service/ServiceList";
 import ServiceDetails from "./Routes/Service/ServiceDetails";
-import Services from "./Routes/Service/Services";
+// import Services from "./Routes/Service/Services";
 import Team from "./Routes/Pages/Team";
 import Testimonial from "./Routes/Pages/Testimonial";
 import Projects from "./Routes/Pages/Projects";
@@ -28,8 +28,8 @@ function App() {
           <Route path="/Home" element={<Home/> } />
           <Route path="/Home/About_Us" element={<About/>} />
 
-          <Route path="/Home/Our_Services" element={<Services />} />
-          <Route path="/Home/Services_Lists" element={<ServiceList />} />
+          <Route path="/Home/Our_Services" element={<ServiceList />} />
+          {/* <Route path="/Home/Services_Lists" element={<ServiceList />} /> */}
           <Route path="/Home/Our_Services/Service_Details" element={<ServiceDetails />} />
 
           <Route path="/Home/Our_Team" element={<Team />} />
