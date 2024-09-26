@@ -60,7 +60,7 @@ const ServiceListComponent = () => {
         ) : (
           <div class="row">
 
-            {allServiceData.map((e, i) => (
+            {allServiceData?.map((e, i) => (
               <div class="col-lg-6" key={i}>
                 <Link
                    to={`/Home/Our_Services/Service_Details?id=${e.name}`}
@@ -74,7 +74,7 @@ const ServiceListComponent = () => {
                         <h4>{e.name} </h4>
                       </div>
                       <div class="service_box_content">
-                        <p>{e.custom_intro}</p>
+                        <p>{e.custom_intro?.slice(0,100)}...</p>
 
                       </div>
                       <div class="service_box_readmore d-flex">
