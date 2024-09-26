@@ -83,7 +83,7 @@ const ContactCompoent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.email && !validateEmail(formData.email) ) {
+    if (formData.email && !validateEmail(formData.email)) {
       toast.error('Please enter a valid email address.');
       return;
     }
@@ -263,8 +263,8 @@ const ContactCompoent = () => {
                     <div className="form-group">
                       {/* Service selection dropdown */}
                       {selectedServices.length !== 0 ? <>
-                        &nbsp;<small style={{ color: 'gray' }}>[Note: You can select multiple services.]</small><br />
-                      </> : <></>}
+                        <div className="mb-1">&nbsp;<small style={{ color: ' #555555' }}>[Note: You can select multiple services.]</small></div>
+                        </> : <></>}
                       <select
                         className="form-control"
                         onChange={handleServiceSelect}
@@ -281,7 +281,9 @@ const ContactCompoent = () => {
 
                       {/* Selected services displayed as tags */}
                       {selectedServices.length !== 0 ? <>
-                        &nbsp;<small style={{ color: 'gray' }}>Selected Services:</small>
+                        <div className="mt-2">
+                        &nbsp;<small style={{ color: ' #555555 ' }} >Selected Services:</small>
+                      </div>
                       </> : <></>}
                       <div className="selected-services">
 
@@ -300,6 +302,7 @@ const ContactCompoent = () => {
                       </div>
                     </div>
                     <div class="form-group">
+                      <label htmlFor="date" className="d-block d-sm-none text-left mb-2" style={{ color: ' #555555 ' }}>Select Appointment Date</label>
                       <div class="input-group date" id="datepicker">
                         <input
                           type="date"
