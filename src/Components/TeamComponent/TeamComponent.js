@@ -13,7 +13,7 @@ const TeamComponent = () => {
     const loadTeamMembersData = async () => {
       try {
         const data = await ApiFacade.fetchTeamMembers();
-        setTeamMembersData(data);
+        setTeamMembersData(data.slice(0,4));
       } catch (error) {
         console.error("Error loading services:", error);
       } finally {
