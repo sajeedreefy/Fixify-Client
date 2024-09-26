@@ -161,22 +161,6 @@ const Appointment = () => {
                       <div className="col-lg-6">
                         <div className="form-group">
                           <input
-                            type="email"
-                            className="form-control"
-                            id="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            placeholder="Your email"
-
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <div className="col-lg-6">
-                        <div className="form-group">
-                          <input
                             type="text"
                             className="form-control"
                             id="phone"
@@ -184,6 +168,22 @@ const Appointment = () => {
                             onChange={handleInputChange}
                             placeholder="Your phone *"
                             required
+                          />
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-lg-6">
+                        <div className="form-group">
+                          <input
+                            type="email"
+                            className="form-control"
+                            id="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            placeholder="Your email"
                           />
                         </div>
                       </div>
@@ -209,7 +209,7 @@ const Appointment = () => {
                           {/* Service selection dropdown */}
                           {selectedServices.length !== 0 ? <>
                             <div className="mb-1">&nbsp;<small style={{ color: ' #555555' }}>[Note: You can select multiple services.]</small></div>
-                            </> : <></>}
+                          </> : <></>}
                           <select
                             className="form-control"
                             onChange={handleServiceSelect}
