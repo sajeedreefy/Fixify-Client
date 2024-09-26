@@ -81,5 +81,5 @@ class ApiFacade {
     return fetchBlogPostData();
   }
 
-
+}
 export default ApiFacade;
