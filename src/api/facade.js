@@ -11,6 +11,7 @@ import { fetchBlogPostData } from './BlogSection/blogSectionAPI';
 
 
 import { fetchAboutComponent } from './about/aboutComponentAPI';
+
 import fetchAboutHighlight from './about/aboutHighlightAPI';
 import fetchFixifyClientsAPI from './fixifyClients/fixifyClientsAPI';
 
@@ -75,12 +76,10 @@ class ApiFacade {
     return fetchAboutComponent();
   }
 
-
   // Static method for fetching all blogs
   static fetchAllBlogs() {
     return fetchBlogPostData();
   }
 
-}
 
 export default ApiFacade;
