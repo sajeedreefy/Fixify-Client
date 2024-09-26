@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./BannerGlobal.css";
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
-import { BlogData } from '../BlogComponent/BlogData';
 import { ProjectData } from '../ProjectComponent/ProjectData';
 import { HeaderData } from '../Header/HeaderData';
 import ApiFacade from '../../api/facade';
@@ -14,6 +13,7 @@ const BannerGlobal = () => {
     let pathName = location.pathname;
 
     const [allServiceData, setAllServiceData] = useState([]); // Default to an empty array to avoid null errors
+    const [allBlogData, setAllBlogData] = useState([]);
 
     useEffect(() => {
       const loadAllServiceData = async () => {
@@ -26,6 +26,19 @@ const BannerGlobal = () => {
       };
 
       loadAllServiceData();
+    }, []);
+
+    useEffect(() => {
+      const loadAllBlogData = async () => {
+        try {
+          const data = await ApiFacade.fetchAllBlogs();
+          setAllBlogData(data || []); // Ensure that even if data is null, it doesn't break
+        } catch (error) {
+          console.error('Error loading blogs:', error);
+        }
+      };
+
+      loadAllBlogData();
     }, []);
 
     useEffect(() => {
@@ -46,11 +59,12 @@ const BannerGlobal = () => {
             setHeading(sData?.name || ''); // Check if sData exists to avoid errors
           }
           if (pathName.includes("Blog_Details")) {
-            const bData = BlogData.find((e) => e.id == id);
-            setHeading(bData?.name || '');
+            const bData = allBlogData.find((e) => e.idx == id);
+            // console.log(e.idx, id, '^^^^^^^^^^^^^^^^^^^')
+            setHeading(bData?.title || '');
           }
           if (pathName.includes("Projects_Details")) {
-            const wData = ProjectData.find((e) => e.id == id);
+            const wData = ProjectData.find((e) => e.id === id);
             setHeading(wData?.name || '');
           }
         } else {
@@ -72,7 +86,7 @@ const BannerGlobal = () => {
             setHeading(data?.heading || '');
           }
         }
-      }, [allServiceData, pathName, searchParams]);
+      }, [allServiceData, allBlogData, pathName, searchParams]);
 
   return (
     <section className="hero_reapeat_wrapper">
