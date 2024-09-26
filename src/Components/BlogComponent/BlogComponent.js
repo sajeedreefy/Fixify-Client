@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./BlogComponent.css";
 import title from "../../images/title_img.png";
 import { Link, createSearchParams } from "react-router-dom";
-import { fetchBlogPostData } from "../../api/blog_section/blogSectionAPI";
+import { fetchBlogPostData } from "../../api/BlogSection/blogSectionAPI";
 
 const BlogComponent = () => {
   const [blogList, setBlogList] = useState(null);
@@ -40,14 +40,14 @@ const BlogComponent = () => {
             </div>
           </div>
           <div class="col-lg-4">
-            <div class="pricing_title_content">
+            {/* <div class="pricing_title_content">
               <p>
                 Lorem Ipsum is simply dummy and is text of the printing and
                 typesetting industry. Lorem Ipsum has been.Lorem Ipsum is simply
                 dummy and is text of the printing and typesetting industry.
                 Lorem Ipsum has been.
               </p>
-            </div>
+            </div> */}
           </div>
           <div class="col-lg-4">
             <div class="troo_da_about_we_r_done_btn text-end">
@@ -62,7 +62,7 @@ const BlogComponent = () => {
         <div class="row">
         {blogList?.slice(0, 3).map((e, i) => (
             <div class="col-lg-4" key={i}>
-              <Link to={`/Home/Our_Blogs/Blog_Details?${createSearchParams({id : e.id, name:e.name})}`}>
+              <Link to={`/Home/Our_Blogs/Blog_Details?${createSearchParams({id : e.idx, name:e.name})}`}>
               <div class="troo_da_hand_we_r_done_box">
                 <div class="troo_da_hand_we_r_done_box_inner">
                   <div class="troo_da_hand_we_r_done_box_img">
