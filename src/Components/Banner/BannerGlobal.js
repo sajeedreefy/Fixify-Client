@@ -40,6 +40,7 @@ const BannerGlobal = () => {
 
       loadAllBlogData();
     }, []);
+    console.log(allBlogData, '^^^^^^^^^^^^^^^^^^^')
 
     useEffect(() => {
         const pathnamee = location.pathname.split("/").filter((p) => !!p);
@@ -52,6 +53,7 @@ const BannerGlobal = () => {
 
     useEffect(() => {
         const id = searchParams.get("id");
+        const name = searchParams.get("name");
 
         if (id) {
           if (pathName.includes("Service_Details") && allServiceData.length > 0) { 
@@ -59,8 +61,7 @@ const BannerGlobal = () => {
             setHeading(sData?.name || ''); // Check if sData exists to avoid errors
           }
           if (pathName.includes("Blog_Details")) {
-            const bData = allBlogData.find((e) => e.idx == id);
-            // console.log(e.idx, id, '^^^^^^^^^^^^^^^^^^^')
+            const bData = allBlogData.find((e) => e.name == name);
             setHeading(bData?.title || '');
           }
           if (pathName.includes("Projects_Details")) {
