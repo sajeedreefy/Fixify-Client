@@ -7,6 +7,7 @@ import { fetchNavItems } from './NavigationItems/navigationItemsAPI';
 import { fetchSingleServiceData } from './services/singleServiceAPI';
 import { fetchBannerItems } from './banner/bannerAPI';
 import { fetchAppointmentSectionData } from './AppointmentSection/appointmentSectionAPI';
+import { fetchBlogPostData } from './BlogSection/blogSectionAPI';
 
 
 import { fetchAboutComponent } from './about/aboutComponentAPI';
@@ -18,14 +19,14 @@ import fetchPreferenceAPI from './preference/preferenceAPI';
 
 class ApiFacade {
   //Fetch preference data
-  static fetchPreferenceData(){
+  static fetchPreferenceData() {
     return fetchPreferenceAPI();
   }
 
-  static fetchTopmenuData(){
+  static fetchTopmenuData() {
     return fetchTopMenuData();
   }
-  static fetchNavItemsData(){
+  static fetchNavItemsData() {
     return fetchNavItems();
   }
 
@@ -42,8 +43,8 @@ class ApiFacade {
   static fetchAllServices() {
     return fetchAllServiceData();
   }
-  
-  static fetchSingleService(serviceId){
+
+  static fetchSingleService(serviceId) {
     return fetchSingleServiceData(serviceId);
   }
 
@@ -68,14 +69,17 @@ class ApiFacade {
     return fetchBannerItems();
   }
 
-  static fetchAppointmentSection(){
+  static fetchAppointmentSection() {
     return fetchAppointmentSectionData();
   }
   static fetchAboutComponent() {
     return fetchAboutComponent();
   }
 
-  
-}
+  // Static method for fetching all blogs
+  static fetchAllBlogs() {
+    return fetchBlogPostData();
+  }
+
 
 export default ApiFacade;
