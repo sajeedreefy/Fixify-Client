@@ -340,3 +340,21 @@ ul.blog_detail_benifits_ul {
     margin: 0 auto;
   }
 }
+
+
+.badge {
+  padding: 0.2em 0.6em;
+  font-size: 0.85em;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.badge-gray {
+  background-color: #e0e0e0;
+  color: #333;
+  text-transform: capitalize;
+}
