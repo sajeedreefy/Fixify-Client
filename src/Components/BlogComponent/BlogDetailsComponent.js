@@ -72,7 +72,7 @@ const BlogDetailsComponent = () => {
             ) : (
               <div className="blog_top_detail">
                 <p>
-                  By {singleData?.blogger}, Published On: {singleData?.published_on}, 
+                  By {singleData?.blogger}, Published On: {singleData?.published_on} &nbsp;
                   <Badge pill bg="secondary" className="mx-2">
                     {capitalizeWords(singleData?.blog_category)}
                   </Badge>

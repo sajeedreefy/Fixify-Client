@@ -85,8 +85,8 @@ const Banner = () => {
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6 hero_right">
-                <div class="troo_da_hero_img">
+              <div className="col-lg-6 hero_right">
+                <div className="troo_da_hero_img d-none d-lg-block">
                   <img
                     src={`${process.env.REACT_APP_BASE_URL}${bannerData.hero_image}`}
                     alt="hero_img"
