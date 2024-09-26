@@ -287,7 +287,7 @@ const FormComponent = () => {
                   <div className="form-group">
                     {/* Service selection dropdown */}
                     {selectedServices.length !== 0 ? <>
-                      &nbsp;<small style={{ color: 'gray' }}>[Note: You can select multiple services.]</small><br />
+                      <div className="mb-1">&nbsp;<small style={{ color: ' #f4f4f4' }}>[Note: You can select multiple services.]</small></div>
                     </> : <></>}
                     <select
                       className="form-control"
@@ -305,10 +305,12 @@ const FormComponent = () => {
 
                     {/* Selected services displayed as tags */}
                     {selectedServices.length !== 0 ? <>
-                      &nbsp;<small style={{ color: 'gray' }}>Selected Services:</small>
+
+                      <div className="mt-2">
+                        &nbsp;<small style={{ color: ' #f4f4f4' }} >Selected Services:</small>
+                      </div>
                     </> : <></>}
                     <div className="selected-services">
-
                       {selectedServices.map((service, index) => (
                         <span key={index} className="service-tag">
                           {service}
@@ -324,7 +326,10 @@ const FormComponent = () => {
                     </div>
                   </div>
                   <div class="form-group">
+                    <label htmlFor="date" className="d-block d-sm-none text-left mb-2" style={{ color: ' #f4f4f4' }}>Select Appointment Date</label>
+
                     <div class="input-group date" id="datepicker">
+
                       <input
                         type="date"
                         className="form-control"

@@ -70,7 +70,7 @@ const Appointment = () => {
       toast.error('Please enter a valid email address.');
       return;
     }
-  
+
     if (!captchaToken) {
       toast.warn("Please verify that you are not a robot!");
       return;
@@ -167,7 +167,7 @@ const Appointment = () => {
                             value={formData.email}
                             onChange={handleInputChange}
                             placeholder="Your email"
-                            
+
                           />
                         </div>
                       </div>
@@ -208,8 +208,8 @@ const Appointment = () => {
                         <div className="form-group">
                           {/* Service selection dropdown */}
                           {selectedServices.length !== 0 ? <>
-                            &nbsp;<small style={{ color: 'gray' }}>[Note: You can select multiple services.]</small><br />
-                          </> : <></>}
+                            <div className="mb-1">&nbsp;<small style={{ color: ' #555555' }}>[Note: You can select multiple services.]</small></div>
+                            </> : <></>}
                           <select
                             className="form-control"
                             onChange={handleServiceSelect}
@@ -226,7 +226,9 @@ const Appointment = () => {
 
                           {/* Selected services displayed as tags */}
                           {selectedServices.length !== 0 ? <>
-                            &nbsp;<small style={{ color: 'gray' }}>Selected Services:</small>
+                            <div className="mt-2">
+                              &nbsp;<small style={{ color: ' #555555 ' }} >Selected Services:</small>
+                            </div>
                           </> : <></>}
                           <div className="selected-services">
 
@@ -246,8 +248,9 @@ const Appointment = () => {
                         </div>
                       </div>
                       <div className="col-lg-6">
+
                         <div className="form-group">
-                          {/* &nbsp;<label style={{marginBottom: '10px', color: 'gray'}}>Appointment Date</label> */}
+                          <label htmlFor="date" className="d-block d-sm-none text-left mb-2" style={{ color: ' #555555 ' }}>Select Appointment Date</label>
                           <input
                             type="date"
                             className="form-control"
